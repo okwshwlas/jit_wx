@@ -1,0 +1,37 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="gb2312">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"/>
+<title>详细</title>
+<link href="../style/default.css" rel="stylesheet" type="text/css" />
+  <link rel="stylesheet" type="text/css" href="../style/index3.css">
+
+ 
+<!-- Modernizr -->
+</head>
+<body>
+<!-- wraps -->
+<div id="wrap">
+	<h2 class="detail_title">消息通知标题</h2>
+	<div class="detail_wrap">
+		<p class="conter_p">消息通知标题消息通知标题消息通知标题消息通知标题消息通知标题
+		消息通知标题消息通知标题消息通知标题消息通知标题消息通知标题消息通知标题消息通知标
+		题消息通知标题消息通知标题消息通知标题消息通知标题消息通知标题消息通知标题消息通知
+		标题消息通知标题消息通知标题消息通知标题消息通知标题消息通知标题消息通知标题消息通
+		知标题消息通知标题消息通知标题消息通知标题消息通知标题消息通知标题消息通知标题消息
+		通知标题消息通知标题消息通知标题消息通知标题消息通知标题消息通知标题消息通知标题消
+		息通知标题消息通知标题消息通知标题消息通知标题消息通知标题消息通知标题消息通知标题
+		消息通知标题消息通知标题消息通知标题消息通知标题消息通知标题消息通知标题消息通知标
+		题消息通知标题消息通知标题消息通知标题消息通知标题消息通知标题消息通知标题消息通知
+		标题消息通知标题消息通知标题消息通知标题消息通知标题消
+		息通知标题消息通知标题消息通知标题消息通知标题消息通知标题消息通知标题消息通知标题
+		消息通知标题消息通知标题消息通知标题消息通知标题</p>
+	</div>
+	
+	<div style="text-align:center; padding-top:15px;padding-bottom:15px;">
+ 		<a href="#this" style="margin-left:-20px;" class="btn_sty btn_orange" onclick="cancelbtn('login_pop')">返 回</a>
+	</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="dogo.dao.SysCodeMapper" >
+  <resultMap id="BaseResultMap" type="dogo.model.SysCode" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="CODEID" property="codeid" jdbcType="VARCHAR" />
+    <result column="XZQH_ID" property="xzqhId" jdbcType="VARCHAR" />
+    <result column="CYEAR" property="cyear" jdbcType="VARCHAR" />
+    <result column="TYPE" property="type" jdbcType="VARCHAR" />
+    <result column="RIQI" property="riqi" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, CODEID, XZQH_ID, CYEAR, TYPE, RIQI
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from SYS_CODE
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from SYS_CODE
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="dogo.model.SysCode" >
+    insert into SYS_CODE (ID, CODEID, XZQH_ID, 
+      CYEAR, TYPE, RIQI)
+    values (#{id,jdbcType=VARCHAR}, #{codeid,jdbcType=VARCHAR}, #{xzqhId,jdbcType=VARCHAR}, 
+      #{cyear,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, #{riqi,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="dogo.model.SysCode" >
+    insert into SYS_CODE
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="codeid != null" >
+        CODEID,
+      </if>
+      <if test="xzqhId != null" >
+        XZQH_ID,
+      </if>
+      <if test="cyear != null" >
+        CYEAR,
+      </if>
+      <if test="type != null" >
+        TYPE,
+      </if>
+      <if test="riqi != null" >
+        RIQI,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="codeid != null" >
+        #{codeid,jdbcType=VARCHAR},
+      </if>
+      <if test="xzqhId != null" >
+        #{xzqhId,jdbcType=VARCHAR},
+      </if>
+      <if test="cyear != null" >
+        #{cyear,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="riqi != null" >
+        #{riqi,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="dogo.model.SysCode" >
+    update SYS_CODE
+    <set >
+      <if test="codeid != null" >
+        CODEID = #{codeid,jdbcType=VARCHAR},
+      </if>
+      <if test="xzqhId != null" >
+        XZQH_ID = #{xzqhId,jdbcType=VARCHAR},
+      </if>
+      <if test="cyear != null" >
+        CYEAR = #{cyear,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        TYPE = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="riqi != null" >
+        RIQI = #{riqi,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="dogo.model.SysCode" >
+    update SYS_CODE
+    set CODEID = #{codeid,jdbcType=VARCHAR},
+      XZQH_ID = #{xzqhId,jdbcType=VARCHAR},
+      CYEAR = #{cyear,jdbcType=VARCHAR},
+      TYPE = #{type,jdbcType=VARCHAR},
+      RIQI = #{riqi,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+   <select id="getYuyueCode" resultMap="BaseResultMap">
+  	select * from sys_code where type = '2' and riqi = #{riqi}
+  </select>
+   
+</mapper>

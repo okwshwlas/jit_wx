@@ -1,0 +1,33 @@
+<!doctype html>
+<html>
+  <head>
+  <meta charset="gb2312">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"/>
+  <title>护照</title>
+  <link href="../style/default.css" rel="stylesheet" type="text/css" />
+  <link rel="stylesheet" type="text/css" href="../style/index3.css">
+  <style>
+#wrap {
+	background: #f4f4f4;
+}
+</style>
+</head>
+<body>
+<!-- wraps -->
+<div id="wrap">
+<div class="contWrap" style=" width:90%; margin:0 auto;">
+	
+	<div style="width:94%; margin:0px auto;">
+		<span class="span_text">申请类别:</span>
+ 		<select class="inforEntry" style=" background-color:#f5f3f3"><option>首次申请证件</option></select>
+	</div>
+
+	<div style="text-align:center; padding-top:25px;">
+		<a href="accept.html" class="btn_sty btn_blue">下一步</a>
+		<a href="#this" class="btn_sty btn_orange" onclick="cancelbtn('login_pop')">返回</a>
+	</div>
+</div>
+
+</div>
+</body>
+</html>

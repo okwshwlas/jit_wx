@@ -1,0 +1,117 @@
+package dogo.util;
+
+public class Constants {
+
+	/** Session变量名 */
+	public final static String FTPSERVER = "192.168.1.175";
+	
+	/** Session变量名 */
+	public final static String SESSION_USER = "session_user";
+
+	/** 默认分页记录数 */
+	public final static int DEFAULT_PAGE_SIZE = 10;
+	
+	/** 数据字典类型(1:行政区划) */
+	public final static Byte XZQH = 1;
+
+
+	// ************************消息KEY 开始*********************************
+	/** 通用消息KEY */
+	public final static String ERROR_EXCEPTION = "error.exception";
+
+	/** 错误异常键 */
+	public final static String ERROR_EXCEPTION_KEY = "error_msg";
+
+	// ************************消息KEY 结束*********************************
+	/** byte 类型(0) */
+	public final static Byte BYTE_OFF = 0;
+	/** byte 类型(1) */
+	public final static Byte BYTE_ON = 1;
+	/** byte 类型(2) */
+	public final static Byte BYTE_TWO = 2;
+
+	public final static String TextColor = "#4682B4";
+
+	public final static String LineColor = "#ff0000";
+
+	public final static String DotColor = "#ff0000";
+
+	public final static Integer TextSize = 12;
+	
+	/** 分页num */
+	public final static String SPLIT_CURRENT_PAGE = "showpage_num";
+	
+	/** 数据库空字符 @author zhang*/
+	public final static String EMPTY = "";
+
+	/** 初始化工作时间模板 @author zhang*/
+	public final static String WORKDAYSAMPLE = "09:00,10:00,5#10:00,11:00,5#13:00,14:00,5#14:00,15:00,5#15:00,16:00,5";
+
+	/** 预约有效期 @author zhang*/
+	public final static String YUYUENUM = "10";
+
+	/** 获取数据失败 @author zhang*/
+	public final static String HQSJSB = "获取地址失败!";
+	
+	/** 发短息功能：第三方公司给的序列号*/
+	public final static String SOFTWARESERIALNO = "7SDK-LHW-0588-QFVSM";
+	
+	/** 发短息功能：key可自定义*/
+	public final static String KEY = "234ef4opd5wes";
+	
+	/** 发短息功能：密码可自定义*/
+	public final static String SERIALPASS = "108228";
+	
+	
+	/** EMS WebService XML格式用户信息*/
+	public final static String EMS_USER_XML = "<UserSetting><username>gatjlcrj</username><userkey>EA6A965788356453B997C2BF766E36A2</userkey><userdw>吉林出入境管理局</userdw></UserSetting>";
+//	public final static String EMS_USER_XML = "<UserSetting><username>test</username><userkey>4e961ac7288ecacb298dfaacffbdd93e</userkey><userdw>吉林出入境管理局</userdw></ UserSetting>";
+
+	/** EMS WebService WSDL地址*/
+	public final static String EMS_WSDL_URL="http://123.56.191.63:8080/EMS/services/EmsService?wsdl";
+	
+	/** EMS WebService 订单接入接口*/
+	public final static String EMS_NORMAL_REQUEST="NormalRequest";
+	
+	/** EMS WebService 上门取件接口*/
+	public final static String EMS_GOT_REQUEST="gotRequest";
+	
+	/** EMS WebService 运单状态查询接口*/
+	public final static String EMS_QUERY_MAIL="QueryMail";
+	
+	/** EMS WebService 订单状态查询接口*/
+	public final static String EMS_GOT_STATUS="GotStatus";
+	
+	
+	/** 短信接口：组织结构编号*/
+	public final static String SMS_CODE="20";
+	
+	/** 短信接口：通信密匙*/
+	public final static String SMS_KEY="234ef4opd5wes";
+	
+	/** 短信接口：模板编号*/
+	public final static String SMS_MOULD_CODE="220";
+	
+	/** 短信接口：URL*/
+	public final static String SMS_URL="http://gafw.jl.gov.cn:80/WebApi/MessageManager/SendMessage";
+	
+	/** 支付接口：签名信息加密钥匙*/
+	public final static String PAY_SIGNATURE_KEY="jlgazfjk";
+	/** 支付接口：URL*/
+	public final static String PAY_URL="http://192.168.2.110:80/WebApi/ThirdParty/pay";
+	/**支付查询接口：URL*/
+	public final static String PAY_QUERY_URL="http://192.168.2.110:80/WebApi/ThirdParty/payquery";
+	/**退款接口：URL*/
+	public final static String PAY_BACK_URL="http://192.168.2.110:80/WebApi/ThirdParty/payback";
+	/** 支付：前台通知URL*/
+	public final static String PAY_FRONT_URL="jit_crj/qiantai/jsp/ryLogin.jsp";
+	/** 支付：后台通知URL*/
+	public final static String PAY_BACK_END_URL="crj/payment/testPayBack.do";
+	
+
+	/** 城市服务：URL*/
+	public final static String CSFW_URL = "http://crj.gafw.jl.gov.cn/jit_crj_wx/jsp/proscenium/yuyue.jsp?type=2";
+	
+	public final static String CSFW_CX_URL = "http://crj.gafw.jl.gov.cn/jit_crj_wx/jsp/proscenium/wx_xxlb.jsp?type=2";
+	
+}

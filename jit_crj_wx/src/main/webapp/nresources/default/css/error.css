@@ -1,0 +1,35 @@
+﻿html,body{
+	height:100%;
+}
+body{
+	position:relative;
+	background:#E0E8EF;
+}
+.error{
+	position:absolute;
+	width:400px;
+	height:100px;
+	top:50%;
+	left:50%;
+	margin-left:-200px;
+	margin-top:-50px;
+	background:white;
+	border:1px #6699CC solid;
+}
+.error .title{
+	height:24px;
+	background:gray url(../images/portal/portalTitleBg.jpg) repeat-x;
+	border-bottom:1px solid #6699CC;
+}
+.error .title .text{
+	display:block;
+	float:left;
+	padding-left:10px;
+	line-height:24px;
+	color:#4F6B72;
+}
+.error .content{
+	text-align:center;
+	line-height:40px;
+	background:white;
+}

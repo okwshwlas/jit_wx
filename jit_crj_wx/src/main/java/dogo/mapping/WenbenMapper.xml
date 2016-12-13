@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="dogo.dao.WenbenMapper" >
+  <resultMap id="BaseResultMap" type="dogo.model.Wenben" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="keyword_id" property="keywordId" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="dogo.model.Wenben" extends="BaseResultMap" >
+    <result column="neirong" property="neirong" jdbcType="VARCHAR" />
+    <!-- 与keywords表一对一关联 -->
+    <association property="keywords" javaType="dogo.model.Keywords">
+		<id property="id" column="kid" /><!-- 与主表id字段相同,用别名进行区分 -->
+		<result property="sign" column="sign" />
+		<result property="context" column="context" />
+	</association>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, keyword_id
+  </sql>
+  <sql id="Blob_Column_List" >
+    neirong
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from dogo_wenben 
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <!-- 记录数 -->
+  <select id="selectAllWenbenCount" resultType="int"  parameterType="java.util.Map">
+    select 
+    count(*)
+    FROM dogo_wenben LEFT JOIN dogo_keywords 
+	ON dogo_wenben.keyword_id=dogo_keywords.id
+    where 1=1
+	    <if test="page.typeName == 'context'">
+	      and context like '%${page.typeValue}%' 
+	    </if>
+    
+  </select>
+	<!-- 查询文本,带分页 -->
+	<select id="selectAllWenben" resultMap="ResultMapWithBLOBs" parameterType="java.util.Map">
+	   select * from (
+	   SELECT 
+	    dogo_wenben.id,dogo_wenben.neirong,dogo_wenben.keyword_id,
+	    dogo_keywords.sign,dogo_keywords.context,rownum r
+	    FROM dogo_wenben LEFT JOIN dogo_keywords 
+	    ON dogo_wenben.keyword_id=dogo_keywords.id
+	  where 1=1
+	   <if test="page.typeName == 'context'">
+	      and context like '%${page.typeValue}%' 
+	   </if>
+	   <![CDATA[ 
+	   and rownum<=#{page.end}
+	   ]]>
+	  ) where 
+	   <![CDATA[ 
+	  #{page.begin}<=r
+	   ]]>
+  </select>
+  
+  
+  <!-- 根据关键词标示或关键词查询所有文本 -->
+	<select id="selectAllWenbenBySign" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String">
+	   SELECT 
+	    dogo_wenben.id,dogo_wenben.neirong,dogo_wenben.keyword_id,
+	    dogo_keywords.sign,dogo_keywords.context
+	    FROM dogo_wenben LEFT JOIN dogo_keywords 
+	    ON dogo_wenben.keyword_id=dogo_keywords.id
+	    where dogo_keywords.sign = #{sign,jdbcType=VARCHAR}  or dogo_keywords.context= #{sign,jdbcType=VARCHAR}
+  </select>
+  
+  
+  <!-- 查询是否已经存在该关键字 -->
+	<select id="selectisNotkeyword" resultType="int" parameterType="java.util.Map">
+		select count(*) from dogo_wenben
+		where 1=1
+		    <if test="wenbenid != null">
+		      and id != #{wenbenid,jdbcType=VARCHAR}
+		    </if>
+		    <if test="keyword_id != null">
+		       and keyword_id = #{keyword_id,jdbcType=VARCHAR}
+		    </if>
+	</select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from dogo_wenben
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="dogo.model.Wenben" >
+    insert into dogo_wenben (id, keyword_id, neirong
+      )
+    values (#{id,jdbcType=VARCHAR}, #{keywordId,jdbcType=VARCHAR}, #{neirong,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="dogo.model.Wenben" >
+    insert into dogo_wenben
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="keywordId != null" >
+        keyword_id,
+      </if>
+      <if test="neirong != null" >
+        neirong,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="keywordId != null" >
+        #{keywordId,jdbcType=VARCHAR},
+      </if>
+      <if test="neirong != null" >
+        #{neirong,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="dogo.model.Wenben" >
+    update dogo_wenben
+    <set >
+      <if test="keywordId != null" >
+        keyword_id = #{keywordId,jdbcType=VARCHAR},
+      </if>
+      <if test="neirong != null" >
+        neirong = #{neirong,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="dogo.model.Wenben" >
+    update dogo_wenben
+    set keyword_id = #{keywordId,jdbcType=VARCHAR},
+      neirong = #{neirong,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="dogo.model.Wenben" >
+    update dogo_wenben
+    set keyword_id = #{keywordId,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

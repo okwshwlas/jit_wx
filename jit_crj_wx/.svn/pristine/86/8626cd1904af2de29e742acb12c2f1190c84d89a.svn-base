@@ -1,0 +1,58 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@taglib uri="/WEB-INF/tld/c.tld" prefix="c"%>
+<%
+	String path = request.getContextPath();
+    String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path;
+%>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0" />
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+	<meta name="format-detection" content="telephone=no" />
+    <title>扫码支付</title>
+    <link rel="stylesheet" type="text/css" href="../css/default.css" />
+    <link rel="stylesheet" type="text/css" href="../css/commont.css" />
+   <script type="text/javascript" src="<%=basePath%>/js/jquery-1.9.1.min.js"></script>
+   <style>
+        html {height: 100%; width: 100%; font-family: 'Heiti SC', 'Microsoft YaHei'; font-size: 100px; outline: 0; -webkit-text-size-adjust:none; background-color: #efefef;}
+        body { height: 100%; -webkit-user-select: none; position: relative;}
+        div,p,span,ul,li,dl,td,dd,input,select,button,a{ font-size: 0.24rem;}
+    </style>
+    <script type="text/javascript">
+   	 	var basePath = '<%=basePath%>';
+    	function query(){
+   			var url = basePath + "/sfxmcontroller/getSfxmByYwbh.do?random=" + Math.random();
+   			alert($("#ywbh").val());
+   			var params = {
+ 				"ywbh" : $("#ywbh").val()
+   			};
+   			$.ajaxSettings.async = false; 
+   			$.getJSON(url,params, function(json) {
+   				$("#ywlbmc").text(json.ywlbmc);
+    			$("#sfje").text(json.sfje);
+   			});
+    	}
+    </script>
+</head>
+<body>
+    <div>
+      	<input id="ywbh" type="text" />
+      	<input type="button" value="查询" onclick="query()">
+    </div>
+     <div>
+	     <table width="40%">
+	     	<tr>
+	     		<td>业务类别名称</td>
+	     		<td><span id="ywlbmc"></span></td>
+	     	</tr>
+	     	<tr>
+	     		<td>收费金额</td>
+	     		<td><span id="sfje"></span></td>
+	     	</tr>
+	     </table>
+     </div>
+</body>
+</html>

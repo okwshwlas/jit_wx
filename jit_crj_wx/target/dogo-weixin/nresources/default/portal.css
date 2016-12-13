@@ -1,0 +1,332 @@
+﻿@import url('css/reset.css');
+html {
+}
+body {
+	font-family: Verdana, 宋体;
+	font-size: 12px;
+	background:#fff;
+}
+li {
+	list-style-type: none;
+}
+img {
+	border:none;
+}
+.clear {
+	height:0;
+	clear:both;
+}
+#page-warp {
+	margin:0 10px;
+}
+.addWidget {
+	text-align:right;
+	padding:4px 0;
+	cursor:pointer;
+}
+.widgetItem table {
+	font-size:12px;
+}
+.widgetItem table td {
+}
+.widget {
+	width:100%;
+}
+.widget .item-col {
+	width:49.5%;
+	position:relative;
+}
+.widget .col-1 {
+	float: left;
+	position:relative;
+}
+.widget .col-2 {
+	float: right;
+	position:relative;
+}
+.item {
+	border:1px solid #5cc0f1;
+	margin-bottom:10px;
+	width:100%;
+}
+.addWidget {
+	height:18px;
+	background:#edf8ff;
+	border-bottom:1px solid #90d0f9;
+	margin-bottom:10px;
+}
+.addWidget span {
+	background:url(images/portal/add.gif) 0 0px no-repeat;
+	padding-left:20px;
+	margin-right:15px;
+	width:70px;
+	text-align:left;
+
+	float:right;
+	display:block
+}
+.tablediv{
+	border:1px solid #74b2e5;
+	position:absolute;
+	right:15px;
+	top:20px;
+	z-index:999;
+	background:#fff;
+	display:none
+}
+.tablediv td{
+	padding:3px
+}
+/*每个单独的模块的容器*/
+.item .caption {
+	background:#99CCFF url(images/portal/portalTitleBg.gif) repeat-x;
+	font-size: 12px;
+	height:24px;
+	text-align: left;
+	text-decoration: none;
+	border:1px solid #FFFFFF;
+	position:relative;
+}/*标题头部分*/
+.item .caption .text {
+	border-right:1px solid #fff;
+	color:#fff;
+	float:left;
+	font-size:12px;
+	font-weight:bold;
+	height:24px;
+	line-height:24px;
+	padding:0 15px;
+	text-align:left;
+	background:#99CCFF url(images/portal/titbg.gif) repeat-x;
+}
+.item .caption .option {
+	position:absolute;
+	top:-2px;
+	height:16px;
+	right:5px;
+	text-align: center;
+}
+.item .caption .option a {
+	width:24px;
+	height:17px;
+	float:left;
+}/*window 操作按钮*/
+.item .caption .option a.setbutton {
+	background:url(images/portal/icon_option.gif) 0px 0 no-repeat;
+	margin-right:5px;
+	width:25px
+}
+.item .caption .option a.setbutton:hover {
+	background:url(images/portal/icon_option.gif) 0px -17px no-repeat;
+	margin-right:5px;
+	width:25px
+}
+.item .caption .option a.min {
+	background:url(images/portal/icon_option.gif) -28px 0 no-repeat;
+	width:23px
+}
+.item .caption .option a.min:hover {
+	background:url(images/portal/icon_option.gif) -28px -17px no-repeat;
+	width:23px
+}
+.item .caption .option a.max {
+	background:url(images/portal/icon_option.gif) -51px 0 no-repeat;
+}
+.item .caption .option a.max:hover {
+	background:url(images/portal/icon_option.gif) -51px -17px no-repeat;
+}
+.item .caption .option a.close {
+	background:url(images/portal/icon_option.gif) -74px 0 no-repeat;
+}
+.item .caption .option a.close:hover {
+	background:url(images/portal/icon_option.gif) -74px -17px no-repeat;
+}
+.item .content {
+	background:#FFFFFF url('images/portal/flow-bg.jpg') repeat-x;
+	border-top:1px solid #5fbfef;
+	overflow:auto;
+}
+.item .content .list li {
+	background:url('images/userview-li-1.gif') no-repeat scroll left center;
+	padding:4px 4px 0 10px;
+}
+.item .content table.baseinfo, .item .content table.baseinfo td {
+	border:none;
+}
+.placeholder {
+	border:2px #ddd dashed;
+	margin-bottom:10px;
+}
+.ul-1 {
+}
+.ul-1 li {
+	background:#fff url(images/portal/arew.gif) 9px 11px no-repeat;
+	padding-left:18px;
+	height:26px;
+	line-height:26px;
+	border-bottom:1px #EFEFEF solid;
+}
+
+.ul-1 li img {
+	margin:2px 6px 0 0;
+	display:block;
+	float:left;
+}
+.ul-1 li a {
+	color:#333333;
+}
+.ul-1 li a.red {
+	color:red;
+}
+.flow {
+	text-align:center;
+}
+.flow .doing {
+	width:190px;
+	height:56px;
+	background: url('images/loading_progress.gif') no-repeat scroll left bottom;
+	margin:40px auto;
+	text-align:right;
+	font-size:14px;
+	font-weight:bold;
+	color:#555;
+	overflow:hidden;
+	line-height:66px;
+}
+.flow ul {
+	height:30px;
+	padding:30px 0;
+	width:720px;
+	margin:0 auto;
+}
+.flow ul li {
+	width:180px;
+	height:30px;
+	line-height:30px;
+	float:left;
+	margin-right:-5px;
+	position:relative;
+}
+.flow ul li span {
+	background: url('images/step_icon_index.gif') no-repeat;
+	display:block;
+	height:100%;
+	text-align:center;
+	font-weight:bold;
+	background-position:100px 100px;
+	overflow:hidden;
+	cursor:default;
+}
+.flow ul li div {
+	background: url('images/step_icon_index.gif') no-repeat;
+}
+.flow ul .default div {
+	background-position:left -180px;
+}
+.flow ul .default div span {
+	background-position:right -210px;
+}
+.flow ul .default .start {
+	background-position:left 0;
+}
+.flow ul .default .end span {
+	background-position:right -390px
+}
+.flow ul .orange div {
+	background-position:left -240px;
+}
+.flow ul .orange div span {
+	background-position:right -270px
+}
+.flow ul .orange .start {
+	background-position:left -60px;
+}
+.flow ul .orange .end span {
+	background-position:right -450px;
+}
+.flow ul .blank div {
+	background-position:left -300px;
+}
+.flow ul .blank div span {
+	background-position:right -330px;
+	color:white;
+}
+.flow ul .blank .start {
+	background-position:left -120px;
+}
+.flow ul .blank .end span {
+	background-position:right -510px;
+}
+.flow ul li dl {
+	position:absolute;
+	width:400px;
+	height:91px;
+	top:40px;
+	left:-110px;
+	text-align:left;
+	display:none;
+	line-height:normal;
+	margin-top:10px;
+}
+.flow ul li dl dt {
+	height:9px;
+	width:15px;
+	background:white url('images/portal/flow-info^.gif') no-repeat scroll center top;
+	position:absolute;
+	top:-8px;
+	left:50%;
+	margin-left:-7px;
+	z-index:1;
+	overflow:hidden;
+}
+.flow ul li dl dd {
+	margin:0 1px 0 0;
+	height:90px;
+	overflow:auto;
+	line-height:22px;
+	padding:5px;
+	padding:0 5px;
+	border:1px silver solid;
+	background:white;
+}
+.flow ul li dl dd a {
+	color:#0066CC;
+}
+.flow ul li dl.on {
+	display:block;
+}
+.flow .over {
+	background: url('images/portal/flow-over.jpg') repeat-x;
+	height:28px;
+	width:720px;
+	margin:40px auto;
+	border:1px #AFB2B9 solid;
+	text-align:center;
+	line-height:28px;
+	font-weight:bold;
+	color:white;
+}
+.portaltable {
+}
+.portaltable th {
+	line-height: 22px;
+	background-color: #D0E7EF;
+	height: 22px;
+	font-weight: bold;
+	color: #003399;
+	font-size: 12px;
+	border-right-width: 1px;
+	border-right-style: solid;
+	border-right-color: #EFEFEF;
+}
+.portaltable td {
+	line-height: 22px;
+	background-color: #FFFFFF;
+	height: 22px;
+	padding-left: 6px;
+	color: #333;
+	font-size: 12px;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+	border-bottom-color: #EFEFEF;
+}

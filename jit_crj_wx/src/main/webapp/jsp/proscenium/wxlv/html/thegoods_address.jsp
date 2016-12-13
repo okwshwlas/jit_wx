@@ -1,0 +1,346 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@taglib uri="/WEB-INF/tld/c.tld" prefix="c"%>
+<%
+	String path = request.getContextPath();
+    String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path;
+    //微信用户唯一标识
+   String openid = request.getParameter("openid");
+   String code = request.getParameter("code");
+   //String openid = "123456";
+   	String sqid=request.getParameter("sqid");
+	String ywid=request.getParameter("ywid");
+	String ywcode=request.getParameter("ywcode");
+	String jdbt=request.getParameter("jdbt");
+%> 
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>收件地址</title>
+    <link rel="stylesheet" type="text/css" href="../css/aui.2.0.css" />
+    <link rel="stylesheet" href="../css/LArea.css">
+    <script type="text/javascript" src="<%=basePath%>/js/jquery-1.9.1.min.js"></script>
+    <script type="text/javascript" src="<%=basePath%>/js/jweixin-1.0.0.js"></script>
+    <script type="text/javascript" src="<%=basePath%>/jsp/proscenium/lib/Validform_v5.3.2/demo/js/Validform_v5.3.2.js"></script>
+    <script type="text/javascript" src="<%=basePath%>/jsp/proscenium/lib/layer-v2.1/layer/layer.js"></script>
+	<script type="text/javascript" src="<%=basePath%>/js/My97Date/WdatePicker.js" charset="utf-8"></script>
+	<script type="text/javascript" src="<%=basePath%>/jsp/proscenium/wxlv/js/cookie.js"></script>
+	<script type="text/javascript" src="<%=basePath%>/jsp/proscenium/wxlv/js/findyw.js"></script>
+		<script type="text/javascript" src="../script/aui-dialog.js"></script>
+	<script type="text/javascript" src="../script/api.js" ></script>
+<script type="text/javascript" src="../script/aui-toast.js" ></script>
+      <style type="text/css">
+    * {
+        margin: 0;
+        padding: 0;
+        -webkit-appearance: none; //去掉浏览器默认样式
+        -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+        -webkit-touch-callout: none;
+        box-sizing: border-box;
+    }
+    
+    html,
+    body {
+        margin: 0 auto;
+        width: 100%;
+        min-height: 100%;
+        overflow-x: hidden;
+        -webkit-user-select: none;
+    }
+    
+    body {
+        font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+        -webkit-text-size-adjust: 100%; //关闭自动调整字体
+        -webkit-overflow-scrolling: touch;
+        overflow-scrolling: touch;
+    }
+    
+    input {
+        width: 90%;
+        height: 40px;
+        font-size: 18px;
+        border: 1px solid #b72f20;
+        border-radius: 5px;
+        margin: 20px 5% 0 5%;
+        padding: 5px;
+    }
+    
+    h1 {
+        background-color: #b72f20;
+        color: #fff;
+        font-size: 25px;
+        text-align: center;
+        padding: 10px;
+    }
+    </style>
+    <link rel="stylesheet" href="../css/LArea.css">
+    <style type="text/css">
+        .aui-list .aui-list-item-media {
+            width: 6rem;
+        }
+        .aui-media-list .aui-list-item-inner {
+            display: block;
+            padding-top: 0.8rem;
+            padding-bottom: 0.8rem;
+        }
+        .aui-list-item-input input,.aui-list-item-input select { color: #959494!important;}
+        .aui-list-item-input select { padding: 0 0.6rem;}
+        .aui-card-list-content-padded { padding: 0.4rem 0.75rem;}
+    </style>
+    <script type="text/javascript">
+    var sfzh =getCookie("sfzh");
+    var lxdh =getCookie("lxdh");
+    var sfx =getCookie("sfx");
+    var qjxx_province =getCookie("qjxx_province");
+    var qjxx_city =getCookie("qjxx_city");
+    var qjxx_county =getCookie("qjxx_country");
+    var qjxx_xm =getCookie("qjxx_xm");
+    var qjxx_dh =getCookie("qjxx_dh");
+    var qjxx_yb =getCookie("qjxx_yb");
+    var qjxx_dz =getCookie("qjxx_dz");
+    
+    var ywid = '<%=ywid%>';
+	var ywcode = '<%=ywcode%>';
+	var jdbt = '<%=jdbt%>';
+	var sqid = '<%=sqid%>';
+    
+  
+     function getsame(){
+    	 
+    	$("#yjxx_xm").val(qjxx_xm);
+    	$("#yjxx_dh").val(qjxx_dh);
+    	$("#yjxx_yb").val(qjxx_yb);
+    	$("#yjxx_dz").val(qjxx_dz);
+    	$("#demo2").val(sfx);
+    
+     }
+     function save(){
+    	 
+    		var sfxt = $("#demo2").val();
+        	var strst= new Array(); //定义一数组
+        	strst=sfxt.split(","); //字符分割
+        	var yjxx_province = strst[0];
+        	var yjxx_city = strst[1];
+        	var yjxx_county = strst[2];
+        	var yjxx_xm = $("#yjxx_xm").val();
+        	var yjxx_dh = $("#yjxx_dh").val();
+        	var yjxx_yb = $("#yjxx_yb").val();
+        	var yjxx_dz = $("#yjxx_dz").val();
+    	 
+		 $.ajax({
+	 			url : "http://221.8.52.247:8445/jit_crj/crj/WxYj/save.do",
+	 			data : {
+	 				"sfzh":sfzh,
+	 				"lxdh":lxdh,
+	 				"qjxx_province":qjxx_province,
+					"qjxx_city" : qjxx_city,
+					"qjxx_county" : qjxx_county,
+					"qjxx_yb" : qjxx_yb,
+					"qjxx_dz" : qjxx_dz,
+					"qjxx_xm" : qjxx_xm,
+					"qjxx_dh" : qjxx_dh,
+					"yjxx_province":yjxx_province,
+					"yjxx_city" : yjxx_city,
+					"yjxx_county" : yjxx_county,
+					"yjxx_yb" : yjxx_yb,
+					"yjxx_dz" : yjxx_dz,
+					"yjxx_xm" : yjxx_xm,
+					"yjxx_dh" : yjxx_dh,
+					"flag" : "1",
+					"ywid" : ywid,
+					"ywcode" :ywcode,
+					"jdbt" : jdbt,
+					"sqid" : sqid
+	 			},
+	 			type : "post",
+	 			dataType:"JSON",
+	// 			jsonp: "callback",//传递给请求处理程序或页面的，用以获得jsonp回调函数名的参数名(一般默认为:callback)
+	// 	        jsonpCallback:"flightHandler",//自定义的jsonp回调函数名称，默认为jQuery自动生成的随机函数名，也可以写"?"，jQuery会自动为你处理数据
+	 			success:function(data,textStatus) {
+	 				if (data.flag== "0") {
+	 					 toast.hide();
+	 				}else {
+					 toast.hide();
+	 					//保存成功跳支付页面
+	 					location="successful_tip1.jsp?sqid="+sqid;
+					
+	 				}
+	 			}
+	 		});
+ 
+     }
+	 
+	 
+	  apiready = function(){
+         api.parseTapmode();
+     }
+     function closeTips(){
+         $api.remove($api.byId("tips-1"));
+     }
+     // 加载
+     var toast = new auiToast({
+     })
+     function showDefault(showtype){
+	 
+	 
+     	$("#end").removeAttr("onclick");
+         switch (showtype) {
+             case "loading":
+                 toast.loading({
+                     title:"加载中",
+                     duration:2000
+                 },function(ret){
+                     console.log(ret);
+                     setTimeout(function(){
+					 save();
+                    	 })
+                 });
+                 break;
+             default:
+                 // statements_def
+                 break;
+         }
+     }
+	 
+	 
+	 
+	 
+	 
+	 
+ 
+    </script>
+    
+</head>
+<body>
+<div class="aui-content" style="padding-bottom: 3rem;">
+    <div class="aui-card-list-content">
+        <img src="../image/banner05.jpg" alt="" />
+    </div>
+    <div style="overflow: hidden; margin: 15px;">
+        <p style="padding-top: 8px; text-align: center; float: left;">*请填写您的收件信息</p>
+        <div class="aui-btn" style=" float: right; color:red" onclick="getsame()">与取件地址相同</div>
+    </div>
+    <div class="aui-content aui-margin-b-15">
+        <ul class="aui-list aui-form-list">
+            <li class="aui-list-item">
+                <div class="aui-list-item-inner">
+                    <div class="aui-list-item-input">
+                        <input type="text" id="yjxx_xm" placeholder="姓名">
+                    </div>
+                </div>
+            </li>
+            <li class="aui-list-item">
+                <div class="aui-list-item-inner">
+                    <div class="aui-list-item-input">
+                        <input type="number" id="yjxx_dh" placeholder="手机号码">
+                    </div>
+                </div>
+            </li>
+            <li class="aui-list-item">
+                <div class="aui-list-item-inner">
+                      <div class="content-block">
+                 <input id="demo2" type="text" readonly="" placeholder="上门取件省，市，县(区)" />
+                 <input id="value2" type="hidden"  />
+                </div>
+                    <div class="aui-list-item-label-icon">
+                        <i class="aui-iconfont aui-icon-right"></i>
+                    </div>
+                </div>
+            </li>
+            <li class="aui-list-item">
+                <div class="aui-list-item-inner">
+                    <div class="aui-list-item-input">
+                        <input type="number" id="yjxx_yb" placeholder="邮政编码">
+                    </div>
+                </div>
+            </li>
+            <li class="aui-list-item">
+                <div class="aui-list-item-inner">
+                    <div class="aui-list-item-input">
+                        <textarea name=""  id="yjxx_dz" placeholder="详细地址"></textarea>
+                    </div>
+
+                </div>
+            </li>
+        </ul>
+    </div>
+    <div class="aui-card-list aui-content-padded">
+        <div class="aui-btn aui-btn-info aui-btn-block aui-btn-sm" tapmode onclick="showDefault('loading')" id="end">
+            下一步
+        </div>
+    </div>
+</div>
+ <!-- 提示-->
+    <div class="aui-tips" id="tips-1" style="position: fixed;">
+        <i class="aui-iconfont aui-icon-info"></i>
+        <div class="aui-tips-title" id="text"></div>
+        <i class="aui-iconfont aui-icon-close" tapmode onclick="closeTips()"></i>
+    </div>
+    <!-- end 提示 -->
+</body>
+<script type="text/javascript" src="../script/api.js" ></script>
+<script type="text/javascript" src="../script/aui-dialog.js"></script>
+<script type="text/javascript">
+    // onclick="openDialog('text')"
+    var dialog = new auiDialog({})
+    function openDialog(type){
+        switch (type) {
+            case "text":
+                dialog.alert({
+                    title:"提示",
+                    msg:'系统检测您还没有住宿登记记录,请到公安局办理报住宿后方可办理',
+                    buttons:['取消','确定']
+                },function(ret){
+                    console.log(ret)
+                })
+                break;
+            case "callback":
+                dialog.alert({
+                    title:"提示",
+                    msg:'系统检测您还没有住宿登记记录，请到公安局办理报住宿后方可办理。',
+                    buttons:['取消','确定']
+                },function(ret){
+                    if(ret){
+                        dialog.alert({
+                            title:"提示",
+                            msg:"您点击了第"+ret.buttonIndex+"个按钮",
+                            buttons:['确定']
+                        });
+                    }
+                })
+                break;
+        }
+    }
+</script>
+<script src="../js/LAreaData1.js"></script>
+    <script src="../js/LAreaData2.js"></script>
+    <script src="../js/LArea.js"></script>
+    <script>
+    var area1 = new LArea();
+//     area1.init({
+//         'trigger': '#demo1', //触发选择控件的文本框，同时选择完毕后name属性输出到该位置
+//         'valueTo': '#value1', //选择完毕后id属性输出到该位置
+//         'keys': {
+//             id: 'id',
+//             name: 'name'
+//         }, //绑定数据源相关字段 id对应valueTo的value属性输出 name对应trigger的value属性输出
+//         'type': 1, //数据源类型
+//         'data': LAreaData //数据源
+//     });
+//     area1.value=[1,13,3];//控制初始位置，注意：该方法并不会影响到input的value
+    var area2 = new LArea();
+    area2.init({
+        'trigger': '#demo2',
+        'valueTo': '#value2',
+        'keys': {
+            id: 'value',
+            name: 'text'
+        },
+        'type': 2,
+        'data': [provs_data, citys_data, dists_data]
+    });
+    </script>
+</html>

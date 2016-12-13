@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="dogo.dao.Wx_PcMapper" >
+  <resultMap id="BaseResultMap" type="dogo.model.Wx_Pc" >
+    <id column="openid" property="openid" jdbcType="VARCHAR" />
+    <result column="yywd" property="yywd" jdbcType="VARCHAR" />
+    <result column="yywddz" property="yywddz" jdbcType="VARCHAR" />
+    <result column="yysj" property="yysj" jdbcType="VARCHAR" />
+    <result column="yybhS" property="yybhs" jdbcType="VARCHAR" />
+    <result column="dhhm" property="dhhm" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    openid, yywd, yywddz, yysj, yybhS, dhhm
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from WX_PC
+    where openid = #{openid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from WX_PC
+    where openid = #{openid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="dogo.model.Wx_Pc" >
+    insert into WX_PC (openid, yywd, yywddz, 
+      yysj, yybhS, dhhm)
+    values (#{openid,jdbcType=VARCHAR}, #{yywd,jdbcType=VARCHAR}, #{yywddz,jdbcType=VARCHAR}, 
+      #{yysj,jdbcType=VARCHAR}, #{yybhs,jdbcType=VARCHAR}, #{dhhm,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="dogo.model.Wx_Pc" >
+    insert into WX_PC
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="openid != null" >
+        openid,
+      </if>
+      <if test="yywd != null" >
+        yywd,
+      </if>
+      <if test="yywddz != null" >
+        yywddz,
+      </if>
+      <if test="yysj != null" >
+        yysj,
+      </if>
+      <if test="yybhs != null" >
+        yybhS,
+      </if>
+      <if test="dhhm != null" >
+        dhhm,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="openid != null" >
+        #{openid,jdbcType=VARCHAR},
+      </if>
+      <if test="yywd != null" >
+        #{yywd,jdbcType=VARCHAR},
+      </if>
+      <if test="yywddz != null" >
+        #{yywddz,jdbcType=VARCHAR},
+      </if>
+      <if test="yysj != null" >
+        #{yysj,jdbcType=VARCHAR},
+      </if>
+      <if test="yybhs != null" >
+        #{yybhs,jdbcType=VARCHAR},
+      </if>
+      <if test="dhhm != null" >
+        #{dhhm,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="dogo.model.Wx_Pc" >
+    update WX_PC
+    <set >
+      <if test="yywd != null" >
+        yywd = #{yywd,jdbcType=VARCHAR},
+      </if>
+      <if test="yywddz != null" >
+        yywddz = #{yywddz,jdbcType=VARCHAR},
+      </if>
+      <if test="yysj != null" >
+        yysj = #{yysj,jdbcType=VARCHAR},
+      </if>
+      <if test="yybhs != null" >
+        yybhS = #{yybhs,jdbcType=VARCHAR},
+      </if>
+      <if test="dhhm != null" >
+        dhhm = #{dhhm,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where openid = #{openid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="dogo.model.Wx_Pc" >
+    update WX_PC
+    set yywd = #{yywd,jdbcType=VARCHAR},
+      yywddz = #{yywddz,jdbcType=VARCHAR},
+      yysj = #{yysj,jdbcType=VARCHAR},
+      yybhS = #{yybhs,jdbcType=VARCHAR},
+      dhhm = #{dhhm,jdbcType=VARCHAR}
+    where openid = #{openid,jdbcType=VARCHAR}
+  </update>
+  <select id="listWx_yuyue" resultMap="BaseResultMap">
+  	select * from WX_PC where openid = #{openid}
+      <if test="yysj != null" >
+        and  yysj = #{yysj}
+      </if>
+  </select>
+    <select id="listWx_yuyueId" resultMap="BaseResultMap">
+  	select * from WX_PC where yybhs = #{id}
+  </select>
+</mapper>

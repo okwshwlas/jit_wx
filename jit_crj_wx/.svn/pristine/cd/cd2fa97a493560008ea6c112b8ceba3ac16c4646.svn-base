@@ -1,0 +1,294 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@taglib uri="/WEB-INF/tld/c.tld" prefix="c"%>
+<%
+	String path = request.getContextPath();
+    String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path;
+    //微信用户唯一标识
+    String openid = request.getParameter("openid");
+    String code = request.getParameter("code");
+    //String openid = "123456";
+    String loginId =(String) session.getAttribute("idCard");
+	//证件标识
+	String ptflag =(String) session.getAttribute("pthz");
+	String gaflag =(String) session.getAttribute("gatxz");
+	String twflag =(String) session.getAttribute("twtxz");
+	//省内外标识
+	String snwflag=(String) session.getAttribute("snwflag");
+	//长春市标识
+	String ccflag = (String) session.getAttribute("ccflag");
+	//工作人员标识
+	String gzryflag = (String) session.getAttribute("gzryflag");
+// 	String gzryflag = "1";
+	//16岁标识 满161 未满0
+	String sixteenflag=(String) session.getAttribute("isSixteen");
+// 	String sixteenflag="1";
+//openid ="5513213422";
+//openid = "oSUoSuMs9E51ulqU1tVuqqGLCHis";     //欣姐openid
+//openid = "oSUoSuHROyzW9Vu48UIj3UJ7WrmU";   //全能openid
+//openid = "oSUoSuDIOQ-YeJZWI--XNvzNh1Xc";   //我的
+%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+	<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>我的出入境</title>
+    <link rel="stylesheet" type="text/css" href="../css/default.css" />
+    <link rel="stylesheet" type="text/css" href="../css/commont.css" />
+    
+    <!-- <link rel="stylesheet" type="text/css" href="../css/aui.2.0.css" /> -->
+    <script type="text/javascript" src="<%=basePath%>/js/jquery-1.9.1.min.js"></script>
+	<script type="text/javascript" src="<%=basePath%>/js/jweixin-1.0.0.js"></script>
+	<script type="text/javascript" src="<%=basePath%>/jsp/proscenium/lib/Validform_v5.3.2/demo/js/Validform_v5.3.2.js"></script>
+	<script type="text/javascript" src="<%=basePath%>/js/My97Date/WdatePicker.js" charset="utf-8"></script>
+	<script type="text/javascript" src="<%=basePath%>/jsp/proscenium/grzx/js/cookie.js"></script>
+	<script type="text/javascript" src="<%=basePath%>/jsp/proscenium/grzx/js/findyw.js"></script>
+	<script type="text/javascript" src="<%=basePath%>/jsp/proscenium/grzx/js/zhuce.js"></script>
+	<script type="text/javascript" src="<%=basePath%>/jsp/proscenium/grzx/js/token.js"></script>
+	<script type="text/javascript" src="<%=basePath%>/jsp/proscenium/grzx/js/smrz.js"></script>
+	
+	
+    
+    <style>
+        html {height: 100%; width: 100%; font-family: 'Heiti SC', 'Microsoft YaHei'; font-size: 100px; outline: 0; -webkit-text-size-adjust:none; background-color: #f5f5f5;}
+        body { height: 100%; -webkit-user-select: none; position: relative;}
+        div,p,span,ul,li,dl,td,dd,input,select,button,a{ font-size: 0.24rem;}
+    </style>
+    <script type="text/javascript">
+		(function (doc, win) {
+			var docEl = doc.documentElement,
+					resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize',
+					recalc = function () {
+						var clientWidth = docEl.clientWidth;
+						if (!clientWidth) return;
+						docEl.style.fontSize = 100 * (clientWidth / 750) + 'px';
+					};
+			if (!doc.addEventListener) return;
+			win.addEventListener(resizeEvt, recalc, false);
+			doc.addEventListener('DOMContentLoaded', recalc, false);
+		})(document, window);
+		
+		$(document).ready(function() {
+			var aliasName = getCookie('aliasName');
+			var userName = getCookie('userName');
+			$("#grxxtext").html(aliasName+'   '+userName);
+			$.ajax({
+				url : basePath + "/proscenium/crjwxgrxxController/weixin/select.do",
+				data:{
+					"openid":openid
+				},
+				type:"post",
+				dateType:"JSON",
+				success:function(data){
+					data = $.parseJSON(data);
+					if(data.data.zjxxflag=='1'){
+						$("#dqtxCheck").attr("checked",true);
+					}
+					if(data.data.bsjdflag=='1'){
+						$("#xxtxCheck").attr("checked",true);
+					}
+				}
+			})
+		}); 
+		
+			var gzryflag = '<%=gzryflag%>';
+			var basePath= "<%=basePath%>";
+			var openid= getCookie('openid');
+			var code= "<%=code%>";
+			var sjhm ;
+			var idCard;
+			var ccflag;
+			var hjszdpcs;
+			var sfzh =getCookie('sfzh');
+		
+		$.ajax({
+			url : basePath + "/proscenium/crjwxgrxxController/weixin/qqsj.do",
+			data:{
+				"type":"zjtx",
+				"sfzh":sfzh,
+				"openid":openid
+			},
+			type:"post",
+			dateType:"JSON",
+			success:function(data){
+			//data = eval(data); 
+			data = $.parseJSON(data);
+				//护照
+				var list = new Array();
+				list = data.data.list;
+				if(list!=null&&list!=""){
+					$("#dqtxForm").show();
+					$("#zwzj").hide();
+					for(var a = 0; a<list.length;a++){
+						if(list[a].zjzl=="14"){
+							$("#hzForm").show();
+							$("#hz").text("普通护照");//护照
+							$("#hzsj").html(list[a].yxqz);//护照时间
+						}
+						//港澳证
+						if(list[a].zjzl=="21"){
+							$("#gazForm").show();
+							$("#gaz").text("往来港澳通行证");//港澳证
+							$("#gazsj").html(list[a].yxqz);//港澳证时间
+						}
+						//台湾证
+						if(list[a].zjzl=="25"){
+							$("#twzForm").show();
+							$("#twz").text("大陆居民往来台湾通行证");//台湾证
+							$("#twzsj").html(list[a].yxqz);//台湾证时间
+						}
+					}
+				}else{
+					$("#dqtxForm").hide();
+					$("#zwzj").show();
+					$("#dqtx").hide();
+				}
+			}
+		})
+		//请求接口
+		$.ajax({
+			url : basePath + "/proscenium/crjwxgrxxController/weixin/qqsj.do",
+			data:{
+				"type":"bsjd",
+				"sfzh":sfzh,
+				"openid":openid
+			},
+			type:"post",
+			dateType:"JSON",
+			success:function(data){
+				data = $.parseJSON(data);
+				var list = new Array();
+				list = data.data.list;
+				if(list!=null&&list!=""){
+					$("#xxtxForm").show();
+					for(var a = 1; a<list.length;a++){
+						var bsjd = '<div style="position: relative" class="bsjd_list">';
+						bsjd += '<div class="aui-info ">'
+						bsjd += '<p class="bsjd_list_tit">'+list[a].ywlx+'</p>'
+						bsjd += '<div class="aui-info-item aui-text-warning">'+list[a].bljg+'</div>'
+						bsjd += '</div>'
+						bsjd += '<p>'+list[a].slrq+'</p>'
+						bsjd += '<div class="tip_dian"></div>'
+						bsjd += '</div>'
+						$("#form").append(bsjd);
+					}
+				}else{
+					$("#xxtxForm").hide();
+					$("#zwxx").show();
+					$("#xxtx").hide();
+				}
+			}
+		})
+		
+	     
+	     function changeFun1(obj){
+	    	 if(obj.checked){
+	    		 var zjxxflag = '1';
+	    	 }else{
+	    		 var zjxxflag = '0';
+	    	 }
+	    	 $.ajax({
+	    			url :  basePath + "/proscenium/crjwxgrxxController/weixin/zjxxzt.do",
+	    			data : {
+	    				"openid" : openid,
+	    				"zjxxflag" :zjxxflag 
+	    			},
+	    			type : "post",
+	    			dataType:"JSON",
+	     	 })	
+	     }
+	     function changeFun(obj){
+	    	 if(obj.checked){
+	    		 var bsjdflag = '1';
+	    	 }else{
+	    		 var bsjdflag = '0';
+	    	 }
+	    	 $.ajax({
+	    			url :  basePath + "/proscenium/crjwxgrxxController/weixin/dqtxzz.do",
+	    			data : {
+	    				"openid" : openid,
+	    				"bsjdflag" : bsjdflag
+	    			},
+	    			type : "post",
+	    			dataType:"JSON",
+	     	 })	
+	     }
+	 
+    </script>
+</head>
+<body>
+	<header id="header_box">
+        <div class="header_head">
+            <img src="../image/head_img.jpg" alt="" />
+        </div>
+        <p class="header_name" id="grxxtext"></p>
+        <div class="header_btn_box" id="yrz">
+            <a href="#this" class="header_qrz_btn" >已认证</a>
+        </div>
+        <div class="header_btn_box" id="wrz" style="display: none">
+            <a href="#this" class="header_wrz_btn">未实名认证</a>
+        </div>
+    </header>
+    <!-- 证件信息 -->
+    <section class="section_box">
+        <div class="section_main">
+            <div class="section_tit">
+                <p class="section_tit_text"><img src="../image/my_zj_icon.png" alt=""/> 证件信息</p>
+            </div>
+            <div class="section_switch" style="display: none" id="dqtxForm">
+                <div class="label_text" id="dqtx">到期提醒</div>
+                <div class="" style="float: left;" >
+                    <input type="checkbox" class="aui-switch" id="dqtxCheck" onchange="changeFun1(this);">
+                </div>
+            </div>
+        </div>
+        <div style="padding-top: 0.15rem;">
+        	<div id="zwzj" style="display: none">暂无证件</div>
+            <div class="aui-info aui-margin-t-10 aui-padded-l-10 aui-padded-r-10" id="hzForm" style="display: none">
+                <div class="aui-info-item">
+                    <span class="section_list_img"><img src="../image/hz_img.jpg" class="aui-img-round" /></span>
+                    <span class="aui-margin-l-5" id="hz"></span>
+                </div>
+                <div class="aui-info-item" id="hzsj"></div>
+            </div>
+            <div class="aui-info aui-margin-t-10 aui-padded-l-10 aui-padded-r-10" id="gazForm" style="display: none">
+                <div class="aui-info-item">
+                    <span class="section_list_img"><img src="../image/gatxz_img.jpg" class="aui-img-round" /></span>
+                    <span class="aui-margin-l-5" id="gaz"></span>
+                </div>
+                <div class="aui-info-item" id="gazsj"></div>
+            </div>
+            <div class="aui-info aui-margin-t-10 aui-padded-l-10 aui-padded-r-10" id="twzForm" style="display: none">
+                <div class="aui-info-item">
+                    <span class="section_list_img"><img src="../image/datxz_img.jpg" class="aui-img-round" /></span>
+                    <span class="aui-margin-l-5" id="twz"></span>
+                </div>
+                <div class="aui-info-item" id="twzsj"></div>
+            </div>
+        </div>
+    </section>
+    <!-- end -->
+    <!-- 办事进度 -->
+    <section class="section_box">
+    <div class="section_main"  style="border-bottom: none;">
+        <div class="section_tit">
+            <p class="section_tit_text"><img src="../image/bljd_icon.png" alt=""/> 办事进度</p>
+        </div>
+        <div class="section_switch" style="display: none" id="xxtxForm">
+            <div class="label_text" id="xxtx" >消息提醒</div>
+            <div class="" style="float: left;">
+                <input type="checkbox" class="aui-switch" id="xxtxCheck" onchange="changeFun(this);">
+            </div>
+        </div>
+    </div>
+    <div id="zwxx" style="display: none">暂无信息</div>
+    <div style="padding-top: 0.15rem;" id="form">
+        
+    </div>
+    </section>
+    <!-- end -->
+</body>
+
+
+</html>

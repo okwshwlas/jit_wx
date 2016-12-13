@@ -1,0 +1,9 @@
+package dogo.service;
+
+import dogo.model.Sfxm;
+
+public interface SfxmServiceI {
+	
+	public Sfxm getSfxmByWhbh(String ywbh)  ;
+	
+}

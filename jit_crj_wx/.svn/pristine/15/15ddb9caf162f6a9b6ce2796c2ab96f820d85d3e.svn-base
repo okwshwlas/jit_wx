@@ -1,0 +1,59 @@
+<!doctype html>
+<html>
+  <head>
+  <meta charset="gb2312">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"/>
+  <title>表单</title>
+  <link href="../style/default.css" rel="stylesheet" type="text/css" />
+  <link rel="stylesheet" type="text/css" href="../style/index3.css">
+  <style>
+#wrap {
+	background: #f4f4f4;
+}
+</style>
+</head>
+<body>
+<!-- wraps -->
+<div id="wrap">
+<div class="contWrap" style=" width:90%; margin:0 auto;">
+	<div style="width:94%; margin:0px auto;">
+        <span class="red">*</span>
+		<span class="span_text02">真实姓名:</span>
+		<input type="text" class="inforEntry" />
+	</div>
+    <div style="width:94%; margin:0px auto;" class="radio1">
+        <span class="red">*</span>
+        <span class="span_text02">性别:</span>
+		<input type="radio" value=""  />
+ 		<label>女</label>
+		<input type="radio" value=""  />
+ 		<label>男</label>
+	</div>
+    <div style="width:94%; margin:0px auto;">
+         <span class="red">*</span>
+		<span class="span_text02">汉字姓:</span>
+		<input type="text" class="inforEntry" />
+	</div>
+	<div style="width:94%; margin:0px auto;">
+        <span class="red">*</span>
+		<span class="span_text02">民族:</span>
+ 		<select class="inforEntry"><option>选择类型</option><option>选择类型</option><option>选择类型</option></select>
+	</div>
+	<div style="width:94%; margin:0px auto;">
+		<span class="span_text">通讯地址:</span>
+		<textarea class="textarea1"></textarea>
+	</div>
+	<div style="width:94%; margin:0px auto;">
+		<span class="span_text">邮箱:</span>
+		<input type="text" class="inforEntry" />
+	</div>
+	
+	<div style="text-align:center; padding-top:15px;">
+		<a href="index.html" class="btn_sty btn_blue">下一步</a>
+		<a href="#this" class="btn_sty btn_orange" onclick="cancelbtn('login_pop')">取  消</a>
+	</div>
+</div>
+
+</div>
+</body>
+</html>

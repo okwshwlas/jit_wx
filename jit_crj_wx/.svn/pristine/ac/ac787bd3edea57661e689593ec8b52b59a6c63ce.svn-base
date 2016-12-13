@@ -1,0 +1,168 @@
+package dogo.service;
+
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import dogo.model.Code;
+
+
+import dogo.dao.CrjRyjbxxMapper;
+import dogo.dao.CrjYyxxMapper;
+import dogo.dao.SysCodeMapper;
+import dogo.dao.SysDictionaryMapper;
+import dogo.dao.SysOrganizationMapper;
+import dogo.dao.SysWorkdaySampleMapper;
+import dogo.dao.SysWorktimeMapper;
+import dogo.dao.Wx_PcMapper;
+import dogo.dao.crjTsxxMapper;
+import dogo.model.CrjRyjbxx;
+import dogo.model.CrjYyxx;
+import dogo.model.SysCode;
+import dogo.model.SysDictionary;
+import dogo.model.SysOrganization;
+import dogo.model.SysWorkdaySample;
+import dogo.model.SysWorktime;
+import dogo.model.Wx_Pc;
+import dogo.model.crjTsxx;
+import dogo.util.Params;
+import dogo.util.StringUtils;
+
+@Service
+public class CrjRyjbxxServiceImpl implements CrjRyjbxxServiceI{
+	
+	@Autowired
+	private CrjRyjbxxMapper crjRyjbxxMapper;
+	
+	@Autowired
+	private SysDictionaryMapper sysDictionaryMapper;
+	
+	@Autowired
+	private SysWorkdaySampleMapper sysWorkdaySampleMapper;
+	
+	@Autowired
+	private SysOrganizationMapper sysOrganizationMapper;
+	
+	@Autowired
+	private SysWorktimeMapper sysWorktimeMapper;
+	
+	@Autowired
+	private CrjYyxxMapper crjYyxxMapper;
+	
+	@Autowired
+	private Wx_PcMapper wx_PcMapper;
+	
+	@Autowired
+	private SysCodeMapper sysCodeMapper;
+	
+	@Autowired
+	private crjTsxxMapper CrjTsxxMapper;
+
+	public void save(CrjRyjbxx crjRyjbxx) {
+		crjRyjbxxMapper.insertSelective(crjRyjbxx);
+	}
+	
+	public CrjRyjbxx selectByCardAndPhone(String sfzjhm, String lxdh) {
+		return crjRyjbxxMapper.selectByCardAndPhone(sfzjhm, lxdh);
+	}
+	
+	public List<SysDictionary> listSysDictionaryByType(String sid, String type,String count) {
+		return sysDictionaryMapper.listSysDictionaryByType(type, sid,count );
+	}
+	
+	public List<SysOrganization> findtimYuYueByRJ( Map<String,Object> param) {
+		return sysOrganizationMapper.findYuYueByRJ(param);
+	}
+	
+	public List<SysWorkdaySample> findYuYueByRiqi(String sid, String type) {
+		return  sysWorkdaySampleMapper.findYuYueByRiqi(sid, type);
+	}
+
+	public SysWorktime selectSysWorktimeById(String id) {
+		return sysWorktimeMapper.selectByPrimaryKey(id);
+	}
+
+	public void addYuyue(CrjYyxx crjYyxx) {
+		crjYyxxMapper.insertSelective(crjYyxx);
+	}
+
+	public int updateByPrimaryKeySelective(SysWorktime record) {
+		return sysWorktimeMapper.updateByPrimaryKey(record);
+	}
+
+	public List<CrjYyxx> listWx_yuyuexiangxi(String Openid) {
+		return crjYyxxMapper.listWx_yuyuexiangxi(Openid);
+	}
+
+	public List<Wx_Pc> listWx_yuyue(String Openid,String date) {
+		
+		return wx_PcMapper.listWx_yuyue(Openid,date);
+	}
+	public int insertSelective(Wx_Pc record) {
+		
+		return wx_PcMapper.insertSelective(record);
+	}
+
+	public List<Wx_Pc> listWx_yuyueId(String id) {
+		return wx_PcMapper.listWx_yuyueId(id);
+	}
+
+	public int updateByPrimaryKeySelective(CrjYyxx record) {
+		return crjYyxxMapper.updateByPrimaryKeySelective(record);
+	}
+
+	public String getYuyueCode(String riqi) {
+		// 预约code
+				String yuyueCode = "";
+				SysCode code = new SysCode();
+				List<SysCode> list = sysCodeMapper.getYuyueCode(riqi);
+				
+				if(list != null && list.size() > 0){
+					code =	list.get(0);
+					yuyueCode = (StringUtils.stringToInteger(code.getCodeid()) + 1) + "";
+					code.setCodeid(yuyueCode);
+					sysCodeMapper.updateByPrimaryKeySelective(code);
+				}else{
+					yuyueCode = "1";
+					code.setType("2");
+					code.setCodeid(yuyueCode);
+					code.setRiqi(riqi);
+					code.setId(Params.getCode());
+					sysCodeMapper.insert(code);
+				}
+				
+				// 生成6位码
+				switch(yuyueCode.length()){
+					case 1:
+				 		yuyueCode = "00000" + yuyueCode;
+				      break;
+				 	case 2:
+				 		yuyueCode = "0000" + yuyueCode;
+				      break;
+				 	case 3:
+				 		yuyueCode = "000" + yuyueCode;
+				      break;  
+				 	case 4:
+				 		yuyueCode = "00" + yuyueCode;
+				      break; 
+				 	case 5:
+				 		yuyueCode = "0" + yuyueCode;
+				      break; 
+				    default:
+				    	break;
+				}
+				String txm = "YY" + riqi + yuyueCode;
+				return txm;
+			}
+
+	public List<SysWorktime> WX_findJgdwById(String riqi, String jgid) {
+		return  sysWorktimeMapper.WX_findJgdwById(riqi, jgid);
+	}
+
+	public crjTsxx selectByPrimaryKey(String id) {
+		return CrjTsxxMapper.selectByPrimaryKey(id);
+	}
+
+}

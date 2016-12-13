@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="dogo.dao.crjTsxxMapper" >
+  <resultMap id="BaseResultMap" type="dogo.model.crjTsxx" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="NAME" property="name" jdbcType="VARCHAR" />
+    <result column="TYPE" property="type" jdbcType="VARCHAR" />
+    <result column="FEI_YONG" property="feiYong" jdbcType="VARCHAR" />
+    <result column="TSXX1" property="tsxx1" jdbcType="VARCHAR" />
+    <result column="YD_TSXX" property="ydTsxx" jdbcType="VARCHAR" />
+    <result column="SORTS" property="sorts" jdbcType="VARCHAR" />
+    <result column="BEI_YONG1" property="beiYong1" jdbcType="VARCHAR" />
+    <result column="BEI_YONG2" property="beiYong2" jdbcType="VARCHAR" />
+    <result column="PID" property="pid" jdbcType="VARCHAR" />
+    <result column="TSXX" property="tsxx" jdbcType="VARCHAR" />
+    <result column="IMGURL" property="imgurl" jdbcType="VARCHAR" />
+  </resultMap>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select a.* from CRJ_M_TSXX a LEFT JOIN CRJ_M_TSXX b ON b.id=a.pid where b.TYPE='dwyw_ts' and a.TYPE=#{id}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from CRJ_M_TSXX
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="dogo.model.crjTsxx" >
+    insert into CRJ_M_TSXX (ID, NAME, TYPE, 
+      FEI_YONG, TSXX1, YD_TSXX, 
+      SORTS, BEI_YONG1, BEI_YONG2, 
+      PID, TSXX, IMGURL)
+    values (#{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, 
+      #{feiYong,jdbcType=VARCHAR}, #{tsxx1,jdbcType=VARCHAR}, #{ydTsxx,jdbcType=VARCHAR}, 
+      #{sorts,jdbcType=VARCHAR}, #{beiYong1,jdbcType=VARCHAR}, #{beiYong2,jdbcType=VARCHAR}, 
+      #{pid,jdbcType=VARCHAR}, #{tsxx,jdbcType=VARCHAR}, #{imgurl,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="dogo.model.crjTsxx" >
+    insert into CRJ_M_TSXX
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="name != null" >
+        NAME,
+      </if>
+      <if test="type != null" >
+        TYPE,
+      </if>
+      <if test="feiYong != null" >
+        FEI_YONG,
+      </if>
+      <if test="tsxx1 != null" >
+        TSXX1,
+      </if>
+      <if test="ydTsxx != null" >
+        YD_TSXX,
+      </if>
+      <if test="sorts != null" >
+        SORTS,
+      </if>
+      <if test="beiYong1 != null" >
+        BEI_YONG1,
+      </if>
+      <if test="beiYong2 != null" >
+        BEI_YONG2,
+      </if>
+      <if test="pid != null" >
+        PID,
+      </if>
+      <if test="tsxx != null" >
+        TSXX,
+      </if>
+      <if test="imgurl != null" >
+        IMGURL,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="feiYong != null" >
+        #{feiYong,jdbcType=VARCHAR},
+      </if>
+      <if test="tsxx1 != null" >
+        #{tsxx1,jdbcType=VARCHAR},
+      </if>
+      <if test="ydTsxx != null" >
+        #{ydTsxx,jdbcType=VARCHAR},
+      </if>
+      <if test="sorts != null" >
+        #{sorts,jdbcType=VARCHAR},
+      </if>
+      <if test="beiYong1 != null" >
+        #{beiYong1,jdbcType=VARCHAR},
+      </if>
+      <if test="beiYong2 != null" >
+        #{beiYong2,jdbcType=VARCHAR},
+      </if>
+      <if test="pid != null" >
+        #{pid,jdbcType=VARCHAR},
+      </if>
+      <if test="tsxx != null" >
+        #{tsxx,jdbcType=VARCHAR},
+      </if>
+      <if test="imgurl != null" >
+        #{imgurl,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="dogo.model.crjTsxx" >
+    update CRJ_M_TSXX
+    <set >
+      <if test="name != null" >
+        NAME = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        TYPE = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="feiYong != null" >
+        FEI_YONG = #{feiYong,jdbcType=VARCHAR},
+      </if>
+      <if test="tsxx1 != null" >
+        TSXX1 = #{tsxx1,jdbcType=VARCHAR},
+      </if>
+      <if test="ydTsxx != null" >
+        YD_TSXX = #{ydTsxx,jdbcType=VARCHAR},
+      </if>
+      <if test="sorts != null" >
+        SORTS = #{sorts,jdbcType=VARCHAR},
+      </if>
+      <if test="beiYong1 != null" >
+        BEI_YONG1 = #{beiYong1,jdbcType=VARCHAR},
+      </if>
+      <if test="beiYong2 != null" >
+        BEI_YONG2 = #{beiYong2,jdbcType=VARCHAR},
+      </if>
+      <if test="pid != null" >
+        PID = #{pid,jdbcType=VARCHAR},
+      </if>
+      <if test="tsxx != null" >
+        TSXX = #{tsxx,jdbcType=VARCHAR},
+      </if>
+      <if test="imgurl != null" >
+        IMGURL = #{imgurl,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="dogo.model.crjTsxx" >
+    update CRJ_M_TSXX
+    set NAME = #{name,jdbcType=VARCHAR},
+      TYPE = #{type,jdbcType=VARCHAR},
+      FEI_YONG = #{feiYong,jdbcType=VARCHAR},
+      TSXX1 = #{tsxx1,jdbcType=VARCHAR},
+      YD_TSXX = #{ydTsxx,jdbcType=VARCHAR},
+      SORTS = #{sorts,jdbcType=VARCHAR},
+      BEI_YONG1 = #{beiYong1,jdbcType=VARCHAR},
+      BEI_YONG2 = #{beiYong2,jdbcType=VARCHAR},
+      PID = #{pid,jdbcType=VARCHAR},
+      TSXX = #{tsxx,jdbcType=VARCHAR},
+      IMGURL = #{imgurl,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

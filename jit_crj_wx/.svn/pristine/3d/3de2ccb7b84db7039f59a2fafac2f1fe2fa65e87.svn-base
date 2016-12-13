@@ -1,0 +1,428 @@
+function returnhide(){
+	//ie8 不识别indexof 方法*****start*******
+	if (!Array.prototype.indexOf) {
+	  Array.prototype.indexOf = function(elt /*, from*/)
+	  {
+	    var len = this.length >>> 0;
+
+	    var from = Number(arguments[1]) || 0;
+	    from = (from < 0)
+	         ? Math.ceil(from)
+	         : Math.floor(from);
+	    if (from < 0)
+	      from += len;
+
+	    for (; from < len; from++)
+	    {
+	      if (from in this &&
+	          this[from] === elt)
+	        return from;
+	    }
+	    return -1;
+	  };
+	}
+	//**********end**********
+//	alert('22')
+
+//	 setCookie('gatxz',gatxz);
+//	setCookie('twtxz',twtxz);
+	var gatxz =getCookie('gatxz');
+	var twtxz =getCookie('twtxz');
+	var sfzh =getCookie('sfzh');
+	var ccflag =getCookie('ccflag');
+		$.ajax({
+			url : "http://221.8.52.247:8445/jit_crj/crj/WxRy/returnhide.do",
+			data : {
+				"sfzh" :sfzh
+				},
+		    // async:false,
+			type : "post",
+			dataType : 'json',
+			success : function(data, textStatus) {
+				if(data!=null && data.success=="false"){
+				
+				}else{
+					var zjjzflag=data.zjjzflag;
+					var zjsqList=new Array();
+					var zjqzhkList=new Array();
+					var zjqzamList=new Array();
+					var zjqztwList=new Array();
+					zjsqList=data.zjsqList;
+					zjqzhkList=data.zjqzhkList;
+					zjqzamList=data.zjqzamList;
+					zjqztwList=data.zjqztwList;
+					
+					 //如果是长春户籍则全部显示。如果不是户籍只显示团队旅游签注****start
+					 if(ccflag ==1){
+			    		//判断是否已经申请了相关业务查询存在未完成的业务对应业务入口隐藏
+			    		 //*****************香港业务判断S*************** 12团队 1B个人
+			    		 // if(zjqzhkList.length>0&&zjqzhkList.indexOf('1B')!=-1){
+						 if(zjqzhkList.length>0){
+
+			    			 $("#xgli").hide(); 
+			    		 }
+			    		 // if(zjqzhkList.length>0&&zjqzhkList.indexOf('12')!=-1){
+			    			 
+			    			 // $("#xgli").hide();
+			    		 // }
+			    		  //*****************香港业务判断E***************
+			    		 
+			    		 //*****************澳门业务判断S*************** 12团队 1B个人
+			    		 // if(zjqzamList.length>0&&zjqzamList.indexOf('1B')!=-1){
+						 if(zjqzamList.length>0){
+			    			 
+			    			 $("#amli").hide();
+			    		 }
+			    		 // if(zjqzamList.length>0&&zjqzamList.indexOf('12')!=-1){
+			    			 
+			    			 // $("#amli").hide();
+			    		 // }
+			    		  //*****************澳门业务判断E***************
+			    		 
+			    		 //*****************台湾业务判断S*************** 25团队 2B个人
+			    		 // if(zjqztwList.length>0&&zjqztwList.indexOf('2B')!=-1){
+						  if(zjqztwList.length>0){
+			    			 
+			    			 $("#twli").hide();
+			    		 }
+			    		 // if(zjqztwList.length>0&&zjqztwList.indexOf('25')!=-1){
+			    			 
+			    			 // $("#twli").hide();
+			    		 // }
+			    		  //*****************台湾业务判断E***************
+			    		 
+			    		 
+					 }else{
+						
+						 $("#xggrlvqz").hide();
+						 $("#amgrlvqz").hide();
+						 $("#twgrlvqz").hide();
+			    		 if(zjqzhkList.length>0&&zjqzhkList.indexOf('12')!=-1){
+			    			 
+			    			 $("#xgli").hide(); 
+			    		 }
+			    		 if(zjqzamList.length>0&&zjqzamList.indexOf('12')!=-1){
+			    			 
+			    			 $("#amli").hide();
+			    		 }	
+			    		 if(zjqztwList.length>0&&zjqztwList.indexOf('25')!=-1){
+			    			 
+			    			 $("#twli").hide(); 
+			    		 }
+						 
+					 }
+					 
+					 //****end ***********************************
+					 if(gatxz=='0'){
+						 $("#xgli").hide(); 
+						 $("#amli").hide(); 
+						 
+					 }
+					 if(twtxz=='0'){
+						 $("#twli").hide(); 
+					 }
+					 
+				}
+			}
+	});
+	
+}
+function findbzjd(){
+	var sfzh = getCookie('sfzh');
+	// 初始化办事进度
+	var listInfoBzjd = "<ul class='aui-list aui-list-in'>";
+	// 准备URL和参数列表
+	var urlBzjd = "http://221.8.52.247:8445/jit_crj/crj/WxQz/findBzjdxx.do";
+	//标题图片Html
+	var imgHtml="";
+	var listParamsBzjd = {
+			"sfzh":sfzh
+	};
+	// $.ajaxSettings.async = false;
+	// 发出请求并处理返回数据
+	$.getJSON(urlBzjd,listParamsBzjd, function(json){
+		if(json.flag =='1'){
+			$.each(json.list, function(i, resultList) {
+				
+				var biaoTi = resultList.biaoTi.substring(0,4);
+				if(biaoTi == '香港个人'||biaoTi == '澳门个人'||biaoTi == '香港团队'||biaoTi == '澳门团队'||biaoTi == '台湾个人'||biaoTi == '台湾团队'){
+					listInfoBzjd += " <li class='aui-list-item'>";
+					listInfoBzjd += "<div class='aui-list-item-inner aui-list-item-inner1'>";
+					switch (biaoTi) {
+					case "香港个人":
+						imgHtml=" <div class='aui-list-item-media' style='width: 3rem;'> " +
+								" <img src='../image/icon2.png' class='aui-img-round aui-list-img-sm'> </div> <div class='aui-list-item-inner aui-list-item-arrow'> 个人旅游签注</div>";
+						break;
+					case "澳门个人":
+						imgHtml=" <div class='aui-list-item-media' style='width: 3rem;'> " +
+								" <img src='../image/icon3.png' class='aui-img-round aui-list-img-sm'> </div> <div class='aui-list-item-inner aui-list-item-arrow'> 个人旅游签注</div>";
+						break;
+					case "香港团队":
+						imgHtml=" <div class='aui-list-item-media' style='width: 3rem;'> " +
+						" <img src='../image/icon2.png' class='aui-img-round aui-list-img-sm'> </div> <div class='aui-list-item-inner aui-list-item-arrow'> 团队旅游签注</div>";
+						break;
+					case "澳门团队":
+						imgHtml=" <div class='aui-list-item-media' style='width: 3rem;'> " +
+						" <img src='../image/icon3.png' class='aui-img-round aui-list-img-sm'> </div> <div class='aui-list-item-inner aui-list-item-arrow'> 团队旅游签注</div>";
+						break;
+					case "台湾个人":
+						imgHtml=" <div class='aui-list-item-media' style='width: 3rem;'> " +
+						" <img src='../image/icon1.png' class='aui-img-round aui-list-img-sm'> </div> <div class='aui-list-item-inner aui-list-item-arrow'> 个人旅游签注</div>";
+						break;
+					case "台湾团队":
+						imgHtml=" <div class='aui-list-item-media' style='width: 3rem;'> " +
+						" <img src='../image/icon1.png' class='aui-img-round aui-list-img-sm'> </div> <div class='aui-list-item-inner aui-list-item-arrow'> 团队旅游签注</div>";
+						break;
+					default:
+						break;
+					};
+					if (resultList.statue == "00") {// 预受理
+						if (resultList.blzt == "00") {// 审核中
+							listInfoBzjd += "预受理";
+							listInfoBzjd += "</td><td align='center'>审核中</td>";
+//							3-26  listInfoBzjd += "<td  align='center'><a style='color: #2c92fd;' onclick=reservation(\""+ resultList.sqId +"\")>撤销</a>";
+						} else if (resultList.blzt == "10") {// 审核通过
+							if (resultList.sfyj == "0") {
+							} else {
+								listInfoBzjd +=imgHtml;
+								listInfoBzjd += '<div class="aui-list-item-inner aui-list-item-inner1 aui-text-info">';
+								listInfoBzjd += "<a style='color: blue;' href='pick_address.jsp?" + resultList.ywId + "&sqid= " + resultList.sqId+ "'>填写速递信息</a>";
+								listInfoBzjd +="</div>";
+							}
+						} else if (resultList.blzt == "20") {// 审核未通过
+							listInfoBzjd += "预受理";
+							listInfoBzjd += "</td><td align='center'>审核未通过";
+						} else if (resultList.blzt == "30") {// 业务已撤销
+							listInfoBzjd += "业务已撤销";
+							listInfoBzjd += "</td><td align='center'>";
+						} else if (resultList.blzt == "40") {// 提示前台受理（诱捕）
+							listInfoBzjd += "预受理审核通过</td><td align='center'>";
+							listInfoBzjd += "<a style='color: #2c92fd;' href='../yuyue/appoint_address.jsp?sqid=" + resultList.sqId + "'>预约</a>";
+							//listInfoBzjd +=  "&nbsp;&nbsp;&nbsp;&nbsp;"+"&nbsp;&nbsp;&nbsp;&nbsp;"+"<a style='color: #2c92fd;' href='../yuyue/appoint_address.jsp?sqid=" + resultList.sqId + "'>撤销</a>";
+						}
+						
+					} else if (resultList.statue == "04") {// 支付
+						if (resultList.blzt == "00") {// 支付中
+							listInfoBzjd += "支付中</td><td align='center'>";
+							listInfoBzjd += "<a style='color: #2c92fd;' href='#'>支付</a>";
+						} else if (resultList.blzt == "10") {// 支付成功
+							listInfoBzjd +=imgHtml;
+							listInfoBzjd += '<div class="aui-list-item-inner aui-list-item-inner1 aui-text-info">';
+							listInfoBzjd += "<a style='color: blue;' href='successful_tip1.jsp?sqid="+resultList.sqId+"&ywcode='"+resultList.ywId+">激活上门取件</a>";
+							listInfoBzjd +="</div>";
+//							listInfoBzjd += "等待上门取证";
+						} else if (resultList.blzt == "20") {// 支付失败
+							listInfoBzjd += "支付失败";
+							listInfoBzjd += "</td><td align='center'><a style='color: #2c92fd;' href='#'>重新支付</a>";
+						} else if (resultList.blzt == "50") {// 支付成功
+							listInfoBzjd +=imgHtml;
+							//listInfoBzjd += "支付成功</td><td align='center'>";
+							listInfoBzjd += '<div class="aui-list-item-inner aui-list-item-inner1 aui-text-info">';
+//							listInfoBzjd += "<a style='color:  #2c92fd;' href='../ywlc/ecqz/qz_ems_get.jsp?ywcode=" + resultList.ywId + "&sqid=" + resultList.sqId +"&jdbt=" + resultList.biaoTi+"&ywcode="+resultList.ywcode+"'>填写速递信息</a>";
+//							listInfoBzjd += '<a style="color:  #2c92fd;" href="#" onclick="checkPay(\''+resultList.sqId+'\',\''+resultList.ywId+'\',\''+resultList.biaoTi+'\',\''+resultList.ywcode+'\')" >填写速递信息</a>';
+//							listInfoBzjd += "<a style='color: #2c92fd;' href='../ywlc/ecqz/ecqz_lvzf_new.jsp?sqid="+resultList.sqId+"&ywcode='"+resultList.ywId+">(激活上门取件)</a></td><td align='center'>";
+							listInfoBzjd += "<a style='color: blue;' href='javascript:void(0)'>等待上门取证</a>";
+							listInfoBzjd +="</div>";
+//							listInfoBzjd += "<a style='color: #2c92fd;' href='../ywlc/ecqz/look_ems.jsp?sq_id=" + resultList.sqId + "'>(查看邮寄信息)</a>";
+						} 
+					} else if (resultList.statue == "05") {// 邮寄
+						if (resultList.blzt == "00") {// 取件中
+							listInfoBzjd +=imgHtml;
+//							listInfoBzjd += "<a style='color: #2c92fd;' href='../ywlc/ecqz/ecqz_lvzf_new.jsp?sqid="+resultList.sqId+"&ywcode='"+resultList.ywId+">(支付页面)</a></td><td align='center'>";
+//							listInfoBzjd +="<div class='aui-btn-warning btn_zf' >支 付</div>"
+						    listInfoBzjd += '<div class="aui-list-item-inner aui-list-item-inner1 aui-text-info">';
+							listInfoBzjd += "<a style='color: blue;' href='successful_tip1.jsp?" + resultList.ywId + "&sqid= " +resultList.sqId+ "'>支付</a>";
+							listInfoBzjd +="</div>";
+//							7-11邮寄listInfoBzjd += "等待上门取证</td><td align='center'>";
+						} else if (resultList.blzt == "10") {// 已取得证件
+							listInfoBzjd += "<a style='color: #2c92fd;' href='../ywlc/shoushen/emsInfoList.jsp?sq_id=" + resultList.sqId + "'>已取得证件</a>";
+							listInfoBzjd += "</td><td align='center'>";
+						} else if (resultList.blzt == "20") {// 取件失败
+							listInfoBzjd += "取件失败";
+							listInfoBzjd += "</td><td align='center'>";
+						}
+					} else if (resultList.statue == "10") {// 受理
+						if (resultList.blzt == "00") {// 正在进行受理
+							listInfoBzjd += "受理中</td><td align='center'>";
+						} else if (resultList.blzt == "10") {// 受理成功
+							listInfoBzjd += "受理成功";
+							listInfoBzjd += "</td><td align='center'>";
+						} else if (resultList.blzt == "20") {// 受理不通过
+							listInfoBzjd += "受理不通过";
+							listInfoBzjd += "</td><td align='center'>";
+						}
+					} else if (resultList.statue == "20") {// 审批
+						if (resultList.blzt == "00") {// 审批中
+							listInfoBzjd += "审批中</td><td align='center'>";
+						} else if (resultList.blzt == "10") {// 审批成功
+							listInfoBzjd += "审批成功";
+							listInfoBzjd += "</td><td align='center'>";
+						} else if (resultList.blzt == "20") {// 审批失败
+							listInfoBzjd += "审批失败";
+							listInfoBzjd += "</td><td align='center'>";
+						}
+					} else if (resultList.statue == "30") {// 制证
+						if (resultList.blzt == "00") {// 制证中
+							listInfoBzjd += "制证中</td><td align='center'>";
+						} else if (resultList.blzt == "10") {// 已制证
+							listInfoBzjd += "已制证";
+							listInfoBzjd += "</td><td align='center'>";
+						}
+					} else if (resultList.statue == "40") {// 已发证
+						listInfoBzjd += "制证完成</td><td align='center'>准备邮寄";
+						 if (resultList.blzt == "10") {// 已发证
+							 listInfoBzjd += "<a style='color: #2c92fd;' href='../ywlc/shoushen/emsInfoList.jsp?sq_id=" + resultList.sqId + "'>派件中</a></td><td align='center'>";
+						} 
+					} else if (resultList.statue == "06") {// 完结
+						listInfoBzjd += "完结</td><td align='center'>";
+					} else if (resultList.statue == "07") {// 派件中
+						listInfoBzjd += "<a style='color: #2c92fd;' href='../ywlc/shoushen/emsInfoList.jsp?sq_id=" + resultList.sqId + "'>派件中</a></td><td align='center'>";
+					} else if (resultList.statue == "08") {// 已送往长春市宽城区
+						listInfoBzjd += "已送往长春市宽城区</td><td align='center'>";
+					} else if (resultList.statue == "09") {// 已签收
+						listInfoBzjd += "已签收</td><td align='center'>办理完结";
+					}else if (resultList.statue == "50") {// 已撤销预约
+						listInfoBzjd += "已撤销</td><td align='center'>";
+					}
+					
+					listInfoBzjd += "</td></tr>";
+					
+				}
+				
+			
+//				
+//				<li class="aui-list-item">
+//	            <div class="aui-list-item-inner aui-list-item-inner1">
+//	                香港旅游签注
+//	            </div>
+//	            <div class="aui-list-item-inner aui-list-item-inner1">
+//	                已通过初审
+//	            </div>
+//	            <div class="aui-list-item-inner aui-list-item-inner1 aui-text-info">
+//	                填写邮寄信息
+//	            </div>
+//	        </li>
+				
+			});
+		listInfoBzjd += "</ul>";
+		$("#bzjdList").html(listInfoBzjd);
+		toast.hide();
+		}else{
+			
+			toast.hide();
+		
+		}
+		toast.hide();
+		
+	});
+}
+function returnhidenew(){
+
+//	 setCookie('gatxz',gatxz);
+//	setCookie('twtxz',twtxz);
+	var gatxz =getCookie('gatxz');
+	var twtxz =getCookie('twtxz');
+	var sfzh =getCookie('sfzh');
+	var ccflag =getCookie('ccflag');
+		$.ajax({
+			url :  basePath+"/crj/wxqz/returnhide.do",
+			data : {
+				"sfzh" :sfzh
+				},
+		    async:false,
+			type : "post",
+			dataType : 'json',
+			success : function(data) {
+				if(data==null){
+				
+				}else{
+					var data1 = data.data;
+					var zjjzflag=data1.zjjzflag;
+					var zjsqList=new Array();
+					var zjqzhkList=new Array();
+					var zjqzamList=new Array();
+					var zjqztwList=new Array();
+					zjsqList=data1.zjsqList;
+					zjqzhkList=data1.zjqzhkList;
+					zjqzamList=data1.zjqzamList;
+					zjqztwList=data1.zjqztwList;
+					
+					 //如果是长春户籍则全部显示。如果不是户籍只显示团队旅游签注****start
+					 if(ccflag ==1){
+			    		//判断是否已经申请了相关业务查询存在未完成的业务对应业务入口隐藏
+			    		 //*****************香港业务判断S*************** 12团队 1B个人
+			    		 if(zjqzhkList.length>0){
+			    			 $("#xgli").hide(); 
+			    		 }
+			    		 if(zjqzhkList.length>0){
+			    			 
+			    			 $("#xgli").hide();
+			    		 }
+			    		  //*****************香港业务判断E***************
+			    		 
+			    		 //*****************澳门业务判断S*************** 12团队 1B个人
+			    		 if(zjqzamList.length>0){
+			    			 
+			    			 $("#amli").hide();
+			    		 }
+			    		 if(zjqzamList.length>0){
+			    			 
+			    			 $("#amli").hide();
+			    		 }
+			    		  //*****************澳门业务判断E***************
+			    		 
+			    		 //*****************台湾业务判断S*************** 25团队 2B个人
+			    		 if(zjqztwList.length>0){
+			    			 
+			    			 $("#twli").hide();
+			    		 }
+			    		 if(zjqztwList.length>0){
+			    			 
+			    			 $("#twli").hide();
+			    		 }
+			    		  //*****************台湾业务判断E***************
+			    		 
+			    		 
+					 }else{
+						
+						 $("#xggrlvqz").hide();
+						 $("#amgrlvqz").hide();
+						 $("#twgrlvqz").hide();
+			    		 if(zjqzhkList.length>0){
+			    			 
+			    			 $("#xgli").hide(); 
+			    		 }
+			    		 if(zjqzamList.length>0){
+			    			 
+			    			 $("#amli").hide();
+			    		 }	
+			    		 if(zjqztwList.length>0){
+			    			 
+			    			 $("#twli").hide(); 
+			    		 }
+						 
+					 }
+					 
+					 //****end ***********************************
+					 if(gatxz=='0'){
+						 $("#xgli").hide(); 
+						 $("#amli").hide(); 
+						 
+					 }
+					 if(twtxz=='0'){
+						 $("#twli").hide(); 
+					 }
+					 
+				}
+			}
+	});
+	
+}
+	
+	
+	
+
+	
+	
+	
+	

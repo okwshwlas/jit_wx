@@ -1,0 +1,50 @@
+@charset "UTF-8";
+/* 路线查看 */
+.ck_header_top { overflow: hidden; clear: both;  width: 6.4rem;  height: 0.9rem; font-size: 0.24rem; background: #fff; border-bottom: 1px solid #e6e6e6; text-align: center;}
+.ck_header_return { float: left; display: block; margin-top: 0.2rem;   width: 0.58rem; height: 0.5rem;  border-right: 1px solid #f1f1f1; background: url("../image/return_icon.png") no-repeat center center;}
+.ck_header_nav { float: left; width: 5.8rem;  overflow: hidden; height: 0.9rem; }
+.ck_header_nav li { float: left; padding-top: 0.1rem; width: 2.8rem; height: 0.8rem; cursor: pointer;}
+.bg_open { background: url("../image/open_1.png") no-repeat center bottom;}
+.ck_header_nav li >a { font-size: 0.24rem; color: #767e89;}
+.ck_header_nav .li_time  { padding-top: 0.05rem; font-size: 0.16rem; text-align: center; }
+.map .map_image { width: 6.4rem; height: 9.58rem;}
+/*
+
+@media (min-width: 480px) and (max-width: 640px) {
+    .map .map_image { width: 6.4rem; height: 7.82rem;}
+}
+
+@media(max-width: 320px){
+    .map .map_image { width: 6.4rem; height: 4.85rem;}
+}
+*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

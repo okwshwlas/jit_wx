@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script type='text/javascript'>
+// 选择县级单位，弹出提示层
+function tip_layer_show(){
+$('#tip_layer').show();
+$('.mask_layer').show();
+}
+// 选择县级单位，弹出提示层
+function tip_layer_hide(){
+$('#tip_layer').hide()
+$('.mask_layer').hide();
+}
+</script>
+<!-- 消息提示 -->
+<div class="succe_box" style="width: 85%; margin: 0 auto;" id="tip_layer">
+    <h2 class="succe_tit">消息提示</h2>
+    <ul class="succe_main">
+        <li  style="min-height: 100px; text-align: center; ">
+            <p style="padding-left: 0; padding: 10px 0; line-height: 35px; width: 90%;">国家公务人员，外地区人员只能在市本级进行办理</p>
+        </li>
+    </ul>
+    <div style="width:60%; margin:0px auto; padding:15px 0; text-align: center;"><a href="javascript:tip_layer_hide(0);" class="btn_confirm" style="background-color:#d5d5d5;">我知道了</a></div>
+</div>
+<!-- end —>
+
+</body>
+</html>

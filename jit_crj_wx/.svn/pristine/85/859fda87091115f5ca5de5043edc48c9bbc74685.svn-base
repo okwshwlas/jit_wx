@@ -1,0 +1,41 @@
+<!doctype html>
+<html >
+<head>
+<meta charset="gb2312">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"/>
+<title>登录</title>
+<link href="../style/default.css" rel="stylesheet" type="text/css" />
+  <link rel="stylesheet" type="text/css" href="../style/index3.css">
+ <!-- Modernizr -->
+</head>
+<body >
+
+<div class="bj">
+<!-- logo -->
+<div class="logo1box" ><img style="margin-top:10px;" src="../image/images/logo01.png"></div>
+<div class="logo2box"><img src="../image/images/logo02.png"></div>
+<!--身份证号-->
+<div class="yonghuming" >
+ <input type="text"  value="" placeholder="身份证号" class="shurukuang" >
+</div>
+<!--手机号-->
+<div class="shoujihao">
+ <input type="text"  value="" placeholder="手机号" class="shurukuang">
+</div>
+<!--验证码-->
+<div style="width:92%;height:50px;">
+            <div class="yanzhengbox" style="float:left">
+               <input  class="yanzheng" placeholder="验证码">
+            </div>
+            <div style="float:left; width:30%; margin-top:14px;">
+            <input class="huoqu" type="button" value="获取">
+            </div>
+</div>
+ <!--登录-->
+ <div class="loginbox"  >
+  <a href=" from.html"> <input type="button" value="登录" class="login" ></a>
+ </div>
+
+ </div>
+</body>
+</html>

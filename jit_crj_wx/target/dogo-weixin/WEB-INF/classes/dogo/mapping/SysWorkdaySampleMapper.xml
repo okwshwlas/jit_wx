@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="dogo.dao.SysWorkdaySampleMapper" >
+  <resultMap id="BaseResultMap" type="dogo.model.SysWorkdaySample" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="YEAR" property="year" jdbcType="VARCHAR" />
+    <result column="QUARTER" property="quarter" jdbcType="VARCHAR" />
+    <result column="MONTH" property="month" jdbcType="VARCHAR" />
+    <result column="WEEK" property="week" jdbcType="VARCHAR" />
+    <result column="DAY" property="day" jdbcType="VARCHAR" />
+    <result column="ISWORKDAY" property="isworkday" jdbcType="VARCHAR" />
+    <result column="USEFLAG" property="useflag" jdbcType="VARCHAR" />
+    <result column="PUBLICFLAG" property="publicflag" jdbcType="VARCHAR" />
+    <result column="COMMONMADEDATE" property="commonmadedate" jdbcType="OTHER" />
+    <result column="COMMONMODIFYDATE" property="commonmodifydate" jdbcType="OTHER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, YEAR, QUARTER, MONTH, WEEK, DAY, ISWORKDAY, USEFLAG, PUBLICFLAG, COMMONMADEDATE, 
+    COMMONMODIFYDATE
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from SYS_WORKDAY_SAMPLE
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from SYS_WORKDAY_SAMPLE
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="dogo.model.SysWorkdaySample" >
+    insert into SYS_WORKDAY_SAMPLE (ID, YEAR, QUARTER, 
+      MONTH, WEEK, DAY, ISWORKDAY, 
+      USEFLAG, PUBLICFLAG, COMMONMADEDATE, 
+      COMMONMODIFYDATE)
+    values (#{id,jdbcType=VARCHAR}, #{year,jdbcType=VARCHAR}, #{quarter,jdbcType=VARCHAR}, 
+      #{month,jdbcType=VARCHAR}, #{week,jdbcType=VARCHAR}, #{day,jdbcType=VARCHAR}, #{isworkday,jdbcType=VARCHAR}, 
+      #{useflag,jdbcType=VARCHAR}, #{publicflag,jdbcType=VARCHAR}, #{commonmadedate,jdbcType=OTHER}, 
+      #{commonmodifydate,jdbcType=OTHER})
+  </insert>
+  <insert id="insertSelective" parameterType="dogo.model.SysWorkdaySample" >
+    insert into SYS_WORKDAY_SAMPLE
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="year != null" >
+        YEAR,
+      </if>
+      <if test="quarter != null" >
+        QUARTER,
+      </if>
+      <if test="month != null" >
+        MONTH,
+      </if>
+      <if test="week != null" >
+        WEEK,
+      </if>
+      <if test="day != null" >
+        DAY,
+      </if>
+      <if test="isworkday != null" >
+        ISWORKDAY,
+      </if>
+      <if test="useflag != null" >
+        USEFLAG,
+      </if>
+      <if test="publicflag != null" >
+        PUBLICFLAG,
+      </if>
+      <if test="commonmadedate != null" >
+        COMMONMADEDATE,
+      </if>
+      <if test="commonmodifydate != null" >
+        COMMONMODIFYDATE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="year != null" >
+        #{year,jdbcType=VARCHAR},
+      </if>
+      <if test="quarter != null" >
+        #{quarter,jdbcType=VARCHAR},
+      </if>
+      <if test="month != null" >
+        #{month,jdbcType=VARCHAR},
+      </if>
+      <if test="week != null" >
+        #{week,jdbcType=VARCHAR},
+      </if>
+      <if test="day != null" >
+        #{day,jdbcType=VARCHAR},
+      </if>
+      <if test="isworkday != null" >
+        #{isworkday,jdbcType=VARCHAR},
+      </if>
+      <if test="useflag != null" >
+        #{useflag,jdbcType=VARCHAR},
+      </if>
+      <if test="publicflag != null" >
+        #{publicflag,jdbcType=VARCHAR},
+      </if>
+      <if test="commonmadedate != null" >
+        #{commonmadedate,jdbcType=OTHER},
+      </if>
+      <if test="commonmodifydate != null" >
+        #{commonmodifydate,jdbcType=OTHER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="dogo.model.SysWorkdaySample" >
+    update SYS_WORKDAY_SAMPLE
+    <set >
+      <if test="year != null" >
+        YEAR = #{year,jdbcType=VARCHAR},
+      </if>
+      <if test="quarter != null" >
+        QUARTER = #{quarter,jdbcType=VARCHAR},
+      </if>
+      <if test="month != null" >
+        MONTH = #{month,jdbcType=VARCHAR},
+      </if>
+      <if test="week != null" >
+        WEEK = #{week,jdbcType=VARCHAR},
+      </if>
+      <if test="day != null" >
+        DAY = #{day,jdbcType=VARCHAR},
+      </if>
+      <if test="isworkday != null" >
+        ISWORKDAY = #{isworkday,jdbcType=VARCHAR},
+      </if>
+      <if test="useflag != null" >
+        USEFLAG = #{useflag,jdbcType=VARCHAR},
+      </if>
+      <if test="publicflag != null" >
+        PUBLICFLAG = #{publicflag,jdbcType=VARCHAR},
+      </if>
+      <if test="commonmadedate != null" >
+        COMMONMADEDATE = #{commonmadedate,jdbcType=OTHER},
+      </if>
+      <if test="commonmodifydate != null" >
+        COMMONMODIFYDATE = #{commonmodifydate,jdbcType=OTHER},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="dogo.model.SysWorkdaySample" >
+    update SYS_WORKDAY_SAMPLE
+    set YEAR = #{year,jdbcType=VARCHAR},
+      QUARTER = #{quarter,jdbcType=VARCHAR},
+      MONTH = #{month,jdbcType=VARCHAR},
+      WEEK = #{week,jdbcType=VARCHAR},
+      DAY = #{day,jdbcType=VARCHAR},
+      ISWORKDAY = #{isworkday,jdbcType=VARCHAR},
+      USEFLAG = #{useflag,jdbcType=VARCHAR},
+      PUBLICFLAG = #{publicflag,jdbcType=VARCHAR},
+      COMMONMADEDATE = #{commonmadedate,jdbcType=OTHER},
+      COMMONMODIFYDATE = #{commonmodifydate,jdbcType=OTHER}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+    <!-- 预约日期 -->
+  <select id="findYuYueByRiqi" resultMap="BaseResultMap">
+  SELECT * FROM (SELECT
+			ID,
+			YEAR || '-' || MONTH || '-' || DAY AS YEAR,
+			week
+		FROM sys_workday_sample WHERE isworkday = '0' AND useflag = '1' AND publicflag = '1' AND YEAR || '-' || MONTH || '-' || DAY >= '2016-05-18' ORDER BY YEAR ASC,MONTH ASC,DAY ASC)
+
+  </select>
+  
+</mapper>

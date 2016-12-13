@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="dogo.dao.SysOrganizationMapper" >
+  <resultMap id="BaseResultMap" type="dogo.model.SysOrganization" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="JGDW_NAME" property="jgdwName" jdbcType="VARCHAR" />
+    <result column="XZQH_ID" property="xzqhId" jdbcType="VARCHAR" />
+    <result column="JGDW_LATITUDE" property="jgdwLatitude" jdbcType="VARCHAR" />
+    <result column="JGDW_LONGITUDE" property="jgdwLongitude" jdbcType="VARCHAR" />
+    <result column="JGDW_TXM" property="jgdwTxm" jdbcType="VARCHAR" />
+    <result column="JGDW_BZ" property="jgdwBz" jdbcType="OTHER" />
+    <result column="JGDW_BZ1" property="jgdwBz1" jdbcType="VARCHAR" />
+    <result column="JGDW_ORDER" property="jgdwOrder" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, JGDW_NAME, XZQH_ID, JGDW_LATITUDE, JGDW_LONGITUDE, JGDW_TXM, JGDW_BZ, JGDW_BZ1, 
+    JGDW_ORDER
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from SYS_ORGANIZATION
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from SYS_ORGANIZATION
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="dogo.model.SysOrganization" >
+    insert into SYS_ORGANIZATION (ID, JGDW_NAME, XZQH_ID, 
+      JGDW_LATITUDE, JGDW_LONGITUDE, JGDW_TXM, 
+      JGDW_BZ, JGDW_BZ1, JGDW_ORDER
+      )
+    values (#{id,jdbcType=VARCHAR}, #{jgdwName,jdbcType=VARCHAR}, #{xzqhId,jdbcType=VARCHAR}, 
+      #{jgdwLatitude,jdbcType=VARCHAR}, #{jgdwLongitude,jdbcType=VARCHAR}, #{jgdwTxm,jdbcType=VARCHAR}, 
+      #{jgdwBz,jdbcType=OTHER}, #{jgdwBz1,jdbcType=VARCHAR}, #{jgdwOrder,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="dogo.model.SysOrganization" >
+    insert into SYS_ORGANIZATION
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="jgdwName != null" >
+        JGDW_NAME,
+      </if>
+      <if test="xzqhId != null" >
+        XZQH_ID,
+      </if>
+      <if test="jgdwLatitude != null" >
+        JGDW_LATITUDE,
+      </if>
+      <if test="jgdwLongitude != null" >
+        JGDW_LONGITUDE,
+      </if>
+      <if test="jgdwTxm != null" >
+        JGDW_TXM,
+      </if>
+      <if test="jgdwBz != null" >
+        JGDW_BZ,
+      </if>
+      <if test="jgdwBz1 != null" >
+        JGDW_BZ1,
+      </if>
+      <if test="jgdwOrder != null" >
+        JGDW_ORDER,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="jgdwName != null" >
+        #{jgdwName,jdbcType=VARCHAR},
+      </if>
+      <if test="xzqhId != null" >
+        #{xzqhId,jdbcType=VARCHAR},
+      </if>
+      <if test="jgdwLatitude != null" >
+        #{jgdwLatitude,jdbcType=VARCHAR},
+      </if>
+      <if test="jgdwLongitude != null" >
+        #{jgdwLongitude,jdbcType=VARCHAR},
+      </if>
+      <if test="jgdwTxm != null" >
+        #{jgdwTxm,jdbcType=VARCHAR},
+      </if>
+      <if test="jgdwBz != null" >
+        #{jgdwBz,jdbcType=OTHER},
+      </if>
+      <if test="jgdwBz1 != null" >
+        #{jgdwBz1,jdbcType=VARCHAR},
+      </if>
+      <if test="jgdwOrder != null" >
+        #{jgdwOrder,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="dogo.model.SysOrganization" >
+    update SYS_ORGANIZATION
+    <set >
+      <if test="jgdwName != null" >
+        JGDW_NAME = #{jgdwName,jdbcType=VARCHAR},
+      </if>
+      <if test="xzqhId != null" >
+        XZQH_ID = #{xzqhId,jdbcType=VARCHAR},
+      </if>
+      <if test="jgdwLatitude != null" >
+        JGDW_LATITUDE = #{jgdwLatitude,jdbcType=VARCHAR},
+      </if>
+      <if test="jgdwLongitude != null" >
+        JGDW_LONGITUDE = #{jgdwLongitude,jdbcType=VARCHAR},
+      </if>
+      <if test="jgdwTxm != null" >
+        JGDW_TXM = #{jgdwTxm,jdbcType=VARCHAR},
+      </if>
+      <if test="jgdwBz != null" >
+        JGDW_BZ = #{jgdwBz,jdbcType=OTHER},
+      </if>
+      <if test="jgdwBz1 != null" >
+        JGDW_BZ1 = #{jgdwBz1,jdbcType=VARCHAR},
+      </if>
+      <if test="jgdwOrder != null" >
+        JGDW_ORDER = #{jgdwOrder,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="dogo.model.SysOrganization" >
+    update SYS_ORGANIZATION
+    set JGDW_NAME = #{jgdwName,jdbcType=VARCHAR},
+      XZQH_ID = #{xzqhId,jdbcType=VARCHAR},
+      JGDW_LATITUDE = #{jgdwLatitude,jdbcType=VARCHAR},
+      JGDW_LONGITUDE = #{jgdwLongitude,jdbcType=VARCHAR},
+      JGDW_TXM = #{jgdwTxm,jdbcType=VARCHAR},
+      JGDW_BZ = #{jgdwBz,jdbcType=OTHER},
+      JGDW_BZ1 = #{jgdwBz1,jdbcType=VARCHAR},
+      JGDW_ORDER = #{jgdwOrder,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+       <!-- 根据身份证和电话查询 -->
+  <select id="findYuYueByRJ" resultMap="BaseResultMap" parameterType="java.util.Map">
+   select so.id as jgdwId, so.jgdw_name as jgdwName, so.jgdw_latitude as latitude, so.jgdw_longitude as longitude,  
+   wt.id as wtid, wt.start_time as startTime, wt.end_time as endTime, wt.yyzl, wt.yysl, wt.sysl, wt.riqi, wt.week  
+   from sys_organization so  inner join sys_worktime wt on wt.jgwd_id = so.id  and wt.riqi = #{riqi}
+     where so.xzqh_id in (${slx}) order by so.jgdw_order, so.id asc, wt.start_time asc 
+  </select>
+</mapper>

@@ -1,0 +1,46 @@
+﻿.selfservice-tab {
+	margin:0;
+}
+.selfservice-tab .tab-caption {
+	margin:0;
+	height:23px;
+	background:url(../images/tab/selfservice-tab-bg.gif) 0 bottom repeat-x;
+}
+.selfservice-tab .tab-caption ul {
+	margin:0;
+	height:23px;
+	margin-left: 8px;
+}
+.selfservice-tab .tab-caption ul li {
+	height:23px;
+	float:left;
+}
+.selfservice-tab .tab-caption ul li a {
+	float:left;
+	height:23px;
+	line-height:23px;
+	display:block;
+	padding:0 15px;
+	color:#666;
+}
+.selfservice-tab .tab-caption ul li.on {
+	background:url(../images/tab/tab-caption-bg.gif) left 0 no-repeat;
+}
+.selfservice-tab .tab-caption ul li.on a {
+	color:#003399;
+	font-weight: bold;
+	background:url(../images/tab/tab-caption-bg.gif) right -23px no-repeat;
+}
+.selfservice-tab .tab-content {
+	margin:0;
+	border:1px solid #B8CBE4;
+	border-top:none;
+	background:url(../images/tab/selfservice-tab-bg-2.gif) left bottom repeat-x;
+}
+.selfservice-tab .tab-content .box {
+	display:none;
+}
+.selfservice-tab .tab-content div.on {
+	display:block;
+}
+

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="dogo.dao.CrjWxGrxxMapper" >
+  <resultMap id="BaseResultMap" type="dogo.model.CrjWxGrxx" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="OPENID" property="openid" jdbcType="VARCHAR" />
+    <result column="ZJXXFLAG" property="zjxxflag" jdbcType="VARCHAR" />
+    <result column="BSJDFLAG" property="bsjdflag" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, OPENID, ZJXXFLAG, BSJDFLAG
+  </sql>
+  <select id="selectByPrimaryKey"  resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from CRJ_WX_GRXX
+    where OPENID = #{openid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from CRJ_WX_GRXX
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="dogo.model.CrjWxGrxx" >
+    insert into CRJ_WX_GRXX (ID, OPENID, ZJXXFLAG, 
+      BSJDFLAG)
+    values (#{id,jdbcType=VARCHAR}, #{openid,jdbcType=VARCHAR}, #{zjxxflag,jdbcType=VARCHAR}, 
+      #{bsjdflag,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="dogo.model.CrjWxGrxx" >
+    insert into CRJ_WX_GRXX
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="openid != null" >
+        OPENID,
+      </if>
+      <if test="zjxxflag != null" >
+        ZJXXFLAG,
+      </if>
+      <if test="bsjdflag != null" >
+        BSJDFLAG,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="openid != null" >
+        #{openid,jdbcType=VARCHAR},
+      </if>
+      <if test="zjxxflag != null" >
+        #{zjxxflag,jdbcType=VARCHAR},
+      </if>
+      <if test="bsjdflag != null" >
+        #{bsjdflag,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="dogo.model.CrjWxGrxx" >
+    update CRJ_WX_GRXX
+    <set >
+      <if test="zjxxflag != null" >
+        ZJXXFLAG = #{zjxxflag,jdbcType=VARCHAR},
+      </if>
+      <if test="bsjdflag != null" >
+        BSJDFLAG = #{bsjdflag,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where OPENID = #{openid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="dogo.model.CrjWxGrxx" >
+    update CRJ_WX_GRXX
+    set
+      ZJXXFLAG = #{zjxxflag,jdbcType=VARCHAR},
+      BSJDFLAG = #{bsjdflag,jdbcType=VARCHAR}
+    where OPENID = #{openid,jdbcType=VARCHAR}
+  </update>
+  <update id="update" parameterType="dogo.model.CrjWxGrxx" >
+    update CRJ_WX_GRXX
+    set
+      ZJXXFLAG = #{zjxxflag,jdbcType=VARCHAR},
+      BSJDFLAG = #{bsjdflag,jdbcType=VARCHAR}
+    where OPENID = #{openid,jdbcType=VARCHAR}
+  </update>
+</mapper>

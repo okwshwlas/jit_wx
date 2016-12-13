@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="dogo.dao.KeywordsMapper" >
+  <resultMap id="BaseResultMap" type="dogo.model.Keywords" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="sign" property="sign" jdbcType="VARCHAR" />
+    <result column="context" property="context" jdbcType="VARCHAR" />
+    <result column="parentid" property="parentid" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, sign, context, parentid
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from dogo_keywords
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  
+  <!-- 查询关键字,不带分页,....显示下拉列表 -->
+  <select id="selectKeywords" resultMap="BaseResultMap" >
+    select 
+    <include refid="Base_Column_List" />
+    from dogo_keywords
+  </select>
+  
+  <select id="selectAllKeywordsCount" resultType="int"  parameterType="java.util.Map">
+    select 
+    count(*)
+    from dogo_keywords
+    where 1=1
+	    <if test="page.typeName == 'sign'">
+	      and sign like '%${page.typeValue}%'
+	    </if>
+	    <if test="page.typeName == 'context'">
+	       and context like '%${page.typeValue}%'
+	    </if>
+	    <if test="page.typeName == 'parentid'">
+	       and parentid like '%${page.typeValue}%'
+	    </if>
+  </select>
+  
+  <!-- 查询关键字,带分页 -->
+  <select id="selectAllKeywordsByPage" resultMap="BaseResultMap" parameterType="java.util.Map">
+    select * from (
+    select 
+    a.*,rownum r
+    from dogo_keywords a
+    where 1=1
+	    <if test="page.typeName == 'sign'">
+	      and sign like '%${page.typeValue}%'
+	    </if>
+	    <if test="page.typeName == 'context'">
+	       and context like '%${page.typeValue}%'
+	    </if>
+	    <if test="page.typeName == 'parentid'">
+	       and parentid like '%${page.typeValue}%'
+	    </if>
+	     <![CDATA[ 
+	   and rownum <=#{page.end}
+	    ]]>
+    )
+    where 
+    <![CDATA[ 
+    #{page.begin}<=r
+    ]]>
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from dogo_keywords
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="dogo.model.Keywords" >
+    insert into dogo_keywords (id, sign, context, 
+      parentid)
+    values (#{id,jdbcType=VARCHAR}, #{sign,jdbcType=VARCHAR}, #{context,jdbcType=VARCHAR}, 
+      #{parentid,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="dogo.model.Keywords" >
+    insert into dogo_keywords
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="sign != null" >
+        sign,
+      </if>
+      <if test="context != null" >
+        context,
+      </if>
+      <if test="parentid != null" >
+        parentid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="sign != null" >
+        #{sign,jdbcType=VARCHAR},
+      </if>
+      <if test="context != null" >
+        #{context,jdbcType=VARCHAR},
+      </if>
+      <if test="parentid != null" >
+        #{parentid,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="dogo.model.Keywords" >
+    update dogo_keywords
+    <set >
+      <if test="sign != null" >
+        sign = #{sign,jdbcType=VARCHAR},
+      </if>
+      <if test="context != null" >
+        context = #{context,jdbcType=VARCHAR},
+      </if>
+      <if test="parentid != null" >
+        parentid = #{parentid,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="dogo.model.Keywords" >
+    update dogo_keywords
+    set sign = #{sign,jdbcType=VARCHAR},
+      context = #{context,jdbcType=VARCHAR},
+      parentid = #{parentid,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

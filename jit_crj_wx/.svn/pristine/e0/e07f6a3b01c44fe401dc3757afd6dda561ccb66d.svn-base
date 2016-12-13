@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="dogo.dao.SysDictionaryMapper" >
+  <resultMap id="BaseResultMap" type="dogo.model.SysDictionary" >
+    <result column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="PID" property="pid" jdbcType="VARCHAR" />
+    <result column="DIC_NAME" property="dicName" jdbcType="VARCHAR" />
+    <result column="DIC_CODE" property="dicCode" jdbcType="VARCHAR" />
+    <result column="DIC_ORDER" property="dicOrder" jdbcType="DECIMAL" />
+    <result column="DIC_HIERARCHY" property="dicHierarchy" jdbcType="DECIMAL" />
+    <result column="DIC_TYPE" property="dicType" jdbcType="VARCHAR" />
+    <result column="DIC_REMARK" property="dicRemark" jdbcType="OTHER" />
+  </resultMap>
+  <insert id="insert" parameterType="dogo.model.SysDictionary" >
+    insert into SYS_DICTIONARY (ID, PID, DIC_NAME, 
+      DIC_CODE, DIC_ORDER, DIC_HIERARCHY, 
+      DIC_TYPE, DIC_REMARK)
+    values (#{id,jdbcType=VARCHAR}, #{pid,jdbcType=VARCHAR}, #{dicName,jdbcType=VARCHAR}, 
+      #{dicCode,jdbcType=VARCHAR}, #{dicOrder,jdbcType=DECIMAL}, #{dicHierarchy,jdbcType=DECIMAL}, 
+      #{dicType,jdbcType=VARCHAR}, #{dicRemark,jdbcType=OTHER})
+  </insert>
+  <insert id="insertSelective" parameterType="dogo.model.SysDictionary" >
+    insert into SYS_DICTIONARY
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="pid != null" >
+        PID,
+      </if>
+      <if test="dicName != null" >
+        DIC_NAME,
+      </if>
+      <if test="dicCode != null" >
+        DIC_CODE,
+      </if>
+      <if test="dicOrder != null" >
+        DIC_ORDER,
+      </if>
+      <if test="dicHierarchy != null" >
+        DIC_HIERARCHY,
+      </if>
+      <if test="dicType != null" >
+        DIC_TYPE,
+      </if>
+      <if test="dicRemark != null" >
+        DIC_REMARK,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="pid != null" >
+        #{pid,jdbcType=VARCHAR},
+      </if>
+      <if test="dicName != null" >
+        #{dicName,jdbcType=VARCHAR},
+      </if>
+      <if test="dicCode != null" >
+        #{dicCode,jdbcType=VARCHAR},
+      </if>
+      <if test="dicOrder != null" >
+        #{dicOrder,jdbcType=DECIMAL},
+      </if>
+      <if test="dicHierarchy != null" >
+        #{dicHierarchy,jdbcType=DECIMAL},
+      </if>
+      <if test="dicType != null" >
+        #{dicType,jdbcType=VARCHAR},
+      </if>
+      <if test="dicRemark != null" >
+        #{dicRemark,jdbcType=OTHER},
+      </if>
+    </trim>
+  </insert>
+   <!-- 根据身份证和电话查询 -->
+  <select id="listSysDictionaryByType" resultMap="BaseResultMap">
+  select * from sys_dictionary t where 1 = 1  and t.DIC_TYPE = #{type}
+    and t.pid = #{pid} 
+    <if test="count != 0" >
+        and t.DIC_NAME LIKE '%'||'本级'||'%'
+      </if>
+       order by dic_order
+  </select>
+   <!-- 根据身份证和电话查询 -->
+  <select id="listSysDictionaryByTypeNew" resultMap="BaseResultMap">
+ 	   select * from sys_dictionary t where 1 = 1  and t.DIC_TYPE = #{type} and t.pid = #{pid}  order by dic_order
+  </select>
+</mapper>

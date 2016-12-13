@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>业务编号</title>
+    <link rel="stylesheet" type="text/css" href="../css/default.css" />
+    <link rel="stylesheet" type="text/css" href="../css/commont.css" />
+    <style>
+        html {height: 100%; width: 100%; font-family: 'Heiti SC', 'Microsoft YaHei'; font-size: 100px; outline: 0; -webkit-text-size-adjust:none; background-color: #efefef;}
+        body { height: 100%; -webkit-user-select: none; position: relative;}
+        div,p,span,ul,li,dl,td,dd,input,select,button,a{ font-size: 0.24rem;}
+    </style>
+</head>
+<body>
+    <div>
+        <img src="../image/6_img.jpg" alt="" width="100%" onclick="window.location.href='6_3.html'"/>
+    </div>
+</body>
+</html>

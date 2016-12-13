@@ -1,0 +1,7 @@
+
+#login_wrap { position: relative; margin: 40% auto 0; padding:15% 5%; width: 85%; background-color: rgba(255,255,255,0.8); border-radius: 5px;}
+.login_title { padding: 5% 0 10% 0; text-align: center; font-size: 0.9rem; color: #5e5e5d;}
+.login_input { width: 94%!important;; background-color: #fff!important; border-radius: 5px!important;; padding: 3%!important; }
+.login_margin { margin-bottom: 7%;}
+.login_btn { display: block; width: 100%;padding: 3% 0; background-color: #359df6; border-radius: 5px; color: #fff; text-align: center;}
+.login_logo { position: absolute; top: -40px; left: 50%; margin-left: -40px;}

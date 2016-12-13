@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"/>
+    <title>绿色加急通道</title>
+    <link rel="stylesheet" type="text/css" href="../css/default.css" />
+    <link rel="stylesheet" type="text/css" href="../css/aui.2.0.css" />
+    <link rel="stylesheet" type="text/css" href="../css/commont.css" />
+    <link rel="stylesheet" type="text/css" href="../css/LArea.css" />
+    <script type="text/javascript" src="../script/jquery-1.8.2.js" ></script>
+
+    <style>
+        html { background-color: #f5f5f5}
+        .aui-font-size-18 { font-size: 0.7rem!important;}
+        .margin_top { margin-top: 0.8rem; padding-left: 1rem!important; padding-right: 0!important;}
+        .aui-content { width: 94%; margin: 0 auto; background-color: #fff;}
+        .aui-list { border-radius: 10px;}
+        .main_box { width: 90%; margin: 0.7rem auto;}
+        .aui-list .aui-list-item::after { background-color:#dddddd}
+    </style>
+</head>
+<body>
+<div class="main_box">
+    <h4>当前位置：长春
+        <span style="float: right;"><img src="../image/xingxing.png" alt=""  width="20" height="20"/></span>
+    </h4>
+    <div class="aui-list-item-inner">
+        <div class="content-block">
+            <input id="demo2" type="text" readonly placeholder="省，市，县(区)" />
+            <input id="value2" type="hidden"  />
+        </div>
+    </div>
+<div class="aui-content" style="width: 100%;">
+    <ul class="aui-list aui-media-list">
+        <li class="aui-list-item">
+            <div class="aui-media-list-item-inner">
+                <div class="aui-list-item-inner">
+                    <div class="aui-list-item-text">
+                        <div class="aui-list-item-title aui-font-size-18">长春市公安局出入境管理局</div>
+                    </div>
+                    <div class="aui-info aui-padded-b-0">
+                        <div class="aui-info-item aui-font-size-12">
+                            <img src="../image/icon01.png" style="width:1rem" class="aui-img-round" />
+                            <span class="aui-margin-l-5">距离：7114.80米</span>
+                            <span class="aui-margin-l-5">约10分钟</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="aui-list-item-media margin_top"  onclick="window.location.href='4.html'">
+                    <span class="aui-label aui-label-info aui-label-outlined aui-margin-l-5">&nbsp;预 约&nbsp;</span>
+                </div>
+            </div>
+        </li>
+        <li class="aui-list-item">
+            <div class="aui-media-list-item-inner">
+                <div class="aui-list-item-inner">
+                    <div class="aui-list-item-text">
+                        <div class="aui-list-item-title aui-font-size-18">长春市出入境管理局南关区分局</div>
+                    </div>
+                    <div class="aui-info aui-padded-b-0">
+                        <div class="aui-info-item aui-font-size-12">
+                            <img src="../image/icon01.png" style="width:1rem" class="aui-img-round" />
+                            <span class="aui-margin-l-5">距离：6965.85米</span>
+                            <span class="aui-margin-l-5">约10分钟</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="aui-list-item-media margin_top">
+                    <span class="aui-label aui-label-info aui-label-outlined aui-margin-l-5">&nbsp;预 约&nbsp;</span>
+                </div>
+            </div>
+        </li>
+        <li class="aui-list-item">
+            <div class="aui-media-list-item-inner">
+                <div class="aui-list-item-inner">
+                    <div class="aui-list-item-text">
+                        <div class="aui-list-item-title aui-font-size-18">长春市出入境管理局宽城区分局</div>
+                    </div>
+                    <div class="aui-info aui-padded-b-0">
+                        <div class="aui-info-item aui-font-size-12">
+                            <img src="../image/icon01.png" style="width:1rem" class="aui-img-round" />
+                            <span class="aui-margin-l-5">距离：13336.93米</span>
+                            <span class="aui-margin-l-5">约10分钟</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="aui-list-item-media margin_top">
+                    <span class="aui-label aui-label-info aui-label-outlined aui-margin-l-5">&nbsp;预 约&nbsp;</span>
+                </div>
+            </div>
+        </li>
+        <li class="aui-list-item">
+            <div class="aui-media-list-item-inner">
+                <div class="aui-list-item-inner">
+                    <div class="aui-list-item-text">
+                        <div class="aui-list-item-title aui-font-size-18">长春市出入境管理局朝阳区分局</div>
+                    </div>
+                    <div class="aui-info aui-padded-b-0">
+                        <div class="aui-info-item aui-font-size-12">
+                            <img src="../image/icon01.png" style="width:1rem" class="aui-img-round" />
+                            <span class="aui-margin-l-5">距离：13336.93米</span>
+                            <span class="aui-margin-l-5">约10分钟</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="aui-list-item-media margin_top">
+                    <span class="aui-label aui-label-info aui-label-outlined aui-margin-l-5">&nbsp;预 约&nbsp;</span>
+                </div>
+            </div>
+        </li>
+    </ul>
+</div>
+</div>
+</body>
+<script src="../script/LAreaData1.js"></script>
+<script src="../script/LAreaData2.js"></script>
+<script src="../script/LArea.js"></script>
+<script>
+    var area1 = new LArea();
+    //     area1.init({
+    //         'trigger': '#demo1', //触发选择控件的文本框，同时选择完毕后name属性输出到该位置
+    //         'valueTo': '#value1', //选择完毕后id属性输出到该位置
+    //         'keys': {
+    //             id: 'id',
+    //             name: 'name'
+    //         }, //绑定数据源相关字段 id对应valueTo的value属性输出 name对应trigger的value属性输出
+    //         'type': 1, //数据源类型
+    //         'data': LAreaData //数据源
+    //     });
+    //     area1.value=[1,13,3];//控制初始位置，注意：该方法并不会影响到input的value
+    var area2 = new LArea();
+    area2.init({
+        'trigger': '#demo2',
+        'valueTo': '#value2',
+        'keys': {
+            id: 'value',
+            name: 'text'
+        },
+        'type': 2,
+        'data': [provs_data, citys_data, dists_data]
+    });
+</script>
+</html>

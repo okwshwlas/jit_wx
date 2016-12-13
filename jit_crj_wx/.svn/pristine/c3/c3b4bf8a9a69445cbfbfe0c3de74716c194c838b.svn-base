@@ -1,0 +1,10 @@
+h1 {
+ /* background: url(../i/bg_title.gif) left center no-repeat;*/
+}
+#top-flash-wrap{
+  display: none;
+}
+
+.p-cont-banner  .p-large-banner .pmask{
+  background: url(../i/banner_mask.gif) left center no-repeat;
+}

@@ -1,0 +1,46 @@
+﻿.accordion{
+	height:100%;
+
+	background:#F2F5F8;
+	overflow:hidden;
+	border:1px solid  #73B2DE;
+	position:relative;
+}
+.accordion .caption {
+	height: 25px;
+	line-height: 25px;
+	background: url(../images/accordion/caption.gif) repeat-x;
+	position:relative;
+}
+
+.accordion .caption a {
+	height: 100%;
+	display: block;
+	font-weight: normal;
+	text-indent: 30px;
+	color: #034289;
+	background: url('../images/accordion/pill.png') no-repeat scroll 5px center;
+	text-indent:30px;
+}
+.accordion .caption a:hover {
+	color: #034289;
+	text-decoration: none;
+}
+.accordion h3.caption.on{
+	background:white url('../images/accordion/first.gif')  repeat-x;
+	height:25px;
+	
+}
+
+.accordion .content {
+	display: none;
+	overflow: hidden;
+	width:100%;
+}
+.accordion h3.on a {
+	color:#04498C;
+	font-weight:bold;
+}
+.accordion div.on {
+	display: block;
+}

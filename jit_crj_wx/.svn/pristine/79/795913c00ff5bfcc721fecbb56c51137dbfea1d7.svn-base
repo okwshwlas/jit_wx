@@ -1,0 +1,75 @@
+package dogo.service;
+
+import java.util.List;
+import java.util.Map;
+
+import org.apache.ibatis.annotations.Param;
+
+import dogo.model.CrjYyxx;
+import dogo.model.SysWorktime;
+import dogo.model.CrjRyjbxx;
+import dogo.model.SysDictionary;
+import dogo.model.SysOrganization;
+import dogo.model.Wx_Pc;
+import dogo.model.crjTsxx;
+
+public interface CrjRyjbxxServiceI {
+
+	
+	/**
+	 * 保存
+	 * @param grregist
+	 */
+	void save(CrjRyjbxx crjRyjbxx);
+	/**
+	 *  提示信息查询
+	 * @return
+	 */
+	crjTsxx selectByPrimaryKey(String id);
+	/**
+	 *  根据身份证和电话查询
+	 * @return
+	 */
+	CrjRyjbxx selectByCardAndPhone(String sfzjhm, String lxdh);
+	
+	List<SysDictionary> listSysDictionaryByType(String sfzjhm, String lxdh, String count);
+	
+	List<SysDictionary> listSysDictionaryByTypeNew(String sfzjhm, String lxdh);
+	
+	List findYuYueByRiqi(String sfzjhm, String lxdh);
+	
+	List<SysOrganization> findtimYuYueByRJ( Map<String,Object> param); 
+	
+	List<SysOrganization> selectByXzqh( Map<String,Object> param); 
+	
+	/**
+	 * 根据ID查询工作日时间配置信息
+	 * 
+	 * @return SysWorktime
+	*/
+	SysWorktime selectSysWorktimeById(String id);
+	
+	int updateByPrimaryKeySelective(SysWorktime record);
+	
+	void addYuyue(CrjYyxx crjYyxx);
+	
+	int updateByPrimaryKeySelective(CrjYyxx record);
+	
+	List<SysWorktime> WX_findJgdwById(String riqi,String jgid);
+	/**
+	 *  根据微信openid查询预约详情
+	 * @return
+	 */
+	 List<CrjYyxx> listWx_yuyuexiangxi(String Openid);
+	 
+	 List<Wx_Pc> listWx_yuyue(String Openid,String date);
+	 
+	 List<Wx_Pc> listWx_yuyueId(String id);
+	 
+	 int insertSelective(Wx_Pc pc);
+	 /**
+		 * 生成预约码
+		 */
+	String getYuyueCode(String riqi);
+	
+}

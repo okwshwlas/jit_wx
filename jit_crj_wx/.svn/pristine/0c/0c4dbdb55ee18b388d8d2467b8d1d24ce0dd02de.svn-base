@@ -1,0 +1,63 @@
+﻿html, body {
+	font-family: Verdana ,宋体;
+}
+body {
+	position: relative;
+	margin:0;
+	font-size:12px;
+background-image:url(../images/welcome/welcome-panel.jpg) ;
+background-repeat:repeat-x;
+	background-position:left bottom;
+}
+.welcome{
+	margin:4px;
+	border:1px silver solid;
+	background-position:left bottom;
+	background-repeat:repeat-x;
+}
+.welcome .pic{
+	background:  url('../images/welcome/welcome_bg.jpg') repeat-x  ;
+	height:206px;
+	
+}
+.welcome .caption{
+	height:26px;	
+	background:  url('../images/welcome/welcome-caption.jpg') repeat-x  ;
+	margin :10px 1px 0;
+	border-bottom:1px silver solid;
+	
+	
+
+	
+}
+.welcome .caption .text{
+	height:26px;
+	line-height:26px;
+	display:block;
+	width:167px;
+	text-indent:35px;
+	color:#003399;
+	font-weight:bold;
+	background:white url('../images/welcome/welcome-caption-text.jpg') no-repeat; 
+}
+dl{
+	margin:20px 40px 100px;
+	padding:0;
+}
+dl dt{
+	font-weight:bold;
+	color:#FFB23E;
+	margin-bottom:10px;
+
+}
+dl dd{
+	line-height:22px;
+	margin-left:10px;
+	background-image: url('../images/welcome/welcome-dd.gif') ;
+	background-repeat:no-repeat;
+	background-position:left center;
+	padding-left:15px;
+}
+dl dd a{
+	color:#000;
+}

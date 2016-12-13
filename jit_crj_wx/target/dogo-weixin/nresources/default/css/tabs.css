@@ -1,0 +1,114 @@
+﻿
+.tabs {
+	height: 100%;
+	overflow: hidden;
+	position: relative;
+
+	
+}
+.tabs .tabs-nav {
+	height: 25px;
+	background: url('../images/tabs/tabs-nav.gif') repeat-x;
+	border: 1px #257ABB solid;
+
+	
+}
+.tabs .move {
+	width: 14px;
+	height: 23px;
+	position: absolute;
+	top: 1px;
+	display: none;
+	z-index: 1;
+	cursor: pointer;
+}
+.tabs .previous {
+	left: 0;
+	border-left: 1px #2565BC solid;
+	background: url('../images/tabs/workPanel_tabs_previous.jpg') no-repeat scroll center center;
+	border-bottom: 1px solid #2565BC;
+	border-right: 1px solid #2565BC;
+}
+.tabs .next {
+	right: 0;
+	border-right: 1px #2565BC solid;
+	background: url('../images/tabs/workPanel_tabs_next.jpg') no-repeat scroll center center;
+	border-bottom: 1px solid #2565BC;
+	border-left: 1px solid #2565BC;
+}
+.tabs .tabs-nav ul {
+	width: 1000%;
+	position: absolute;
+	left: 0;
+	height:25px;
+	border-left: 1px #2565BC solid;
+	border-bottom: 1px #2565BC solid;
+	float:left;
+	float:left;
+
+}
+.tabs .tabs-nav li {
+	height: 25px;
+	float: left;
+	line-height: 25px;
+	text-align: center;
+	cursor: default;
+	color: #004488;
+	cursor: pointer;
+	position: relative;
+	border-right: 1px #2565BC solid;
+}
+.tabs .tabs-nav .first{
+	margin-left:14px;
+	_margin-left:7px;
+	border-left: 1px #2565BC solid;
+}
+.tabs .tabs-nav .first span{
+
+}
+.tabs .tabs-nav .on {
+}
+.tabs .tabs-nav .close {
+	width: 12px;
+	height: 12px;
+	overflow: hidden;
+	background: url('../images/tabs/tabs-nav-close.gif') no-repeat scroll center center;
+	position: absolute;
+	right:3px;
+	top:3px;
+}
+.tabs .tabs-nav .close:hover{
+	background: url('../images/tabs/tabs-nav-close-hover.gif') no-repeat;
+}
+.tabs .tabs-nav span {
+	padding: 0 16px;
+	
+	display: block;
+	top:1px;
+}
+.tabs .tabs-nav .on span {
+	float: left;
+	height: 23px;
+	background: white url('../images/tabs/tabs-nav-li-on.jpg') repeat-x;
+	background:white;
+	position:relative;
+	
+	
+}
+.tabs .tabs-nav .on .close {
+	display: block;
+}
+.tabs .tabs-content {
+	border: 1px #85B3CA solid;
+	border-top: 0;
+	overflow: auto;
+}
+.tabs .tabs-content .box {
+	display: none;
+	height: 100%;
+	overflow:hidden;
+	background:white;
+}
+.tabs .tabs-content .on {
+	display: block;
+}

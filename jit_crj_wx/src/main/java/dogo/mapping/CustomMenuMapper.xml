@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="dogo.dao.CustomMenuMapper" >
+  <resultMap id="BaseResultMap" type="dogo.model.CustomMenu" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="parentid" property="parentid" jdbcType="VARCHAR" />
+    <result column="keywordorUrl" property="keywordorurl" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="defaultpath" property="defaultpath" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+    <result column="url" property="url" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="dogo.model.CustomMenu" extends="BaseResultMap" >
+    <result column="content" property="content" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, parentid, keywordorUrl, name, defaultpath, status, url
+  </sql>
+  <sql id="Blob_Column_List" >
+    content
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from dogo_custommenu
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from dogo_custommenu
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="dogo.model.CustomMenu" >
+    insert into dogo_custommenu (id, parentid, keywordorUrl, 
+      name, defaultpath, status, 
+      url, content)
+    values (#{id,jdbcType=VARCHAR}, #{parentid,jdbcType=VARCHAR}, #{keywordorurl,jdbcType=VARCHAR}, 
+      #{name,jdbcType=VARCHAR}, #{defaultpath,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, 
+      #{url,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="dogo.model.CustomMenu" >
+    insert into dogo_custommenu
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="parentid != null" >
+        parentid,
+      </if>
+      <if test="keywordorurl != null" >
+        keywordorUrl,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="defaultpath != null" >
+        defaultpath,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="url != null" >
+        url,
+      </if>
+      <if test="content != null" >
+        content,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="parentid != null" >
+        #{parentid,jdbcType=VARCHAR},
+      </if>
+      <if test="keywordorurl != null" >
+        #{keywordorurl,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="defaultpath != null" >
+        #{defaultpath,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null" >
+        #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="dogo.model.CustomMenu" >
+    update dogo_custommenu
+    <set >
+      <if test="parentid != null" >
+        parentid = #{parentid,jdbcType=VARCHAR},
+      </if>
+      <if test="keywordorurl != null" >
+        keywordorUrl = #{keywordorurl,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="defaultpath != null" >
+        defaultpath = #{defaultpath,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null" >
+        url = #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        content = #{content,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="dogo.model.CustomMenu" >
+    update dogo_custommenu
+    set parentid = #{parentid,jdbcType=VARCHAR},
+      keywordorUrl = #{keywordorurl,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      defaultpath = #{defaultpath,jdbcType=VARCHAR},
+      status = #{status,jdbcType=VARCHAR},
+      url = #{url,jdbcType=VARCHAR},
+      content = #{content,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="dogo.model.CustomMenu" >
+    update dogo_custommenu
+    set parentid = #{parentid,jdbcType=VARCHAR},
+      keywordorUrl = #{keywordorurl,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      defaultpath = #{defaultpath,jdbcType=VARCHAR},
+      status = #{status,jdbcType=VARCHAR},
+      url = #{url,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

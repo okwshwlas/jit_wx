@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"/>
+    <title>地图预约</title>
+    <link href="../style/default.css" rel="stylesheet" type="text/css" />
+    <link href="../style/contents.css" type="text/css"  rel="stylesheet"  />
+    <script type="text/javascript" src="../js/jquery.1.8.2.min.js"></script>
+    <script type="text/javascript">
+	   //点击弹出层城市选择
+ 	 	function region(){
+			$("#layer").show();
+			$("#layer").animate({top:'0'},300);
+			}
+		//点击关闭弹出层
+		function down_none(){
+			$("#layer").hide().animate({top:'800px'},300);
+			}
+		//县区弹出层
+		function county(){
+			$("#layer_1").slideDown(200);
+ 			}
+		//县区弹出层关闭
+		function county_no(){
+			$("#layer_1").hide();
+ 			}
+		//选择时间弹出层
+		function time_box() {
+			$('#time_box').slideDown();
+		}
+		//选择时间弹出层关闭
+		function time_clos() {
+			$('#time_box').slideUp();	
+			$('#prompt_box').show();	
+			$('.mask_layer').show();
+		}
+			//当前位置 弹出层
+		function adders_show() {
+			$('#addr_box').slideDown();
+		
+		}
+		//当前位置关闭弹出层
+		function adders_clos() {
+			$('#addr_box').slideUp();	
+			$('#time_box').slideDown();	
+		}
+		//关闭提示层
+		function layer_clos() {
+			$('#prompt_box').hide();	
+			$('.mask_layer').hide();
+		}
+		// 切换地图、列表
+		function tab(){
+			if ( $('#flag').val() == 1 ){
+				$('#flag').val('0');
+				$('.list_wrap').show();
+				$('.map_wrap').hide();
+				$('#lisebox_').hide();
+				$('#text1').html('切换地图')
+			}else{
+				$('#flag').val('1');
+				$('.list_wrap').hide();
+				$('.map_wrap').show();
+				$('#lisebox_').show();
+				$('#text1').html('切换列表')
+			}
+		}	
+		document.getElementById('datePicker').valueAsDate = new Date();
+    </script>
+</head>
+<body>
+	<div class="mask_layer"></div>
+	<div id="wrap">
+    	<header id="header">
+        	<span style="float:left; padding-left:15px;">地图预约</span>
+        	<a href="javascript:tab(0);" value='1' class="list_text"><img src="../image/icon/addres_icon.png" alt="" width="12" height="15" /> <span style="vertical-align:middle;" id="text1"> 切换列表</span></a>
+            <input type="hidden" value='1'  id='flag'>
+        </header>
+        <section id="" style="padding-bottom:65px;">
+        	 <ul class="nav_box">
+             	 <li>
+                 	<a href="javascript:void(0);" class="default" onClick="region();">长春市</a>
+                 </li>
+                 <li><a href="javascript:void(0);" onClick="county();">县区</a></li>
+                 <li><input type="date" placeholder="日期"  class="date_sty" id="datePicker"/></li>
+                <!-- <li><a href="javascript:void(0);" onClick="time_box();">日期</a></li>-->
+             </ul>
+             <!-- 地图 -->
+             <div style="position:relative;" class="map_wrap">
+              <p class="hit">提示：点击下方地点按钮选择预约时间</p>
+             	<img src="../image/images/map_img01.jpg" alt="" width="100%"/> 
+             </div>
+              <!--<div class="hit_show">
+                    <p>地点：长春市出入境管理局南关区分局</p>
+                    <p>日期：2016-4-20</p>
+                    <p>时间：10:30-11:30</p>
+              </div>-->
+             <!-- 列表 -->
+             <div class="list_wrap" style="display:none; z-index:12;">
+             	<ul class="lise_box">
+                	<li><span>长春市出入境管理局办证大厅</span><a href="javascript:void(0);" class="time_btn" onClick="time_box();">选择时间</a></li>
+                    <li><span>长春市出入境管理局办证大厅</span><a href="javascript:void(0);" class="time_btn">选择时间</a></li>
+                    <li><span>长春市出入境管理局办证大厅</span><a href="javascript:void(0);" class="time_btn">选择时间</a></li>
+                    <li><span>长春市出入境管理局办证大厅</span><a href="javascript:void(0);" class="time_btn">选择时间</a></li>
+                    <li><span>长春市出入境管理局办证大厅</span><a href="javascript:void(0);" class="time_btn">选择时间</a></li>
+                    <li><span>长春市出入境管理局办证大厅</span><a href="javascript:void(0);" class="time_btn">选择时间</a></li>
+                </ul>
+             </div>
+             <!-- end -->
+        </section>
+     <!--   <section style=" margin-top:15px; position:fixed; left:0; bottom:15px; width:100%;">
+            <div><a href="javascript:void(0);" class="btn_confirm">确 定</a></div>
+        </section>-->
+    </div>
+    <!-- 选择城市弹出层 -->
+    <div class="city_box" style="display:none;" id="layer">
+    	<h2 class="city_title_def"><span>当前城市-长春</span> <a href="javascript:void(0);" class="close_icon" onClick="down_none();"><img src="../image/icon/down_icon.png" width="25" height="18" /></a></h2>
+        <!-- 城市字母显示 -->
+    	<div style="padding-top:35px;">
+        	<h2 class="city_title">A</h2>
+            <div class="screening_box">
+            	<a href="javascript:void(0);" class="select_sty">鞍山</a>
+                <a href="javascript:void(0);" class="select_sty">安阳</a>
+                <a href="javascript:void(0);" class="select_sty">安庆</a>
+                <a href="javascript:void(0);" class="select_sty">安康</a>
+                <a href="javascript:void(0);" class="select_sty">安丘</a>
+                <a href="javascript:void(0);" class="select_sty">安顺</a>
+             </div>
+        </div>
+        <!-- end -->
+        <!-- 城市字母显示 -->
+    	<div>
+        	<h2 class="city_title">B</h2>
+            <div class="screening_box">
+            	<a href="javascript:void(0);" class="select_sty">北京</a>
+                <a href="javascript:void(0);" class="select_sty">保定</a>
+                <a href="javascript:void(0);" class="select_sty">包头</a>
+                <a href="javascript:void(0);" class="select_sty">宝鸡</a>
+                <a href="javascript:void(0);" class="select_sty">滨州</a>
+              </div>
+        </div>
+        <!-- end -->
+        <!-- 城市字母显示 -->
+    	<div>
+        	<h2 class="city_title">C</h2>
+            <div class="screening_box">
+            	<a href="javascript:void(0);" class="select_sty">成都</a>
+                <a href="javascript:void(0);" class="select_sty">重庆</a>
+                <a href="javascript:void(0);" class="select_sty">长春</a>
+                <a href="javascript:void(0);" class="select_sty">长沙</a>
+                <a href="javascript:void(0);" class="select_sty">常州</a>
+              </div>
+        </div>
+        <!-- end -->
+        <!-- 城市字母显示 -->
+    	<div>
+        	<h2 class="city_title">D</h2>
+            <div class="screening_box">
+            	<a href="javascript:void(0);" class="select_sty">大连</a>
+                <a href="javascript:void(0);" class="select_sty">大庆</a>
+                <a href="javascript:void(0);" class="select_sty">大同</a>
+                <a href="javascript:void(0);" class="select_sty">丹东</a>
+              </div>
+        </div>
+        <!-- end -->
+        <!-- 城市字母显示 -->
+    	<div>
+        	<h2 class="city_title">E</h2>
+            <div class="screening_box">
+            	<a href="javascript:void(0);" class="select_sty">鄂尔多斯</a>
+                <a href="javascript:void(0);" class="select_sty">恩施</a>
+                <a href="javascript:void(0);" class="select_sty">鄂州</a>
+                <a href="javascript:void(0);" class="select_sty">峨眉山</a>
+                <a href="javascript:void(0);" class="select_sty">额尔古纳</a>
+              </div>
+        </div>
+        <!-- end -->
+        
+    </div>
+    <!-- 选择县区弹出层 -->
+    <div class="city_box" id="layer_1" style="top:85px; display:none; z-index:4">
+         <!-- 城市字母显示 -->
+    	<div>
+             <div class="screening_box">
+            	<a href="javascript:void(0);" class="select_sty" onClick="county_no();">汽车开发区</a>
+                <a href="javascript:void(0);" class="select_sty">朝阳区</a>
+                <a href="javascript:void(0);" class="select_sty">南关区</a>
+                <a href="javascript:void(0);" class="select_sty">宽城区</a>
+                <a href="javascript:void(0);" class="select_sty">二道区</a>
+                <a href="javascript:void(0);" class="select_sty">绿园区</a>
+                <a href="javascript:void(0);" class="select_sty">经济开发区</a>
+                <a href="javascript:void(0);" class="select_sty">净月开发区</a>
+                <a href="javascript:void(0);" class="select_sty">高新区</a>
+             </div>
+        </div>
+        <!-- end -->
+    </div>
+    <!-- end -->
+    <!-- 时间选择层 -->
+    <div class="time_box" style="display:none; z-index:10;" id="time_box">
+        	<a href="javascript:time_clos(0);" class="close_icon" style="top:10px;" ><img src="../image/icon/down_icon.png" width="25" height="18" /></a>
+        	<ul class="time_main">
+           		<li>
+                	<p>长春市出入境管理局南关区分局</p>
+                    <p>长春市光明路688号 <img src="../image/icon/addres_icon1.png" alt="" width="10" height="12" /></p>
+                    <p class="text_color">可办理业务：护照申请、港澳证、大陆证</p>
+                    <span class="time_main_icon"><img src="../image/icon/time_icon1.png" width="35" height="35"  /></span>
+                </li> 
+                <li>
+                	<p><span>9:00 -10:00 (剩余 26人)</span><a href="javascript:time_clos(0);" class="btn_appoin">预 约</a></p>
+                    <span class="time_main_icon"><img src="../image/icon/time_icon2.png" width="32" height="32"  /></span>
+                </li> 
+                <li>
+                	<p><span>10:30 -11:30 (剩余 26人)</span><a href="javascript:void(0);" class="btn_appoin">预 约</a></p>
+                    <span class="time_main_icon"><img src="../image/icon/time_icon1.png" width="32" height="32"  /></span>
+                </li> 
+                <li>
+                	<p><span>13:00 -14:00 (剩余 26人)</span><a href="javascript:void(0);" class="btn_appoin">预 约</a></p>
+                    <span class="time_main_icon"><img src="../image/icon/time_icon3.png" width="32" height="32"  /></span>
+                </li> 
+                <li>
+                	<p><span>15:00 -16:00 (剩余 26人)</span><a href="javascript:void(0);" class="btn_appoin">预 约</a></p>
+                    <span class="time_main_icon"><img src="../image/icon/time_icon2.png" width="32" height="32"  /></span>
+                </li> 
+            </ul>
+        </div>
+	<!-- end -->    
+     <!-- 当前位置－列表 -->
+    <div class="time_box" style="z-index:9" id="lisebox_">
+        	<a href="javascript:adders_show(0);" class="close_icon" style="top:10px;" ><img src="../image/icon/down_icon.png" width="25" height="18" /></a>
+            <div class="my_location">
+            	<p>当前位置</p>
+                <p>在前进大街2275号附近</p>
+            </div>
+             <div class="list_wrap list_box_" style="display:none;" id="addr_box">
+             	<ul class="lise_box">
+                	<li><span>长春市出入境管理局南关区分局</span><span class="addres_color">朝阳区2266号 <i class="text_color distance_num">512米</i> </span><a href="javascript:adders_clos(0);" class="btn_appoin btn_right">预约</a></li>                	<li><span>长春市出入境管理局南关区分局</span><span class="addres_color">朝阳区2266号 <i class="text_color distance_num">512米</i> </span><a href="javascript:void(0);" class="btn_appoin btn_right">预约</a></li>
+                	<li><span>长春市出入境管理局南关区分局</span><span class="addres_color">朝阳区2266号 <i class="text_color distance_num">512米</i> </span><a href="javascript:void(0);" class="btn_appoin btn_right">预约</a></li>
+                	<li><span>长春市出入境管理局南关区分局</span><span class="addres_color">朝阳区2266号 <i class="text_color distance_num">512米</i> </span><a href="javascript:void(0);" class="btn_appoin btn_right">预约</a></li>
+                	<li><span>长春市出入境管理局南关区分局</span><span class="addres_color">朝阳区2266号 <i class="text_color distance_num">512米</i> </span><a href="javascript:void(0);" class="btn_appoin btn_right">预约</a></li>            
+                </ul>
+             </div>
+        </div>
+	<!-- end -->   
+    <!-- 数据提示 -->
+    	 <div class="succe_box" style="width:90%; margin:0  auto; display:none; z-index:11; position:absolute; top:35%; left:5%;" id="prompt_box">
+         	<h2 class="succe_tit">消息提示</h2>
+            <ul class="succe_main">
+            	<li>
+                	<p class="li_p"><span>预约时间：</span>2016-4-20  10:30-11:30</p>
+                    <p class="li_p1"><span>预约地点：</span>长春市出入境管理局南关区分局</p>
+                    <p class="li_p1"><span>预约地址：</span>光明路2266号</p>
+                </li>
+            </ul>
+            <div style="width:60%; margin:0px auto; padding:15px 0;"><a href="javascript:layer_clos(0);" class="btn_confirm">确 定</a></div>
+         </div>
+    <!-- end --> 
+</body>
+</html>

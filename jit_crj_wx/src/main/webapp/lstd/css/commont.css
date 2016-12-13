@@ -1,0 +1,59 @@
+html,body,img,p,dl,dt,dd,font { margin: 0; padding: 0;}
+.tip_box {  overflow: hidden;padding: 0.4rem 2%; background-color: #626262;}
+.tip_box img { float: left; margin-right: 10px;}
+.tip_box p { float: left; color: #fff; width: 92%; font-size: 0.6rem;}
+.icon_select { position: relative; padding-right: 2rem; background: url("../image/select_del.png") no-repeat 93% center; }
+.icon_select_vi { position: absolute; right: 0.57rem; top: 46%; margin: -10px; }
+.border_top { border-top: 1px solid #e0dede;}
+.border_bottom {border-bottom: 1px solid #e0dede; width: 100%;}
+.p_right { padding-right: 1.5rem;}
+.p_bottom { padding-bottom: 0.9rem!important;}
+.m_top { margin-top: 0.5rem;}
+.aui-content-padded { margin: 0.5rem !important;}
+.aui-list .aui-list-item::after { background-color: #fff;}
+.aui-btn-blue { background-color: #009ff2; color: #fff;}
+
+.aui-btn-blue1{background-color: #4b78dd; color: #fff;}
+.aui-btn-block { font-size: 0.8rem;}
+.font_size { font-size: 0.9rem!important;}
+.upload_box {overflow: hidden; padding:0 0.5rem 0.5rem 0.5rem;}
+.upload_box li { overflow: hidden; position: relative; float:left; margin-right: 0.5rem; width: 3.8rem; height: 3.8rem; background-color: #f1f1f1;}
+.upload_box li img{ width: 100%;}
+.upload_box li:nth-child(4){ margin-right: 0; background-color: #fff; width: 3rem;}
+.tip_text { padding: 0.3rem 0.3rem 0.5rem 0.3rem; color: #ce1313;}
+.textarea {margin: 0 0.5rem; padding: 0.3rem 0 0 0.3rem; width: 94%; height: 100px; border: 1px solid #dddddd;}
+#wordCountShow { position: absolute; bottom: 0.3rem; right: 0.9rem; font-size: 0.6rem;color: #a8a7a7;}
+/* 添加偕行人 */
+.add_xxr_box { position: absolute; top: 7.3rem; left: 4%; padding: 0.8rem; width: 90%; background-color: #fff; box-shadow: 2px 2px 5px #474747;}
+.input_bor { border: 1px solid #dddddd!important; padding-left: 0.3rem!important;}
+.add_btn { text-align: center;}
+.delete_box { position: absolute; right: -10px; top: -6px;}
+.position { position: relative;}
+
+/* 办事进度列表 */
+.state {font-size: 0.6rem; width: 110px}
+.state img {vertical-align:middle; margin-bottom: 2px;}
+
+/* 结果反馈 */
+.operating_box { position: absolute; left: 5%; top: 7rem; padding: 0.4rem; width: 90%;box-shadow: 2px 2px 4px #5b5b5b; background:rgba(255,255,255,0.6);}
+.pad_top {padding: 1.5rem 0 1rem 0!important; background: #fff;}
+.tip_text { padding: 0.3rem 0.3rem 0.5rem 0.3rem; color: #ce1313;}
+.input_bg { padding-left: 0.4rem!important; background-color: #ebeced!important; border-radius: 5px!important; }
+.mar_top { margin-top: 6rem!important;}
+.pad_0 { padding: 0 0.5rem!important;}
+.border_top { border-top: 1px solid #e0dede;}
+.pad_top_1 { padding-top: 0.3rem!important;}
+.aui-btn-yellow { background-color: #fbc533!important; color: #fff; font-size: 0.8rem!important; font-weight: normal;}
+.no_data {text-align: center; padding-top: 7rem;}
+
+/* 未通过 */
+.why_box {  position: relative; margin: 8rem auto 0; width: 90%; background-color: #fff; padding: 2rem 1rem;}
+.tit_why_text { position: absolute; top:-15px; left: 50%;margin-left: -45px; padding:0 2rem; background-color: #33acfb; height: 30px; line-height: 30px; color: #fff;
+    text-align: center; font-size: 0.7rem; border-radius: 5px;}
+.supplement_box { width: 90%; margin: 0 auto; background-color: #e6e6e6; text-align: center; height: 35px; line-height: 35px;}
+.supplement_box a { color: #33acfb; }
+
+
+
+
+

@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="dogo.dao.GongzhongMapper" >
+  <resultMap id="BaseResultMap" type="dogo.model.Gongzhong" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="account" property="account" jdbcType="VARCHAR" />
+    <result column="token" property="token" jdbcType="VARCHAR" />
+    <result column="weixin" property="weixin" jdbcType="VARCHAR" />
+    <result column="account_depict" property="accountDepict" jdbcType="VARCHAR" />
+    <result column="account_appid" property="accountAppid" jdbcType="VARCHAR" />
+    <result column="account_appsecret" property="accountAppsecret" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, account, token, weixin, account_depict, account_appid, account_appsecret
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from dogo_gongzhongzhanghao
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  
+  <!-- 记录数 -->
+  <select id="selectAllGZZHCount" resultType="int"  parameterType="java.util.Map">
+    select 
+    count(*)
+    from dogo_gongzhongzhanghao
+    where 1=1
+	    <if test="page.typeName == 'account'">
+	       and account like '%${page.typeValue}%'
+	    </if>
+	    <if test="page.typeName == 'weixin'">
+	       and weixin like '%${page.typeValue}%'
+	    </if>
+	    <if test="page.typeName == 'accountAppid'">
+	       and account_depict like '%${page.typeValue}%'
+	    </if>
+  </select>
+  
+  <!-- 查询列表,带分页 -->
+  <select id="selectAllGZZHByPage" resultMap="BaseResultMap" parameterType="java.util.Map">
+    select * from (
+    select 
+    a.*,rownum r
+    from dogo_gongzhongzhanghao a
+    where 1=1
+	    <if test="page.typeName == 'account'">
+	      and account like '%${page.typeValue}%'
+	    </if>
+	    <if test="page.typeName == 'weixin'">
+	       and weixin like '%${page.typeValue}%'
+	    </if>
+	    <if test="page.typeName == 'accountAppid'">
+	       and account_appid like '%${page.typeValue}%'
+	    </if>
+	    and 
+	    <![CDATA[
+	     rownum<=#{page.end}
+	    ]]>
+    )
+    where 
+    <![CDATA[ 
+    #{page.begin}<=r
+    ]]>
+  </select>
+  
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from dogo_gongzhongzhanghao
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="dogo.model.Gongzhong" >
+    insert into dogo_gongzhongzhanghao (id, account, token, 
+      weixin, account_depict, account_appid, 
+      account_appsecret)
+    values (#{id,jdbcType=VARCHAR}, #{account,jdbcType=VARCHAR}, #{token,jdbcType=VARCHAR}, 
+      #{weixin,jdbcType=VARCHAR}, #{accountDepict,jdbcType=VARCHAR}, #{accountAppid,jdbcType=VARCHAR}, 
+      #{accountAppsecret,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="dogo.model.Gongzhong" >
+    insert into dogo_gongzhongzhanghao
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="account != null" >
+        account,
+      </if>
+      <if test="token != null" >
+        token,
+      </if>
+      <if test="weixin != null" >
+        weixin,
+      </if>
+      <if test="accountDepict != null" >
+        account_depict,
+      </if>
+      <if test="accountAppid != null" >
+        account_appid,
+      </if>
+      <if test="accountAppsecret != null" >
+        account_appsecret,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="account != null" >
+        #{account,jdbcType=VARCHAR},
+      </if>
+      <if test="token != null" >
+        #{token,jdbcType=VARCHAR},
+      </if>
+      <if test="weixin != null" >
+        #{weixin,jdbcType=VARCHAR},
+      </if>
+      <if test="accountDepict != null" >
+        #{accountDepict,jdbcType=VARCHAR},
+      </if>
+      <if test="accountAppid != null" >
+        #{accountAppid,jdbcType=VARCHAR},
+      </if>
+      <if test="accountAppsecret != null" >
+        #{accountAppsecret,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="dogo.model.Gongzhong" >
+    update dogo_gongzhongzhanghao
+    <set >
+      <if test="account != null" >
+        account = #{account,jdbcType=VARCHAR},
+      </if>
+      <if test="token != null" >
+        token = #{token,jdbcType=VARCHAR},
+      </if>
+      <if test="weixin != null" >
+        weixin = #{weixin,jdbcType=VARCHAR},
+      </if>
+      <if test="accountDepict != null" >
+        account_depict = #{accountDepict,jdbcType=VARCHAR},
+      </if>
+      <if test="accountAppid != null" >
+        account_appid = #{accountAppid,jdbcType=VARCHAR},
+      </if>
+      <if test="accountAppsecret != null" >
+        account_appsecret = #{accountAppsecret,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="dogo.model.Gongzhong" >
+    update dogo_gongzhongzhanghao
+    set account = #{account,jdbcType=VARCHAR},
+      token = #{token,jdbcType=VARCHAR},
+      weixin = #{weixin,jdbcType=VARCHAR},
+      account_depict = #{accountDepict,jdbcType=VARCHAR},
+      account_appid = #{accountAppid,jdbcType=VARCHAR},
+      account_appsecret = #{accountAppsecret,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

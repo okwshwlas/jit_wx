@@ -1,0 +1,69 @@
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+html { font-size: 12px }
+body { font-size: 12px }
+body, html { font-family: "微软雅黑"; }
+label { cursor: pointer }
+a:link, a:visited { text-decoration: none; }
+a:hover, a:focus, a:active { text-decoration: none }
+a, abbr, acronym, address, applet, article, aside, audio, b, blockquote, big, body, center, canvas, caption, cite, code, command, datalist, dd, del, details, dfn, dl, div, dt, em, embed, fieldset, figcaption, figure, font, footer, form, h1, h2, h3, h4, h5, h6, header, hgroup, html, i, iframe, img, ins, kbd, keygen, label, legend, li, meter, nav, menu, object, ol, output, p, pre, progress, q, s, samp, section, small, span, source, strike, strong, sub, sup, table, tbody, tfoot, thead, th, tr, tdvideo, tt, u, ul, var { margin: 0; padding: 0 }
+h1, h2, h3, h4, h5, h6, th, td, table, input, button, select, textarea, sub { font-size: 1em }
+body, input, button, select, textarea, sub { font-family: sans-serif }
+em, cite, address, optgroup { font-style: normal }
+kbd, samp, code { font-family: monospace }
+img, input, button, select, textarea { vertical-align: middle }
+ul, ol { list-style: none }
+img, fieldset { border: 0 }
+abbr, acronym { cursor: help; border-bottom: 1px dotted black }
+table { width: 100%; border: 0; /*border-collapse:collapse; border-spacing:0;*/ }
+legend, hr { overflow: hidden; position: absolute; top: 0; left: 0 }
+legend, hr, caption { visibility: hidden; font-size: 0; width: 0; height: 0; line-height: 0 }
+/* clear float */
+.group:after { content: "."; display: block; height: 0; clear: both; visibility: hidden }
+.group { display: block }
+.clear { clear: both; }
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section { display: block; }
+body { line-height: 1; }
+ol, ul, li { list-style: none; }
+blockquote, q { quotes: none; }
+blockquote:before, blockquote:after, q:before, q:after { content: ''; content: none; }
+/* site */
+body {
+	font-family: "helvetica neue", "hiragino sans gb", "stheiti", "微软雅黑", SimSun, Arial, sans-serif;
+	font-size: 13px;
+	line-height: 1.8em;
+	color: #333;
+	text-align: left;
+	background-color: #FFFFFF;
+	background-image: url(../i/bg_body0.jpg);
+	background-repeat: repeat-x;
+	background-position: center top;
+}
+/* form */
+input, button, textarea, select { font-family: "微软雅黑", SimSun, Arial, sans-serif; font-size: 13px; color: #333333; background-color: #fff; vertical-align: middle }
+input[type=text], textarea { border: solid 1px #999; padding: 2px; }
+select { border: solid 1px #999; padding: 1px; }
+textarea { vertical-align: top; overflow: auto; }
+input[type=checkbox] { border: solid 1px #999; padding: 0; vertical-align: middle; }
+input[type=submit], input[type=reset] { padding: 2px 20px; height: 26px; background-color: #89b32c; color: #fff; border: solid 1px #333333; letter-spacing: 3px; overflow: hidden; }
+input[type=submit]:hover, input[type=reset]:hover { background-color: #739f18; }
+input[type=text].error, textarea.error { background-color: #ffe8e8; border: solid 1px #f00; }
+input[type=text]:focus, textarea:focus { background-color: #fffeef; }
+a img { border: none; }
+/* 链接虚线 */
+a { outline: none; /* for Forefox */ }
+a { star:expression(this.onFocus=this.blur()); /* for Ie*/
+}
+a, a:visited { text-decoration: none; color: #333333; }
+a:hover { text-decoration: underline; color: #0744B5; }
+/* 清除浮动 */
+.clear { clear: both; zoom: 1; }
+.clear:after { content: ""; clear: both; overflow: hidden; height: 0; display: block; }
+.center { text-align: center; }
+/* 全局容器 */
+.g-wrap { width: 1000px; margin: 0 auto; clear: both; position: relative !important; z-index:100; overflow: hidden; }
+.zwgkzl { padding-top: 5px;padding-bottom: 10px;}

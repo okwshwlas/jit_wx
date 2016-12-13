@@ -1,0 +1,320 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="dogo.dao.CrjYyxxMapper" >
+  <resultMap id="BaseResultMap" type="dogo.model.CrjYyxx" >
+    <id column="YY_ID" property="yyId" jdbcType="VARCHAR" />
+    <result column="SQ_ID" property="sqId" jdbcType="VARCHAR" />
+    <result column="JGDW_ID" property="jgdwId" jdbcType="VARCHAR" />
+    <result column="SFZH" property="sfzh" jdbcType="VARCHAR" />
+    <result column="SJHM" property="sjhm" jdbcType="VARCHAR" />
+    <result column="YYZT" property="yyzt" jdbcType="VARCHAR" />
+    <result column="YYSJ_ID" property="yysjId" jdbcType="VARCHAR" />
+    <result column="YYSJ_QS" property="yysjQs" jdbcType="VARCHAR" />
+    <result column="YYSJ_ZZ" property="yysjZz" jdbcType="VARCHAR" />
+    <result column="YYRQ" property="yyrq" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="OTHER" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="OTHER" />
+    <result column="NAME" property="name" jdbcType="VARCHAR" />
+    <result column="YYSZ" property="yysz" jdbcType="VARCHAR" />
+    <result column="YYXQ" property="yyxq" jdbcType="VARCHAR" />
+    <result column="YYSZD" property="yyszd" jdbcType="VARCHAR" />
+    <result column="YYCODE" property="yycode" jdbcType="VARCHAR" />
+    <result column="OPENID" property="openid" jdbcType="VARCHAR" />
+    <result column="BEIYONG1" property="beiyong1" jdbcType="VARCHAR" />
+    <result column="BEIYONG2" property="beiyong2" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    YY_ID, SQ_ID, JGDW_ID, SFZH, SJHM, YYZT, YYSJ_ID, YYSJ_QS, YYSJ_ZZ, YYRQ, CREATE_TIME, 
+    UPDATE_TIME, NAME, YYSZ, YYXQ, YYSZD, YYCODE, OPENID, BEIYONG1, BEIYONG2
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from CRJ_YYXX
+    where YY_ID = #{yyId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from CRJ_YYXX
+    where YY_ID = #{yyId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="dogo.model.CrjYyxx" >
+    insert into CRJ_YYXX (YY_ID, SQ_ID, JGDW_ID, 
+      SFZH, SJHM, YYZT, YYSJ_ID, 
+      YYSJ_QS, YYSJ_ZZ, YYRQ, 
+      CREATE_TIME, UPDATE_TIME, NAME, 
+      YYSZ, YYXQ, YYSZD, 
+      YYCODE, OPENID, BEIYONG1, 
+      BEIYONG2)
+    values (#{yyId,jdbcType=VARCHAR}, #{sqId,jdbcType=VARCHAR}, #{jgdwId,jdbcType=VARCHAR}, 
+      #{sfzh,jdbcType=VARCHAR}, #{sjhm,jdbcType=VARCHAR}, #{yyzt,jdbcType=VARCHAR}, #{yysjId,jdbcType=VARCHAR}, 
+      #{yysjQs,jdbcType=VARCHAR}, #{yysjZz,jdbcType=VARCHAR}, #{yyrq,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=OTHER}, #{updateTime,jdbcType=OTHER}, #{name,jdbcType=VARCHAR}, 
+      #{yysz,jdbcType=VARCHAR}, #{yyxq,jdbcType=VARCHAR}, #{yyszd,jdbcType=VARCHAR}, 
+      #{yycode,jdbcType=VARCHAR}, #{openid,jdbcType=VARCHAR}, #{beiyong1,jdbcType=VARCHAR}, 
+      #{beiyong2,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="dogo.model.CrjYyxx" >
+    insert into CRJ_YYXX
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="yyId != null" >
+        YY_ID,
+      </if>
+      <if test="sqId != null" >
+        SQ_ID,
+      </if>
+      <if test="jgdwId != null" >
+        JGDW_ID,
+      </if>
+      <if test="sfzh != null" >
+        SFZH,
+      </if>
+      <if test="sjhm != null" >
+        SJHM,
+      </if>
+      <if test="yyzt != null" >
+        YYZT,
+      </if>
+      <if test="yysjId != null" >
+        YYSJ_ID,
+      </if>
+      <if test="yysjQs != null" >
+        YYSJ_QS,
+      </if>
+      <if test="yysjZz != null" >
+        YYSJ_ZZ,
+      </if>
+      <if test="yyrq != null" >
+        YYRQ,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME,
+      </if>
+      <if test="name != null" >
+        NAME,
+      </if>
+      <if test="yysz != null" >
+        YYSZ,
+      </if>
+      <if test="yyxq != null" >
+        YYXQ,
+      </if>
+      <if test="yyszd != null" >
+        YYSZD,
+      </if>
+      <if test="yycode != null" >
+        YYCODE,
+      </if>
+      <if test="openid != null" >
+        OPENID,
+      </if>
+      <if test="beiyong1 != null" >
+        BEIYONG1,
+      </if>
+      <if test="beiyong2 != null" >
+        BEIYONG2,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="yyId != null" >
+        #{yyId,jdbcType=VARCHAR},
+      </if>
+      <if test="sqId != null" >
+        #{sqId,jdbcType=VARCHAR},
+      </if>
+      <if test="jgdwId != null" >
+        #{jgdwId,jdbcType=VARCHAR},
+      </if>
+      <if test="sfzh != null" >
+        #{sfzh,jdbcType=VARCHAR},
+      </if>
+      <if test="sjhm != null" >
+        #{sjhm,jdbcType=VARCHAR},
+      </if>
+      <if test="yyzt != null" >
+        #{yyzt,jdbcType=VARCHAR},
+      </if>
+      <if test="yysjId != null" >
+        #{yysjId,jdbcType=VARCHAR},
+      </if>
+      <if test="yysjQs != null" >
+        #{yysjQs,jdbcType=VARCHAR},
+      </if>
+      <if test="yysjZz != null" >
+        #{yysjZz,jdbcType=VARCHAR},
+      </if>
+      <if test="yyrq != null" >
+        #{yyrq,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=OTHER},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=OTHER},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="yysz != null" >
+        #{yysz,jdbcType=VARCHAR},
+      </if>
+      <if test="yyxq != null" >
+        #{yyxq,jdbcType=VARCHAR},
+      </if>
+      <if test="yyszd != null" >
+        #{yyszd,jdbcType=VARCHAR},
+      </if>
+      <if test="yycode != null" >
+        #{yycode,jdbcType=VARCHAR},
+      </if>
+      <if test="openid != null" >
+        #{openid,jdbcType=VARCHAR},
+      </if>
+      <if test="beiyong1 != null" >
+        #{beiyong1,jdbcType=VARCHAR},
+      </if>
+      <if test="beiyong2 != null" >
+        #{beiyong2,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="dogo.model.CrjYyxx" >
+    update CRJ_YYXX
+    <set >
+      <if test="sqId != null" >
+        SQ_ID = #{sqId,jdbcType=VARCHAR},
+      </if>
+      <if test="jgdwId != null" >
+        JGDW_ID = #{jgdwId,jdbcType=VARCHAR},
+      </if>
+      <if test="sfzh != null" >
+        SFZH = #{sfzh,jdbcType=VARCHAR},
+      </if>
+      <if test="sjhm != null" >
+        SJHM = #{sjhm,jdbcType=VARCHAR},
+      </if>
+      <if test="yyzt != null" >
+        YYZT = #{yyzt,jdbcType=VARCHAR},
+      </if>
+      <if test="yysjId != null" >
+        YYSJ_ID = #{yysjId,jdbcType=VARCHAR},
+      </if>
+      <if test="yysjQs != null" >
+        YYSJ_QS = #{yysjQs,jdbcType=VARCHAR},
+      </if>
+      <if test="yysjZz != null" >
+        YYSJ_ZZ = #{yysjZz,jdbcType=VARCHAR},
+      </if>
+      <if test="yyrq != null" >
+        YYRQ = #{yyrq,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=OTHER},
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME = #{updateTime,jdbcType=OTHER},
+      </if>
+      <if test="name != null" >
+        NAME = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="yysz != null" >
+        YYSZ = #{yysz,jdbcType=VARCHAR},
+      </if>
+      <if test="yyxq != null" >
+        YYXQ = #{yyxq,jdbcType=VARCHAR},
+      </if>
+      <if test="yyszd != null" >
+        YYSZD = #{yyszd,jdbcType=VARCHAR},
+      </if>
+      <if test="yycode != null" >
+        YYCODE = #{yycode,jdbcType=VARCHAR},
+      </if>
+      <if test="openid != null" >
+        OPENID = #{openid,jdbcType=VARCHAR},
+      </if>
+      <if test="beiyong1 != null" >
+        BEIYONG1 = #{beiyong1,jdbcType=VARCHAR},
+      </if>
+      <if test="beiyong2 != null" >
+        BEIYONG2 = #{beiyong2,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where YY_ID = #{yyId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="dogo.model.CrjYyxx" >
+    update CRJ_YYXX
+    set SQ_ID = #{sqId,jdbcType=VARCHAR},
+      JGDW_ID = #{jgdwId,jdbcType=VARCHAR},
+      SFZH = #{sfzh,jdbcType=VARCHAR},
+      SJHM = #{sjhm,jdbcType=VARCHAR},
+      YYZT = #{yyzt,jdbcType=VARCHAR},
+      YYSJ_ID = #{yysjId,jdbcType=VARCHAR},
+      YYSJ_QS = #{yysjQs,jdbcType=VARCHAR},
+      YYSJ_ZZ = #{yysjZz,jdbcType=VARCHAR},
+      YYRQ = #{yyrq,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=OTHER},
+      UPDATE_TIME = #{updateTime,jdbcType=OTHER},
+      NAME = #{name,jdbcType=VARCHAR},
+      YYSZ = #{yysz,jdbcType=VARCHAR},
+      YYXQ = #{yyxq,jdbcType=VARCHAR},
+      YYSZD = #{yyszd,jdbcType=VARCHAR},
+      YYCODE = #{yycode,jdbcType=VARCHAR},
+      OPENID = #{openid,jdbcType=VARCHAR},
+      BEIYONG1 = #{beiyong1,jdbcType=VARCHAR},
+      BEIYONG2 = #{beiyong2,jdbcType=VARCHAR}
+    where YY_ID = #{yyId,jdbcType=VARCHAR}
+  </update>
+  <select id="listWx_yuyuexiangxi" resultMap="BaseResultMap">
+  select a.YY_ID,
+  	a.SQ_ID,
+      a.JGDW_ID,
+      a.SFZH,
+      a.SJHM,
+      a.YYZT,
+      a.YYSJ_ID,
+      a.YYSJ_QS ,
+      a.YYSJ_ZZ,
+      a.YYRQ,
+      a.NAME,
+      a.YYSZ,
+      a.YYXQ,
+      a.YYSZD,
+      a.YYCODE,
+      a.OPENID,
+      a.BEIYONG1,
+      a.BEIYONG2,
+      b.jgdw_latitude jgdwLatitude,
+      b.jgdw_longitude jgdwLongitude
+      from CRJ_YYXX a left join SYS_ORGANIZATION b on a.jgdw_id = b.id where OPENID = #{openid} and yyzt='1'
+  </select>
+   <select id="listWx_yuyuexiangxi_yycode" resultMap="BaseResultMap">
+  select YY_ID,
+  	SQ_ID,
+      JGDW_ID,
+      SFZH,
+      SJHM,
+      YYZT,
+      YYSJ_ID,
+      YYSJ_QS ,
+      YYSJ_ZZ,
+      YYRQ,
+      NAME,
+      YYSZ,
+      YYXQ,
+      YYSZD,
+      YYCODE,
+      OPENID,
+      BEIYONG1,
+      BEIYONG2  from CRJ_YYXX where YYCODE = #{yycode} and yyzt='1'
+  </select>
+  
+    <select id="selectBySfzh" resultMap="BaseResultMap"  >
+    select 
+    <include refid="Base_Column_List" />
+    from CRJ_YYXX
+    where SFZH = #{sfzh,jdbcType=VARCHAR} and 
+    TO_CHAR(create_time, 'YYYY-MM-DD')=  #{yysj} and yyzt ='1'
+  </select>
+</mapper>

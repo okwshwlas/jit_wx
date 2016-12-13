@@ -1,0 +1,97 @@
+﻿html,body{
+	height:100%;
+	overflow:hidden;
+}
+body{
+
+
+}
+.listPage .r1{
+
+	
+}
+.listPage .r2{
+	background:#efefef;
+	height:400px;
+	overflow:auto;
+	width:100%;
+
+}
+.listPage .r2 .listpage{
+	
+
+	
+}
+.listPage .r2 .listpage .warp{
+	
+	
+}
+.listPage .r3{
+	border-top:1px #73B2DE solid;
+	position:relative;
+	height:30px;
+	background:#efefef;
+}
+.listPage h1.title{
+	position:absolute;
+	height:22px;
+	line-height:22px;
+	text-align:center;
+	padding:0 20px;
+	background:#88A6FF ;
+	color:white;
+	right:0;
+	
+}
+.listPage h1.caption{
+	background:transparent url(../images/table-input/25.gif) repeat-x scroll 0 0;	
+	height:21px;
+	position:relative;
+	font-weight:normal;
+}
+.listPage h1.caption .text{
+	line-height:20px;
+	color:gray;
+	padding:0 10px;
+	position:absolute;
+}
+.listPage h1.caption .text a{
+	color:gray;
+}
+.listPage .search{
+	background:url('../images/taskPage/search.jpg') repeat-x scroll left bottom ;
+	padding:4px;
+	border:1px #A7B8C8 solid;
+	border-left:0;
+	border-right:0;
+
+}
+.listPage .search label{
+	font-size:12px;
+}
+.listPage .search .text{
+	width:100px;
+}
+.listPage .toolbar{
+	height:25px;
+	background:#D2E2F6 url('../images/toolbar.jpg') repeat-x;
+	border-bottom:1px   solid silver;
+
+}
+.listPage .option{
+	text-align:right;
+	height:24px;
+}
+.listPage .attr{
+	background:#efefef;
+	border-bottom:1px black solid;
+	padding:5px;
+	font-size:12px;
+}
+.listPage .attr .text{
+	width:100px;
+	margin-right:10px;
+}
+.listPage .table-count{
+height:50px;border-bottom:1px  #73B2DE solid;padding-bottom:4px;border-top:1px  silver solid;
+}

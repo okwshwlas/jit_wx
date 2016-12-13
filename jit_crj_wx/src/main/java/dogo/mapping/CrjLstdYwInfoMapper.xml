@@ -1,0 +1,371 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="dogo.dao.CrjLstdYwInfoMapper" >
+  <resultMap id="BaseResultMap" type="dogo.model.CrjLstdYwInfo" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="YWBH" property="ywbh" jdbcType="VARCHAR" />
+    <result column="YW_TYPE" property="ywType" jdbcType="VARCHAR" />
+    <result column="YWZT" property="ywzt" jdbcType="VARCHAR" />
+    <result column="REMARKS" property="remarks" jdbcType="VARCHAR" />
+    <result column="JGBH" property="jgbh" jdbcType="VARCHAR" />
+    <result column="XXR1" property="xxr1" jdbcType="VARCHAR" />
+    <result column="XXR2" property="xxr2" jdbcType="VARCHAR" />
+    <result column="XXR3" property="xxr3" jdbcType="VARCHAR" />
+    <result column="SFZHM" property="sfzhm" jdbcType="VARCHAR" />
+    <result column="OPENID" property="openid" jdbcType="VARCHAR" />
+    <result column="YWLY" property="lwly" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="DATE" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, YWBH, YW_TYPE, YWZT, REMARKS, JGBH, XXR1, XXR2, XXR3, SFZHM, OPENID, YWLY, CREATE_DATE
+  </sql>
+  
+  <!-- 通过openid 创建时间倒序  取第一条 判断是否可以办理业务 -->
+  <select id="selectByOpenIdPD" resultMap="BaseResultMap"  >
+  	select * from(
+  		select 
+	    <include refid="Base_Column_List" />
+	    from CRJ_LSTD_YW_INFO
+	    where OPENID = #{openId,jdbcType=VARCHAR} order by CREATE_DATE desc
+  	) where rownum = 1
+  </select>
+  
+  <!-- 通过openid 查询历史记录 -->
+  <select id="selectByOpenId" resultMap="BaseResultMap"  >
+    select 
+    <include refid="Base_Column_List" />
+    from CRJ_LSTD_YW_INFO
+    where OPENID = #{openId,jdbcType=VARCHAR} order by CREATE_DATE desc 
+  </select>
+  
+  <!-- 通过业务编号查询 -->
+  <select id="selectByYwbh" resultMap="BaseResultMap"  >
+    select 
+    <include refid="Base_Column_List" />
+    from CRJ_LSTD_YW_INFO
+    where YWBH = #{ywbh,jdbcType=VARCHAR} 
+  </select>
+  
+  <insert id="insert" parameterType="dogo.model.CrjLstdYwInfo" >
+    insert into CRJ_LSTD_YW_INFO
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="ywbh != null" >
+        YWBH,
+      </if>
+      <if test="ywType != null" >
+        YW_TYPE,
+      </if>
+      <if test="ywzt != null" >
+        YWZT,
+      </if>
+      <if test="remarks != null" >
+        REMARKS,
+      </if>
+      <if test="jgbh != null" >
+        JGBH,
+      </if>
+      <if test="xxr1 != null" >
+        XXR1,
+      </if>
+      <if test="xxr2 != null" >
+        XXR2,
+      </if>
+      <if test="xxr3 != null" >
+        XXR3,
+      </if>
+      <if test="sfzhm != null" >
+        SFZHM,
+      </if>
+      <if test="openid != null" >
+        OPENID,
+      </if>
+      <if test="ywly != null" >
+        YWLY,
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="ywbh != null" >
+        #{ywbh,jdbcType=VARCHAR},
+      </if>
+      <if test="ywType != null" >
+        #{ywType,jdbcType=VARCHAR},
+      </if>
+      <if test="ywzt != null" >
+        #{ywzt,jdbcType=VARCHAR},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="jgbh != null" >
+        #{jgbh,jdbcType=VARCHAR},
+      </if>
+      <if test="xxr1 != null" >
+        #{xxr1,jdbcType=VARCHAR},
+      </if>
+      <if test="xxr2 != null" >
+        #{xxr3,jdbcType=VARCHAR},
+      </if>
+      <if test="xxr3 != null" >
+        #{xxr3,jdbcType=VARCHAR},
+      </if>
+      <if test="sfzhm != null" >
+        #{sfzhm,jdbcType=VARCHAR},
+      </if>
+      <if test="openid != null" >
+        #{openid,jdbcType=VARCHAR},
+      </if>
+      <if test="ywly != null" >
+        #{ywly,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=DATE},
+      </if>
+    </trim>
+  </insert>
+  <insert id="insertSelective" parameterType="dogo.model.CrjLstdYwInfo" >
+    insert into CRJ_LSTD_YW_INFO
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="ywbh != null" >
+        YWBH,
+      </if>
+      <if test="ywType != null" >
+        YW_TYPE,
+      </if>
+      <if test="ywzt != null" >
+        YWZT,
+      </if>
+      <if test="remarks != null" >
+        REMARKS,
+      </if>
+      <if test="jgbh != null" >
+        JGBH,
+      </if>
+      <if test="xxr1 != null" >
+        XXR1,
+      </if>
+      <if test="xxr2 != null" >
+        XXR2,
+      </if>
+      <if test="xxr3 != null" >
+        XXR3,
+      </if>
+      <if test="sfzhm != null" >
+        SFZHM,
+      </if>
+      <if test="openid != null" >
+        OPENID,
+      </if>
+      <if test="ywly != null" >
+        YWLY,
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="ywbh != null" >
+        #{ywbh,jdbcType=VARCHAR},
+      </if>
+      <if test="ywType != null" >
+        #{ywType,jdbcType=VARCHAR},
+      </if>
+      <if test="ywzt != null" >
+        #{ywzt,jdbcType=VARCHAR},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="jgbh != null" >
+        #{jgbh,jdbcType=VARCHAR},
+      </if>
+      <if test="xxr1 != null" >
+        #{xxr1,jdbcType=VARCHAR},
+      </if>
+      <if test="xxr2 != null" >
+        #{xxr3,jdbcType=VARCHAR},
+      </if>
+      <if test="xxr3 != null" >
+        #{xxr3,jdbcType=VARCHAR},
+      </if>
+      <if test="sfzhm != null" >
+        #{sfzhm,jdbcType=VARCHAR},
+      </if>
+      <if test="openid != null" >
+        #{openid,jdbcType=VARCHAR},
+      </if>
+      <if test="ywly != null" >
+        #{ywly,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=DATE},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="dogo.model.CrjLstdYwInfo" >
+    update CRJ_LSTD_YW_INFO
+    <set >
+      <if test="ywbh != null" >
+        YWBH = #{ywbh,jdbcType=VARCHAR},
+      </if>
+      <if test="ywType != null" >
+        YW_TYPE = #{ywType,jdbcType=VARCHAR},
+      </if>
+      <if test="ywzt != null" >
+        YWZT = #{ywzt,jdbcType=VARCHAR},
+      </if>
+      <if test="remarks != null" >
+        REMARKS = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="jgbh != null" >
+        JGBH = #{jgbh,jdbcType=VARCHAR},
+      </if>
+      <if test="xxr1 != null" >
+        XXR1 = #{xxr1,jdbcType=VARCHAR},
+      </if>
+      <if test="xxr2 != null" >
+        XXR2 = #{xxr2,jdbcType=VARCHAR},
+      </if>
+      <if test="xxr3 != null" >
+        XXR3 = #{xxr3,jdbcType=VARCHAR},
+      </if>
+      <if test="sfzhm != null" >
+        SFZHM = #{sfzhm,jdbcType=VARCHAR},
+      </if>
+      <if test="openid != null" >
+        OPENID = #{openid,jdbcType=VARCHAR},
+      </if>
+      <if test="ywly != null" >
+        YWLY = #{ywly,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE = #{createDate,jdbcType=DATE},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateById" parameterType="dogo.model.CrjLstdYwInfo" >
+    <!-- update CRJ_LSTD_YW_INFO
+    set YWBH = #{ywbh,jdbcType=VARCHAR},
+      YW_TYPE = #{ywType,jdbcType=VARCHAR},
+      YWZT = #{ywzt,jdbcType=VARCHAR},
+      REMARKS = #{remarks,jdbcType=VARCHAR},
+      JGBH = #{jgbh,jdbcType=VARCHAR},
+      XXR1 = #{xxr1,jdbcType=VARCHAR},
+      XXR2 = #{xxr2,jdbcType=VARCHAR},
+      XXR3 = #{xxr3,jdbcType=VARCHAR},
+      SFZHM = #{sfzhm,jdbcType=VARCHAR},
+      OPENID = #{openid,jdbcType=VARCHAR},
+      CREATE_DATE = #{createDate,jdbcType=DATE}
+      where ID = #{id,jdbcType=VARCHAR} -->
+      update CRJ_LSTD_YW_INFO
+    <set >
+      <if test="ywbh != null" >
+        YWBH = #{ywbh,jdbcType=VARCHAR},
+      </if>
+      <if test="ywType != null" >
+        YW_TYPE = #{ywType,jdbcType=VARCHAR},
+      </if>
+      <if test="ywzt != null" >
+        YWZT = #{ywzt,jdbcType=VARCHAR},
+      </if>
+      <if test="remarks != null" >
+        REMARKS = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="jgbh != null" >
+        JGBH = #{jgbh,jdbcType=VARCHAR},
+      </if>
+      <if test="xxr1 != null" >
+        XXR1 = #{xxr1,jdbcType=VARCHAR},
+      </if>
+      <if test="xxr2 != null" >
+        XXR2 = #{xxr2,jdbcType=VARCHAR},
+      </if>
+      <if test="xxr3 != null" >
+        XXR3 = #{xxr3,jdbcType=VARCHAR},
+      </if>
+      <if test="sfzhm != null" >
+        SFZHM = #{sfzhm,jdbcType=VARCHAR},
+      </if>
+      <if test="openid != null" >
+        OPENID = #{openid,jdbcType=VARCHAR},
+      </if>
+      <if test="ywly != null" >
+        YWLY = #{ywly,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE = #{createDate,jdbcType=DATE},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByYwbh" parameterType="dogo.model.CrjLstdYwInfo" >
+   <!--  update CRJ_LSTD_YW_INFO
+    set YWBH = #{ywbh,jdbcType=VARCHAR},
+      YW_TYPE = #{ywType,jdbcType=VARCHAR},
+      YWZT = #{ywzt,jdbcType=VARCHAR},
+      REMARKS = #{remarks,jdbcType=VARCHAR},
+      JGBH = #{jgbh,jdbcType=VARCHAR},
+      XXR1 = #{xxr1,jdbcType=VARCHAR},
+      XXR2 = #{xxr2,jdbcType=VARCHAR},
+      XXR3 = #{xxr3,jdbcType=VARCHAR},
+      SFZHM = #{sfzhm,jdbcType=VARCHAR},
+      OPENID = #{openid,jdbcType=VARCHAR},
+      CREATE_DATE = #{createDate,jdbcType=DATE}
+      where YWBH = #{ywbh,jdbcType=VARCHAR} -->
+    update CRJ_LSTD_YW_INFO
+    <set >
+      <if test="ywbh != null" >
+        YWBH = #{ywbh,jdbcType=VARCHAR},
+      </if>
+      <if test="ywType != null" >
+        YW_TYPE = #{ywType,jdbcType=VARCHAR},
+      </if>
+      <if test="ywzt != null" >
+        YWZT = #{ywzt,jdbcType=VARCHAR},
+      </if>
+      <if test="remarks != null" >
+        REMARKS = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="jgbh != null" >
+        JGBH = #{jgbh,jdbcType=VARCHAR},
+      </if>
+      <if test="xxr1 != null" >
+        XXR1 = #{xxr1,jdbcType=VARCHAR},
+      </if>
+      <if test="xxr2 != null" >
+        XXR2 = #{xxr2,jdbcType=VARCHAR},
+      </if>
+      <if test="xxr3 != null" >
+        XXR3 = #{xxr3,jdbcType=VARCHAR},
+      </if>
+      <if test="sfzhm != null" >
+        SFZHM = #{sfzhm,jdbcType=VARCHAR},
+      </if>
+      <if test="openid != null" >
+        OPENID = #{openid,jdbcType=VARCHAR},
+      </if>
+      <if test="ywly != null" >
+        YWLY = #{ywly,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE = #{createDate,jdbcType=DATE},
+      </if>
+    </set>
+    where YWBH = #{ywbh,jdbcType=VARCHAR}
+  </update>
+</mapper>

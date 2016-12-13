@@ -1,0 +1,78 @@
+@charset "gb2312";
+/* CSS Document */
+#wrap { max-width:640px; margin:0 auto; overflow:hidden;}
+/**/
+.listMain { width:100%;}
+.listMain li { position:relative; padding:0 4%; border-bottom:1px solid #dedede; margin-bottom:1px; background:#f3f3f3;}
+.listMain li .dllist { overflow:hidden; clear:both; padding:9px 0;}
+.listMain li .dllist dt { float:left; width:26%; text-align:center;}
+.listMain li .dllist dt img { width:80%; border-radius:15px; height:70px;}
+.listMain li .dllist dd { float:left; width:80%; font-size:1.em;}
+.listMain li .dllist dd .pheight { line-height:30px;}
+.listMain li .dllist .titstyle { line-height:25px;}
+.enterIcon { position:absolute; top:40%; right:3%; width:13px; height:21px;}
+
+/* 详细 */
+.detail_title { text-align:center; width:100%; line-height:40px;}
+.detail_wrap { margin:0 auto; padding:0 2%; width:90%;  background:#f3f3f3; border-radius:3px;}
+.detail_wrap .conter_p { line-height:30px;}
+
+
+.slider { position:relative}
+.flex-control-paging li a {background: #fff!important; background: rgba(255,255,255,1)!important; }
+.flex-control-paging li a:hover { background: #2aabe5!important; background: rgba(42,171,229,1)!important;border:1px solid #fff; }
+.flex-control-paging li a.flex-active { background: #2aabe5!important; background: rgba(42,171,229,1)!important; border:1px solid #fff; }
+.flex-control-nav { text-align:right!important;}
+.contWrap { padding:0px 0 60px 0; position:relative;}
+.contWrap1{ padding:0px 0 20px 0; position:relative;}
+.conter_box { margin:0 auto; width:100%; overflow:hidden; clear:both; padding-top:20%;}
+.conter_box li { float:left; width:33%; text-align:center; padding-bottom:30px;}
+.conter_box li a { display:inline-block; width:60px; height:60px; border-radius:10px; box-shadow:1px 2px 3px #bfbfbf; color:#fff; font-size:1.6em; line-height:60px;}
+.conter_box li p { line-height:35px; font-size:1.2em; font-weight:bold;}
+.aColor2 { background:#2aabe5;}
+.aColor3 { background:#f5c10d;}
+.aColor4 { background:#b7d43e;}
+.aColor5 { background:#d6496c;}
+.aColor6 { background:#e83030;}
+.aColor7 { background:#536d88;}
+/* 列表 */
+.ul_box {padding-left:40%;width:60%; background:url(../image/icon/ulBg.jpg) repeat-x left bottom; overflow:hidden; background-color:#f4f4f4;}
+.ul_box li { float:left; width:50%; background:url(../image/icon/ul_libg.jpg) repeat-y right top;  margin:10px 0;}
+.ul_box li > a { display:block; text-align:center;}
+.ul_box .span_text { line-height:20px; display:block; color:#585757;}
+
+.head_box { position:absolute; top:-15%; left:5%; border:3px solid #fff; width:100px; height:80px; background-color:#fff; box-shadow:2px 2px 2px #868686;}
+.head_box > img { width:100px; height:80px;}
+/* 表单 */
+.form_input { background-color:#f4f4f4;}
+.red{ color:#F00; font-size:10px;}
+.inforEntry { width:96%;overflow:hidden; clear:both; height:32px; border:1px solid #e6e3e4; border-radius:5px;  color:#b7aeb1;}
+.inforEntry01 { width:50%;overflow:hidden; clear:both; height:32px; border:1px solid #e6e3e4; border-radius:5px;  color:#b7aeb1;}
+.gain{height:32px; border:1px solid #e6e3e4; border-radius:5px;  color:#666; background-color:#FFF}
+.span_text { padding-left:5px; height:32px; line-height:32px; display:inline-block;}
+.span_text02 {  height:32px; line-height:32px; display:inline-block;}
+.span_text01 { padding-left:5px; height:32px; line-height:32px; display:inline-block;color:#1797e1; font-weight:bold;}
+.sxcl{ border:1px solid #e6e3e4; border-radius:5px; background-color:#FFF ; line-height:24px; text-indent:10px; padding-top:10px; padding-bottom:10px; padding-left:5px; padding-right:5px;}
+.textarea1 { width:96%; height:70px; border:1px solid #e6e3e4; border-radius:5px;  }
+.btn_sty { display:inline-block;  *display:inline; margin-left:20px; width:98px;line-height:28px; height:28px; text-align:center; color:#fff; border-radius:3px;}
+.btn_blue { background:#4171b8;}/* 蓝色按钮 */
+.btn_gray { background-color:#dcdcdc;} /* 灰色 */
+.btn_hui { background-color:#b3b3b3;} /* 深灰色 */
+.btn_orange { background-color:#f08026;}
+.btn_blue:hover,.btn_gray:hover,.btn_orange:hover {opacity:0.8;filter: progid:DXImageTransform.Microsoft.Alpha(opacity=80);}
+.radio1 { padding:10px 0;}
+/*登录*/
+.logo1box{width:25%; margin-left:38%;}
+.logo1box img,.logo2box img{ width:100%; height:100%}
+.logo2box{width:70%; margin-left:15%;}
+.yonghuming{ background: url(../image/images/3.png)8px no-repeat;background-color:#f2f4fa; border: #afb6c8 1px solid; border-radius: 6px; -o-border-radius: 6px; -moz-border-radius: 6px; -webkit-border-radius: 6px; box-shadow: 0 0 1px #ccc; width:92%; margin-left:4%;  height: 42px; margin-top: 24px;}
+.shoujihao{ background: url(../image/images/4.png)8px no-repeat;background-color:#f2f4fa; border: #afb6c8 1px solid; border-radius: 6px; -o-border-radius: 6px; -moz-border-radius: 6px; -webkit-border-radius: 6px; box-shadow: 0 0 1px #ccc; width:92%; margin-left:4%;  height: 42px; margin-top: 24px;}
+.shurukuang{background-color:#f2f4fa; outline: none; width: 200px; height: 30px; line-height: 30px; margin-top: 5px; border:0px; margin-left:30px; font-family: 14px;}
+.loginbox{width:92%; margin-left:4%; height:50px; margin-top:35px;}
+.login{width:100%; height:40px; background-color:#00b8ee; border:#03a2d1 1px solid;border-radius: 6px; -o-border-radius: 6px; -moz-border-radius: 6px; -webkit-border-radius: 6px; font-size:16px; color:#FFF}
+.bj{background:url(../image/images/bj.jpg); background-repeat:no-repeat; background-size:100% 100%; width:100%; height:100%; margin:0 auto;}
+.yanzhengbox{ width:60%; height:45px; margin-left:4%; margin-top:14px;background: url(../image/images/5.png)8px no-repeat;background-color:#f2f4fa;border: #afb6c8 1px solid; border-radius: 6px; -o-border-radius: 6px; -moz-border-radius: 6px; -webkit-border-radius: 6px;}
+.yanzheng{background-color:#f2f4fa; outline: none; width: 100px; height: 30px; line-height: 30px; margin-top: 5px; border: 0px; margin-left:30px; font-family: 14px;}
+.huoqu{ width:100%; height:42px; margin-left:10px; margin-top: 4px; background-color:#e6e6ee; border:#beb3cf 1px solid;border-radius: 6px; -o-border-radius: 6px; -moz-border-radius: 6px; -webkit-border-radius: 6px; font-size:16px;color;#696b6a;}
+.jindubox{width:92%; background-color:#FFF; margin-left:1%; border-radius:4px;border-radius: 4px; -o-border-radius: 4px; -moz-border-radius: 4px; -webkit-border-radius: 4px; padding-bottom:10px;border:1px solid #e6e3e4;}
+</style>

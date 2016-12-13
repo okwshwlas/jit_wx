@@ -1,0 +1,94 @@
+﻿html,body{
+	height:100%;
+}
+body{
+	position:relative;
+	background: url('../images/index.jpg') no-repeat #D2EAEC;
+
+}
+.post{
+	position:absolute;
+	width:500px;
+	height:300px;
+	top:50%;
+	left:50%;
+	margin-left:-250px;
+	margin-top:-150px;
+	background:white;
+	border:1px #6699CC solid;
+}
+.post .title{
+	height:24px;
+	background:gray url(../images/portal/portalTitleBg.jpg) repeat-x;
+	border-bottom:1px solid #6699CC;
+}
+.post .title .more{
+	position:absolute;
+	top:4px;
+	right:5px;
+}
+.post .title .more a{
+	color:gray;
+}
+.post .title .text{
+	display:block;
+	float:left;
+	padding-left:10px;
+	line-height:24px;
+	color:#4F6B72;
+}
+.post .content{
+	height:245px;
+	overflow:auto;
+	background:white;
+}
+.post .pages{
+	height:29px;
+	border-top:1px #6699CC solid;
+	position:relative;
+}
+.ul-1{
+	
+}
+
+.ul-1 li{
+	background:#fff;
+	padding-left:10px;
+	height:22px;
+	line-height:22px;
+	border-bottom:1px #DEEDF4 solid;
+}
+.ul-1 li img{
+	margin:2px 6px 0 0 ;
+	display:block;
+	float:left;
+}
+.ul-1 li a{
+	color:#0066CC;
+}
+.ul-1 li a.red{
+	color:red;
+}
+
+.post-content{
+	background:white;
+}
+.post-content .title{
+	text-align:center;
+	margin:20px;
+	font-size:14px;
+}
+.post-content p{
+	line-height:22px;
+	text-indent:24px;
+	margin:20px;
+}
+.post-content .info{
+	text-align:right;
+	margin:0 20px;
+	color:gray;
+}
+
+.post-content p.enclosure{
+	margin:2px 20px;
+}

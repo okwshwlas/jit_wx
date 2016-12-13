@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"/>
+    <title>业务选择</title>
+    <link href="../style/default.css" rel="stylesheet" type="text/css" />
+    <link href="../style/contents.css" type="text/css"  rel="stylesheet"  />
+    <script type="text/javascript" src="../js/jquery.1.8.2.min.js"></script>
+    <script type="text/javascript">
+	     var suibian ='<div class="layer_selected"><img src="../image/icon/select_1.png" alt="" width="25" height="25" /></div>';
+		$(document).ready(function() {
+            $(".buse_ul li").click(function(){
+				var count=$(this).find("div").length;
+				if(count>0){
+					$(this).find('div').remove();
+ 				}else{
+					$(this).append(suibian)
+				}
+			})
+        });
+    </script>
+</head>
+<body>
+	<div id="wrap">
+    	<header id="header" onClick="laod();">业务选择</header>
+        <div class="busi_box">
+        	<!-- 首次申请 -->
+        	<div>
+            	<h2 class="busi_tit">首次申请</h2>
+                <ul class="buse_ul">
+                	<li id="id_box">
+                    	<p><img src="../image/icon/huzhao_icon1.png" alt="" width="40" height="53" /></p>
+                        <p>护照申请</p>
+                     </li>
+                    <li>
+                    	<p><img src="../image/icon/huzhao_icon2.png" alt=""  width="40" height="53" /></p>
+                        <p>护照申请</p>
+                     </li>
+                    <li>
+                    	<p><img src="../image/icon/huzhao_icon3.png" alt=""  width="40" height="53" /></p>
+                        <p>护照申请</p>
+                    </li>
+                </ul>
+            </div>
+            <!-- 再次申请 -->
+            <div>
+            	<h2 class="busi_tit busi_tit_again">再次申请</h2>
+                <ul class="buse_ul padding_no">
+                	<li>
+                    	<p><img src="../image/icon/two_icon1.png" alt="" width="40" height="40" /></p>
+                        <p>护照<span class="span_dis">(换发、补发)</span></p>
+                     </li>
+                    <li>
+                    	<p><img src="../image/icon/two_icon2.png" alt="" width="40" height="40" /></p>
+                        <p>港澳证签注 <span class="span_dis"></span></p>
+                    </li>
+                    <li>
+                    	<p><img src="../image/icon/two_icon3.png" alt="" width="40" height="40" /></p>
+                        <p>大陆证签注<span class="span_dis"></span></p>
+                    </li>
+                </ul>
+            </div>
+            
+        </div>
+        <section id="footer">
+             <div style="width:100%; text-align:center;"><a href="javascript:void(0);" class="btn_confirm btn_width">确 定</a></div>
+        </section>
+
+    </div>
+</body>
+</html>

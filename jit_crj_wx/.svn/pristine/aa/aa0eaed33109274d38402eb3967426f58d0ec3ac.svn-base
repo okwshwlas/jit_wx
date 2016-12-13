@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="dogo.dao.CrjPaylogMapper" >
+  <resultMap id="BaseResultMap" type="dogo.model.CrjPaylog" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="AMT" property="amt" jdbcType="DECIMAL" />
+    <result column="CAT_NAME" property="catName" jdbcType="VARCHAR" />
+    <result column="CAT_CODE" property="catCode" jdbcType="VARCHAR" />
+    <result column="PAYER_NO" property="payerNo" jdbcType="VARCHAR" />
+    <result column="PAYER_NAME" property="payerName" jdbcType="VARCHAR" />
+    <result column="BIZ_NO" property="bizNo" jdbcType="VARCHAR" />
+    <result column="PAYER_MOBILE_NO" property="payerMobileNo" jdbcType="VARCHAR" />
+    <result column="SETTLE_DESC" property="settleDesc" jdbcType="VARCHAR" />
+    <result column="PAYTIME" property="paytime" jdbcType="TIMESTAMP" />
+    <result column="SIGNATURE" property="signature" jdbcType="VARCHAR" />
+    <result column="RESP_CODE" property="respCode" jdbcType="VARCHAR" />
+    <result column="RESPMSG" property="respmsg" jdbcType="VARCHAR" />
+    <result column="SETTLENO" property="settleno" jdbcType="VARCHAR" />
+    <result column="BIZ_DATE" property="bizDate" jdbcType="VARCHAR" />
+    <result column="PAY_STATUS" property="payStatus" jdbcType="VARCHAR" />
+    <result column="RESP_SIGNATURE" property="respSignature" jdbcType="VARCHAR" />
+    <result column="YWBH" property="ywbh" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, AMT, CAT_NAME, CAT_CODE, PAYER_NO, PAYER_NAME, BIZ_NO, PAYER_MOBILE_NO, SETTLE_DESC, 
+    PAYTIME, SIGNATURE, RESP_CODE, RESPMSG, SETTLENO, BIZ_DATE, PAY_STATUS, RESP_SIGNATURE, 
+    YWBH
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from CRJ_PAYLOG
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  
+  <select id="selectByBizNo" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from CRJ_PAYLOG
+    where BIZ_NO = #{bizNo,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from CRJ_PAYLOG
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="dogo.model.CrjPaylog" >
+    insert into CRJ_PAYLOG (ID,AMT, CAT_NAME, 
+      CAT_CODE, PAYER_NO, PAYER_NAME, 
+      BIZ_NO, PAYER_MOBILE_NO, SETTLE_DESC, 
+      PAYTIME, SIGNATURE, RESP_CODE, 
+      RESPMSG, SETTLENO, BIZ_DATE, 
+      PAY_STATUS, RESP_SIGNATURE, YWBH
+      )
+    values (#{id,jdbcType=DECIMAL}, #{amt,jdbcType=DECIMAL}, #{catName,jdbcType=VARCHAR}, 
+      #{catCode,jdbcType=VARCHAR}, #{payerNo,jdbcType=VARCHAR}, #{payerName,jdbcType=VARCHAR}, 
+      #{bizNo,jdbcType=VARCHAR}, #{payerMobileNo,jdbcType=VARCHAR}, #{settleDesc,jdbcType=VARCHAR}, 
+      #{paytime,jdbcType=TIMESTAMP}, #{signature,jdbcType=VARCHAR}, #{respCode,jdbcType=VARCHAR}, 
+      #{respmsg,jdbcType=VARCHAR}, #{settleno,jdbcType=VARCHAR}, #{bizDate,jdbcType=VARCHAR}, 
+      #{payStatus,jdbcType=VARCHAR}, #{respSignature,jdbcType=VARCHAR}, #{ywbh,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="dogo.model.CrjPaylog" >
+    insert into CRJ_PAYLOG
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="amt != null" >
+        AMT,
+      </if>
+      <if test="catName != null" >
+        CAT_NAME,
+      </if>
+      <if test="catCode != null" >
+        CAT_CODE,
+      </if>
+      <if test="payerNo != null" >
+        PAYER_NO,
+      </if>
+      <if test="payerName != null" >
+        PAYER_NAME,
+      </if>
+      <if test="bizNo != null" >
+        BIZ_NO,
+      </if>
+      <if test="payerMobileNo != null" >
+        PAYER_MOBILE_NO,
+      </if>
+      <if test="settleDesc != null" >
+        SETTLE_DESC,
+      </if>
+      <if test="paytime != null" >
+        PAYTIME,
+      </if>
+      <if test="signature != null" >
+        SIGNATURE,
+      </if>
+      <if test="respCode != null" >
+        RESP_CODE,
+      </if>
+      <if test="respmsg != null" >
+        RESPMSG,
+      </if>
+      <if test="settleno != null" >
+        SETTLENO,
+      </if>
+      <if test="bizDate != null" >
+        BIZ_DATE,
+      </if>
+      <if test="payStatus != null" >
+        PAY_STATUS,
+      </if>
+      <if test="respSignature != null" >
+        RESP_SIGNATURE,
+      </if>
+      <if test="ywbh != null" >
+        YWBH,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="amt != null" >
+        #{amt,jdbcType=DECIMAL},
+      </if>
+      <if test="catName != null" >
+        #{catName,jdbcType=VARCHAR},
+      </if>
+      <if test="catCode != null" >
+        #{catCode,jdbcType=VARCHAR},
+      </if>
+      <if test="payerNo != null" >
+        #{payerNo,jdbcType=VARCHAR},
+      </if>
+      <if test="payerName != null" >
+        #{payerName,jdbcType=VARCHAR},
+      </if>
+      <if test="bizNo != null" >
+        #{bizNo,jdbcType=VARCHAR},
+      </if>
+      <if test="payerMobileNo != null" >
+        #{payerMobileNo,jdbcType=VARCHAR},
+      </if>
+      <if test="settleDesc != null" >
+        #{settleDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="paytime != null" >
+        #{paytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="signature != null" >
+        #{signature,jdbcType=VARCHAR},
+      </if>
+      <if test="respCode != null" >
+        #{respCode,jdbcType=VARCHAR},
+      </if>
+      <if test="respmsg != null" >
+        #{respmsg,jdbcType=VARCHAR},
+      </if>
+      <if test="settleno != null" >
+        #{settleno,jdbcType=VARCHAR},
+      </if>
+      <if test="bizDate != null" >
+        #{bizDate,jdbcType=VARCHAR},
+      </if>
+      <if test="payStatus != null" >
+        #{payStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="respSignature != null" >
+        #{respSignature,jdbcType=VARCHAR},
+      </if>
+      <if test="ywbh != null" >
+        #{ywbh,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="dogo.model.CrjPaylog" >
+    update CRJ_PAYLOG
+    <set >
+      <if test="amt != null" >
+        AMT = #{amt,jdbcType=DECIMAL},
+      </if>
+      <if test="catName != null" >
+        CAT_NAME = #{catName,jdbcType=VARCHAR},
+      </if>
+      <if test="catCode != null" >
+        CAT_CODE = #{catCode,jdbcType=VARCHAR},
+      </if>
+      <if test="payerNo != null" >
+        PAYER_NO = #{payerNo,jdbcType=VARCHAR},
+      </if>
+      <if test="payerName != null" >
+        PAYER_NAME = #{payerName,jdbcType=VARCHAR},
+      </if>
+      <if test="bizNo != null" >
+        BIZ_NO = #{bizNo,jdbcType=VARCHAR},
+      </if>
+      <if test="payerMobileNo != null" >
+        PAYER_MOBILE_NO = #{payerMobileNo,jdbcType=VARCHAR},
+      </if>
+      <if test="settleDesc != null" >
+        SETTLE_DESC = #{settleDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="paytime != null" >
+        PAYTIME = #{paytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="signature != null" >
+        SIGNATURE = #{signature,jdbcType=VARCHAR},
+      </if>
+      <if test="respCode != null" >
+        RESP_CODE = #{respCode,jdbcType=VARCHAR},
+      </if>
+      <if test="respmsg != null" >
+        RESPMSG = #{respmsg,jdbcType=VARCHAR},
+      </if>
+      <if test="settleno != null" >
+        SETTLENO = #{settleno,jdbcType=VARCHAR},
+      </if>
+      <if test="bizDate != null" >
+        BIZ_DATE = #{bizDate,jdbcType=VARCHAR},
+      </if>
+      <if test="payStatus != null" >
+        PAY_STATUS = #{payStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="respSignature != null" >
+        RESP_SIGNATURE = #{respSignature,jdbcType=VARCHAR},
+      </if>
+      <if test="ywbh != null" >
+        YWBH = #{ywbh,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="dogo.model.CrjPaylog" >
+    update CRJ_PAYLOG
+    set AMT = #{amt,jdbcType=DECIMAL},
+      CAT_NAME = #{catName,jdbcType=VARCHAR},
+      CAT_CODE = #{catCode,jdbcType=VARCHAR},
+      PAYER_NO = #{payerNo,jdbcType=VARCHAR},
+      PAYER_NAME = #{payerName,jdbcType=VARCHAR},
+      BIZ_NO = #{bizNo,jdbcType=VARCHAR},
+      PAYER_MOBILE_NO = #{payerMobileNo,jdbcType=VARCHAR},
+      SETTLE_DESC = #{settleDesc,jdbcType=VARCHAR},
+      PAYTIME = #{paytime,jdbcType=TIMESTAMP},
+      SIGNATURE = #{signature,jdbcType=VARCHAR},
+      RESP_CODE = #{respCode,jdbcType=VARCHAR},
+      RESPMSG = #{respmsg,jdbcType=VARCHAR},
+      SETTLENO = #{settleno,jdbcType=VARCHAR},
+      BIZ_DATE = #{bizDate,jdbcType=VARCHAR},
+      PAY_STATUS = #{payStatus,jdbcType=VARCHAR},
+      RESP_SIGNATURE = #{respSignature,jdbcType=VARCHAR},
+      YWBH = #{ywbh,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

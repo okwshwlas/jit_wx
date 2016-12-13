@@ -1,0 +1,21 @@
+package dogo.service;
+
+import dogo.model.CrjPaylog;
+
+
+public interface CrjWxQzPayServicel {
+
+	 int deleteByPrimaryKey(String id);
+
+	    int insert(CrjPaylog record);
+
+	    int insertSelective(CrjPaylog record);
+
+	    CrjPaylog selectByPrimaryKey(String id);
+	    CrjPaylog selectByBizNo(String bizNo);
+
+	    int updateByPrimaryKeySelective(CrjPaylog record);
+
+	    int updateByPrimaryKey(CrjPaylog record);
+	
+}

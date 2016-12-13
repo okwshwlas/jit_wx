@@ -1,0 +1,25 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="gb2312">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"/>
+<title>详细</title>
+<link href="../style/default.css" rel="stylesheet" type="text/css" />
+  <link rel="stylesheet" type="text/css" href="../style/index3.css">
+
+ 
+<!-- Modernizr -->
+</head>
+<body>
+<!--map-->
+<img src="../image/images/map.jpg" style="width:100%">
+<!-- wraps -->
+<div id="wrap">
+	<p style=" margin-left:10px; margin-top:10px; width:100%; font-size:16px;">预约信息：您预约长春市出入境管理局（2016-01-29 9:00-10:00）</p>
+	<div style="text-align:center; padding-top:25px;padding-bottom:25px;">
+		<a href="gain.html" class="btn_sty btn_blue">下一步</a>
+		<a href="#this" class="btn_sty btn_orange" onclick="cancelbtn('login_pop')">取  消</a>
+	</div>
+</div>
+</body>
+</html>

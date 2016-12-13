@@ -1,0 +1,132 @@
+﻿html{
+
+}
+body{
+	font-family: Verdana,宋体;
+	font-size: 12px;
+	margin:10px;
+
+	background:#e0e8ef;
+}
+
+li{
+	list-style-type: none;
+}
+img
+{
+	border:none;
+}
+
+.clear{
+	height:0;
+	clear:both;
+}
+
+#page-warp {
+	margin:0 10px;
+
+}
+
+
+.widgetItem table{
+	font-size:12px;
+}
+.widgetItem table td{
+	
+}
+.widget {
+
+	width:100%;
+
+}
+.widget .item-col {
+	width:49.5%;
+	position:relative;
+}
+.widget .col-1 {
+	float: left;
+	position:relative;
+}
+.widget .col-2 {
+	float: right;
+	position:relative;
+}
+.item{
+	border:1px solid #6699CC;
+	margin-bottom:10px;
+	width:100%;
+}/*每个单独的模块的容器*/
+.item .caption{
+	background:#99CCFF url(../images/portal/portalTitleBg.jpg) repeat-x;
+	font-size: 12px;
+	height:24px;
+	text-align: left;
+	text-decoration: none;
+	border:1px solid #FFFFFF;
+	position:relative;
+}/*标题头部分*/
+.item .caption .text{
+	border-right:1px solid #ddd;
+	color:#4F6B72;
+	float:left;
+	font-size:12px;
+	font-weight:bold;
+	height:24px;
+	line-height:24px;
+	padding:0 25px;
+	text-align:left;
+}
+.item .caption .option {
+	position:absolute;
+	top:2px;
+	height:16px;
+	right:5px;
+	text-align: center;
+}
+
+
+
+.item .content{
+	background:#FFFFFF url('../images/portal/flow-bg.jpg') repeat-x;
+	border-top:1px solid #6699CC;
+	height:230px;
+	overflow:auto;
+	
+	}
+
+
+.item .content .list li{
+	background:url('../images/userview-li-1.gif') no-repeat scroll left center;
+	padding:4px 4px 0 10px;
+}
+.item .content table.baseinfo ,.item .content table.baseinfo td{
+	border:none;
+}
+.placeholder{
+	border:2px #ddd	dashed;
+	margin-bottom:10px;
+}
+
+
+.ul-1{
+	
+}
+
+.ul-1 li{
+	background:#fff;
+	padding-left:10px;
+	height:22px;
+	line-height:22px;
+	border-bottom:1px #DEEDF4 solid;
+}
+.ul-1 li img{
+	margin:2px 6px 0 0 ;
+	display:block;
+	float:left;
+}
+.ul-1 li a{
+	color:#0066CC;
+}
+.ul-1 li a.red{
+	color:red;
+}

@@ -1,0 +1,20 @@
+﻿html, body {
+	font-family: Verdana ,宋体;
+	height: 100%;
+	overflow: hidden;
+}
+body {
+	background: #efefef;
+	position: relative;
+	background:url(../images/main-bg.jpg) no-repeat;
+}
+.loading{
+	position:absolute;
+	width:132px;
+	height:146px;
+	top:50%;
+	left:50%;
+	margin-left:-66px;
+	margin-top:-120px;
+	background:url('../images/loading.gif') no-repeat;
+}

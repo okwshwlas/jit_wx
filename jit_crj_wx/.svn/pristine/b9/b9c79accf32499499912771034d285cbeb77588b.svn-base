@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="dogo.dao.TzggMapper" >
+  <resultMap id="BaseResultMap" type="dogo.model.Tzgg" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="BIAOTI" property="biaoti" jdbcType="VARCHAR" />
+    <result column="NEIRONG" property="neirong" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="DATE" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="DATE" />
+    <result column="DISPLAY_STATE" property="displayState" jdbcType="VARCHAR" />
+    <result column="FU_JIAN" property="fuJian" jdbcType="VARCHAR" />
+    <result column="TYPE" property="type" jdbcType="VARCHAR" />
+    <result column="IDCARD" property="idcard" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, BIAOTI, NEIRONG, CREATE_TIME, UPDATE_TIME, DISPLAY_STATE, FU_JIAN, TYPE, IDCARD
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from CRJ_TZGG
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from CRJ_TZGG
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  
+  <insert id="insertSelective" parameterType="dogo.model.Tzgg" >
+    insert into CRJ_TZGG
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="biaoti != null" >
+        BIAOTI,
+      </if>
+      <if test="neirong != null" >
+        NEIRONG,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME,
+      </if>
+      <if test="displayState != null" >
+        DISPLAY_STATE,
+      </if>
+      <if test="fuJian != null" >
+        FU_JIAN,
+      </if>
+      <if test="type != null" >
+        TYPE,
+      </if>
+      <if test="idcard != null" >
+        IDCARD,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="biaoti != null" >
+        #{biaoti,jdbcType=VARCHAR},
+      </if>
+      <if test="neirong != null" >
+        #{neirong,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=DATE},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=DATE},
+      </if>
+      <if test="displayState != null" >
+        #{displayState,jdbcType=VARCHAR},
+      </if>
+      <if test="fuJian != null" >
+        #{fuJian,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="idcard != null" >
+        #{idcard,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="dogo.model.Tzgg" >
+    update CRJ_TZGG
+    <set >
+      <if test="biaoti != null" >
+        BIAOTI = #{biaoti,jdbcType=VARCHAR},
+      </if>
+      <if test="neirong != null" >
+        NEIRONG = #{neirong,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=DATE},
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME = #{updateTime,jdbcType=DATE},
+      </if>
+      <if test="displayState != null" >
+        DISPLAY_STATE = #{displayState,jdbcType=VARCHAR},
+      </if>
+      <if test="fuJian != null" >
+        FU_JIAN = #{fuJian,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        TYPE = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="idcard != null" >
+        IDCARD = #{idcard,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <!-- 查询个人的通知公告根据状态 -->
+  <select id="selectAllTzggByIdcardAndstatue" parameterType="dogo.model.Tzgg" resultMap="BaseResultMap">
+  select <include refid="Base_Column_List" />
+  ,
+  TO_CHAR(CREATE_TIME, 'YYYY-MM-DD HH24:MI:SS') ctime,
+  TO_CHAR(UPDATE_TIME, 'YYYY-MM-DD HH24:MI:SS') uptime
+  from CRJ_TZGG where DISPLAY_STATE=#{displayState}
+  and TYPE=#{type}
+  and IDCARD = #{idcard}
+  order by CREATE_TIME desc
+  </select>
+  
+</mapper>

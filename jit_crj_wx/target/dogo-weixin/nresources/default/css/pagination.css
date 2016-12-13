@@ -1,0 +1,48 @@
+.pagination{
+	position:absolute;
+
+	right:5px;
+	top:2px;
+	height:24px;
+	overflow:hidden;
+}
+.pagination li {
+	line-height:22px;
+	float:left;
+}
+.pagination a {
+	border: solid 1px #DDDDDD;
+	margin-right: 2px;
+	height:22px;
+}
+.pagination .count{
+	margin-right:40px;
+}
+.pagination .previous-off, .pagination .next-off {
+	color: #666666;
+	display: block;
+	float: left;
+	font-weight: bold;
+	padding: 0 4px;
+}
+.pagination .next a, .pagination .previous a {
+	font-weight: bold;
+	border: solid 1px #FFFFFF;
+}
+.pagination .active {
+	color: #ff0084;
+	font-weight: bold;
+	display: block;
+	float: left;
+	padding: 0 6px;
+}
+.pagination a:link, .pagination a:visited {
+	color: #0063e3;
+	display: block;
+	float: left;
+	padding: 0 6px;
+	text-decoration: none;
+}
+.pagination a:hover {
+	border: solid 1px #666666;
+}

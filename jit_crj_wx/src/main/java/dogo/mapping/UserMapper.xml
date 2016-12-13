@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="dogo.dao.UserMapper" >
+  <resultMap id="BaseResultMap" type="dogo.model.User" >
+    <id column="USERID" property="userid" jdbcType="VARCHAR" />
+    <result column="USERNAME" property="username" jdbcType="VARCHAR" />
+    <result column="USERPWD" property="userpwd" jdbcType="VARCHAR" />
+    <result column="USERTEL" property="usertel" jdbcType="VARCHAR" />
+    <result column="USERMOBILETEL" property="usermobiletel" jdbcType="VARCHAR" />
+    <result column="USERSTATE" property="userstate" jdbcType="VARCHAR" />
+    <result column="USERCODE" property="usercode" jdbcType="VARCHAR" />
+    <result column="USERDIQU" property="userdiqu" jdbcType="VARCHAR" />
+    <result column="USERBMMC" property="userbmmc" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="dogo.model.User" extends="BaseResultMap" >
+    <result column="USERDEP" property="userdep" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    USERID, USERNAME, USERPWD, USERTEL, USERMOBILETEL, USERSTATE, USERCODE, USERDIQU, 
+    USERBMMC
+  </sql>
+  <sql id="Blob_Column_List" >
+    USERDEP
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from m_user
+    where USERID = #{userid,jdbcType=VARCHAR}
+  </select>
+  <select id="findUserByUserCode" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from m_user
+    where USERCODE = #{usercode,jdbcType=VARCHAR}
+  </select>
+  
+  <!-- 根据用户名密码查询 -->
+  <select id="selectByWhere" resultType="int" parameterType="dogo.model.User" >
+   select count(*) from m_user where USERNAME=#{username,jdbcType=VARCHAR}
+   and USERPWD=#{userpwd,jdbcType=VARCHAR}
+  </select>
+  
+  
+   <!-- 查询所有记录数 -->
+	<select id="selectAllCount" resultType="int" parameterType="java.util.Map" statementType="STATEMENT">
+	select count(*) from m_user
+	<trim suffixOverrides="," >
+      <if test="page.typeName != 'ALL' and page.typeName != null" >
+	    where 
+        ${page.typeName} like '%${page.typeValue}%',
+      </if>
+    </trim>
+	</select>
+  
+   <!-- 查询所有带分页 -->
+   
+   <!-- SELECT * FROM (SELECT a.*, rownum r FROM LTWX_ACTIVITY_INFO a 
+			WHERE  rownum $unionLeft$= $endRownum$) WHERE r $unionRight$= $startRownum$   ORDER BY r DESC  -->
+	<select id="selectAllUserByPage" resultMap="BaseResultMap" parameterType="java.util.Map" statementType="STATEMENT" >
+	select * from (
+	SELECT 
+		u.USERID, 
+		u.USERNAME, 
+		u.USERPWD, 
+		u.USERTEL, 
+		u.USERMOBILETEL, 
+		u.USERSTATE, 
+		u.USERCODE, 
+		u.USERDIQU, 
+    	u.USERBMMC,
+		r.rolename,
+		rownum r
+	FROM m_user u LEFT JOIN m_user_role ur 
+		ON u.USERID=ur.USERID LEFT JOIN m_role r 
+		ON r.ROLEID=ur.ROLEID
+		 where 1=1
+		 <![CDATA[ 
+		 and rownum<=${page.end}
+		 ]]>
+    <trim suffixOverrides="," >
+      <if test="page.typeName != 'ALL' and page.typeName != null" >
+	   and
+        ${page.typeName} like '%${page.typeValue}%',
+      </if>
+    </trim>
+    )
+    where 
+     <![CDATA[ ${page.begin}<=r
+     ]]>
+	</select>
+	
+	<!-- 查询所有带分页 -->
+	<select id="selectAllUserByRoleid" resultMap="BaseResultMap" parameterType="java.lang.String" >
+		 select 
+    <include refid="Base_Column_List" />
+    from m_user
+    where ROLEID = #{roleid,jdbcType=VARCHAR}
+	</select>
+  
+  
+  
+  <resultMap type="dogo.model.User" id="userResultMap3" extends="BaseResultMap">
+		<collection property="userRoles" javaType="list" ofType="dogo.model.UserRole">
+			<id property="id" column="userrole_id" />
+			<result column="role_id" property="roleId" />
+			<result property="userId" column="user_id" />
+
+			<association property="role" javaType="dogo.model.Role">
+				<id property="id" column="role_id" />
+				<result property="text" column="role_text" />
+			</association>
+		</collection>
+	</resultMap>
+	<select id="getAll3" resultMap="userResultMap3">
+		SELECT
+		tuser.ID,
+		tuser.CREATEDATETIME,
+		tuser.MODIFYDATETIME,
+		tuser.NAME,
+		tuser.PWD,
+		tuser.CREATE_TIME,
+		tuser.UPDATE_TIME,
+		tuser_trole.ID userrole_id,
+		tuser_trole.ROLE_ID role_id,
+		tuser_trole.USER_ID user_id,
+		trole.ID role_id,
+		trole.TEXT role_text
+		FROM
+		tuser
+		JOIN tuser_trole ON tuser.ID = tuser_trole.USER_ID
+		JOIN trole ON tuser_trole.ROLE_ID = trole.ID
+	</select>
+  
+  
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from m_user
+    where USERID = #{userid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="dogo.model.User" >
+    insert into m_user (USERID, USERNAME, USERPWD, 
+      USERTEL, USERMOBILETEL, USERSTATE, 
+      USERCODE, USERDIQU, USERBMMC, 
+      USERDEP)
+    values (#{userid,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}, #{userpwd,jdbcType=VARCHAR}, 
+      #{usertel,jdbcType=VARCHAR}, #{usermobiletel,jdbcType=VARCHAR}, #{userstate,jdbcType=VARCHAR}, 
+      #{usercode,jdbcType=VARCHAR}, #{userdiqu,jdbcType=VARCHAR}, #{userbmmc,jdbcType=VARCHAR}, 
+      #{userdep,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="dogo.model.User" >
+    insert into m_user
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="userid != null" >
+        USERID,
+      </if>
+      <if test="username != null" >
+        USERNAME,
+      </if>
+      <if test="userpwd != null" >
+        USERPWD,
+      </if>
+      <if test="usertel != null" >
+        USERTEL,
+      </if>
+      <if test="usermobiletel != null" >
+        USERMOBILETEL,
+      </if>
+      <if test="userstate != null" >
+        USERSTATE,
+      </if>
+      <if test="usercode != null" >
+        USERCODE,
+      </if>
+      <if test="userdiqu != null" >
+        USERDIQU,
+      </if>
+      <if test="userbmmc != null" >
+        USERBMMC,
+      </if>
+      <if test="userdep != null" >
+        USERDEP,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="userid != null" >
+        #{userid,jdbcType=VARCHAR},
+      </if>
+      <if test="username != null" >
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="userpwd != null" >
+        #{userpwd,jdbcType=VARCHAR},
+      </if>
+      <if test="usertel != null" >
+        #{usertel,jdbcType=VARCHAR},
+      </if>
+      <if test="usermobiletel != null" >
+        #{usermobiletel,jdbcType=VARCHAR},
+      </if>
+      <if test="userstate != null" >
+        #{userstate,jdbcType=VARCHAR},
+      </if>
+      <if test="usercode != null" >
+        #{usercode,jdbcType=VARCHAR},
+      </if>
+      <if test="userdiqu != null" >
+        #{userdiqu,jdbcType=VARCHAR},
+      </if>
+      <if test="userbmmc != null" >
+        #{userbmmc,jdbcType=VARCHAR},
+      </if>
+      <if test="userdep != null" >
+        #{userdep,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="dogo.model.User" >
+    update m_user
+    <set >
+      <if test="username != null" >
+        USERNAME = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="userpwd != null" >
+        USERPWD = #{userpwd,jdbcType=VARCHAR},
+      </if>
+      <if test="usertel != null" >
+        USERTEL = #{usertel,jdbcType=VARCHAR},
+      </if>
+      <if test="usermobiletel != null" >
+        USERMOBILETEL = #{usermobiletel,jdbcType=VARCHAR},
+      </if>
+      <if test="userstate != null" >
+        USERSTATE = #{userstate,jdbcType=VARCHAR},
+      </if>
+      <if test="usercode != null" >
+        USERCODE = #{usercode,jdbcType=VARCHAR},
+      </if>
+      <if test="userdiqu != null" >
+        USERDIQU = #{userdiqu,jdbcType=VARCHAR},
+      </if>
+      <if test="userbmmc != null" >
+        USERBMMC = #{userbmmc,jdbcType=VARCHAR},
+      </if>
+      <if test="userdep != null" >
+        USERDEP = #{userdep,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where USERID = #{userid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="dogo.model.User" >
+    update m_user
+    set USERNAME = #{username,jdbcType=VARCHAR},
+      USERPWD = #{userpwd,jdbcType=VARCHAR},
+      USERTEL = #{usertel,jdbcType=VARCHAR},
+      USERMOBILETEL = #{usermobiletel,jdbcType=VARCHAR},
+      USERSTATE = #{userstate,jdbcType=VARCHAR},
+      USERCODE = #{usercode,jdbcType=VARCHAR},
+      USERDIQU = #{userdiqu,jdbcType=VARCHAR},
+      USERBMMC = #{userbmmc,jdbcType=VARCHAR},
+      USERDEP = #{userdep,jdbcType=VARCHAR}
+    where USERID = #{userid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="dogo.model.User" >
+    update m_user
+    set USERNAME = #{username,jdbcType=VARCHAR},
+      USERPWD = #{userpwd,jdbcType=VARCHAR},
+      USERTEL = #{usertel,jdbcType=VARCHAR},
+      USERMOBILETEL = #{usermobiletel,jdbcType=VARCHAR},
+      USERSTATE = #{userstate,jdbcType=VARCHAR},
+      USERCODE = #{usercode,jdbcType=VARCHAR},
+      USERDIQU = #{userdiqu,jdbcType=VARCHAR},
+      USERBMMC = #{userbmmc,jdbcType=VARCHAR}
+    where USERID = #{userid,jdbcType=VARCHAR}
+  </update>
+</mapper>

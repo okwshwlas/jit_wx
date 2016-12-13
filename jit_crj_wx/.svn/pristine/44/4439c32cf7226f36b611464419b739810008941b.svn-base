@@ -1,0 +1,964 @@
+package dogo.weixin.core;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
+import java.security.MessageDigest;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.ServletInputStream;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.beans.propertyeditors.URLEditor;
+
+import com.alibaba.fastjson.JSONObject;
+
+/**
+ * 微信工具类
+ * 
+ * @author tj
+ * 
+ */
+public class WeiXinUtil {
+	// 向请求端发送返回数据
+	public void print(String content, HttpServletResponse response) {
+		try {
+			response.getWriter().print(content);
+			response.getWriter().flush();
+			response.getWriter().close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	// 数组转字符串
+	public String ArrayToString(String[] arr) {
+		StringBuffer bf = new StringBuffer();
+		for (int i = 0; i < arr.length; i++) {
+			bf.append(arr[i]);
+		}
+		return bf.toString();
+	}
+
+	// sha1加密
+	public String SHA1Encode(String sourceString) {
+		String resultString = null;
+		try {
+			resultString = new String(sourceString);
+			MessageDigest md = MessageDigest.getInstance("SHA-1");
+			resultString = byte2hexString(md.digest(resultString.getBytes()));
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+		return resultString;
+	}
+
+	public final String byte2hexString(byte[] bytes) {
+		StringBuffer buf = new StringBuffer(bytes.length * 2);
+		for (int i = 0; i < bytes.length; i++) {
+			if (((int) bytes[i] & 0xff) < 0x10) {
+				buf.append("0");
+			}
+			buf.append(Long.toString((int) bytes[i] & 0xff, 16));
+		}
+		return buf.toString().toUpperCase();
+	}
+
+	// 从输入流读取post参数
+	public String readStreamParameter(ServletInputStream in) {
+		StringBuilder buffer = new StringBuilder();
+		BufferedReader reader = null;
+		try {
+			reader = new BufferedReader(new InputStreamReader(in, "utf-8"));
+			String line = null;
+			while ((line = reader.readLine()) != null) {
+				buffer.append(line);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (null != reader) {
+				try {
+					reader.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return buffer.toString();
+	}
+
+	// 微信接口验证
+	public boolean checkSignature(HttpServletRequest request, final String TOKEN) {
+		String signature = request.getParameter("signature");
+		String timestamp = request.getParameter("timestamp");
+		String nonce = request.getParameter("nonce");
+		String token = TOKEN;
+		String[] tmpArr = { token, timestamp, nonce };
+		Arrays.sort(tmpArr);
+		String tmpStr = this.ArrayToString(tmpArr);
+		tmpStr = this.SHA1Encode(tmpStr);
+		if (tmpStr.equalsIgnoreCase(signature)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	/**
+	 * 返回发送回复文本类型的的XML
+	 * 
+	 * @param ToUserName
+	 *            发送的用户
+	 * @param FromUserName
+	 *            平台用户
+	 * @param time
+	 *            时间戳
+	 * @param content
+	 *            发送的内容
+	 * @return
+	 */
+	public String messageXml(String ToUserName, String FromUserName, Long time,
+			String content) {
+
+		String textTpl = "<xml>" + "<ToUserName><![CDATA[" + ToUserName
+				+ "]]></ToUserName>" + "<FromUserName><![CDATA[" + FromUserName
+				+ "]]></FromUserName>" + "<CreateTime>" + time
+				+ "</CreateTime>" + "<MsgType><![CDATA[text]]></MsgType>"
+				+ "<Content><![CDATA[" + content + "]]></Content>"
+				+ "<FuncFlag>0</FuncFlag>" + "</xml>";
+
+		return textTpl;
+	}
+
+	/**
+	 * 转接多客服
+	 * 
+	 * @param ToUserName
+	 * @param FromUserName
+	 * @param time
+	 * @return
+	 */
+	public String kefuXml(String ToUserName, String FromUserName, Long time) {
+
+		String textTpl = "<xml>" + "<ToUserName><![CDATA[" + ToUserName
+				+ "]]></ToUserName>" + "<FromUserName><![CDATA[" + FromUserName
+				+ "]]></FromUserName>" + "<CreateTime>" + time
+				+ "</CreateTime>"
+				+ "<MsgType><![CDATA[transfer_customer_service]]></MsgType>"
+				+ "</xml>";
+
+		return textTpl;
+	}
+
+	/**
+	 * 返回发送回复图文类型的的XML 最多10条
+	 * 
+	 * @param ToUserName
+	 *            发送的用户
+	 * @param FromUserName
+	 *            平台用户
+	 * @param titles
+	 *            图文消息标题
+	 * @param descriptions
+	 *            图文消息描述
+	 * @param picurls
+	 *            图片链接，支持JPG、PNG格式，较好的效果为大图640*320，小图80*80，
+	 *            限制图片链接的域名需要与开发者填写的基本资料中的Url一致
+	 * @param urls
+	 *            点击图文消息跳转链接
+	 * @return
+	 */
+	public String newsXml(String ToUserName, String FromUserName, Long time,
+			List<String> titles, List<String> descriptions,
+			List<String> picurls, List<String> urls) {
+		String ArticleCount = titles.size() + "";
+
+		String Articles = "<Articles>";
+		for (int i = 0; i < titles.size() && i < 10; i++) {
+			Articles = Articles + " <item>";
+			Articles = Articles + " <Title><![CDATA[" + titles.get(i)
+					+ "]]></Title>";
+			Articles = Articles + " <Description><![CDATA["
+					+ descriptions.get(i) + "]]></Description>";
+			Articles = Articles + " <PicUrl><![CDATA[" + picurls.get(i)
+					+ "]]></PicUrl>";
+			Articles = Articles + " <Url><![CDATA[" + urls.get(i) + "]]></Url>";
+			Articles = Articles + " </item>";
+		}
+		Articles = Articles + "</Articles>";
+
+		String picTpl = "<xml>   " + "<ToUserName><![CDATA[" + ToUserName
+				+ "]]></ToUserName>" + "<FromUserName><![CDATA[" + FromUserName
+				+ "]]></FromUserName>" + "<CreateTime>" + time
+				+ "</CreateTime>" + " <MsgType><![CDATA[news]]></MsgType>"
+				+ " <Content><![CDATA[]]></Content>" + " <ArticleCount>"
+				+ ArticleCount + "</ArticleCount>" + Articles
+				+ " <FuncFlag>1</FuncFlag>" + " </xml>    ";
+
+		return picTpl;
+	}
+
+	/**
+	 * 计算两个经纬度坐标之间的距离
+	 * 
+	 * @param lng1
+	 *            : 第1个坐标的经度
+	 * @param lat1
+	 *            : 第1个坐标的纬度
+	 * @param lng2
+	 *            : 第2个坐标的经度
+	 * @param lat2
+	 *            : 第2个坐标的纬度
+	 * @return
+	 */
+	public double getDistance(double lng1, double lat1, double lng2, double lat2) {
+		return (111120 * 1 / 0.017453292)
+				* Math.acos((Math.sin(lat1 * 0.017453292) * Math
+						.sin(lat2 * 0.017453292))
+						+ ((Math.cos(lat1 * 0.017453292) * Math
+								.cos(lat2 * 0.017453292)) * Math.cos(lng2
+								* 0.017453292 - lng1 * 0.017453292)));
+	}
+
+	/**
+	 * 获取Access_token
+	 * 
+	 * 
+	 * wxf1fd8f1419f114b6 
+	 * 
+	 * f07db3f88b45786377687dc19eca3fd1
+	 * 
+	 * @param appid
+	 *            你自己的token
+	 * @param appsecret
+	 *            你自己的token
+	 * @return
+	 */
+	public String getOpenid(String appid, String appsecret, String code) {
+
+		StringBuffer bufferRes = new StringBuffer();
+		String openid = "";
+		try {
+			URL realUrl = new URL(
+					"https://api.weixin.qq.com/sns/oauth2/access_token?appid="
+							+ appid + "&secret=" + appsecret + "&code=" + code + "&grant_type=authorization_code");
+			HttpURLConnection conn = (HttpURLConnection) realUrl
+					.openConnection();
+			// 连接超时
+			conn.setConnectTimeout(25000);
+			// 读取超时 --服务器响应比较慢，增大时间
+			conn.setReadTimeout(25000);
+			HttpURLConnection.setFollowRedirects(true);
+			// 请求方式
+			conn.setRequestMethod("GET");
+			conn.setDoOutput(true);
+			conn.setDoInput(true);
+			conn.setRequestProperty("User-Agent",
+					"Mozilla/5.0 (Windows NT 6.1; WOW64; rv:21.0) Gecko/20100101 Firefox/21.0");
+			conn.setRequestProperty("Referer", "https://api.weixin.qq.com/");
+			conn.connect();
+
+			InputStream in = conn.getInputStream();
+			BufferedReader read = new BufferedReader(new InputStreamReader(in,
+					"UTF-8"));
+			String valueString = null;
+			while ((valueString = read.readLine()) != null) {
+				bufferRes.append(valueString);
+			}
+			System.out.println(bufferRes.toString());
+			JSONObject jo = (JSONObject) JSONObject.parse(bufferRes.toString());
+			openid = jo.getString("openid");
+			// System.out.println("access_token==="+access_token);
+			in.close();
+			if (conn != null) {
+				// 关闭连接
+				conn.disconnect();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+		return openid;
+	}
+
+	/**
+	 * 获取Access_token
+	 * 
+	 * 
+	 * wxf1fd8f1419f114b6 
+	 * 
+	 * f07db3f88b45786377687dc19eca3fd1
+	 * 
+	 * @param appid
+	 *            你自己的token
+	 * @param appsecret
+	 *            你自己的token
+	 * @return
+	 */
+	public String getAccess_token(String appid, String appsecret) {
+
+		StringBuffer bufferRes = new StringBuffer();
+		String access_token = "";
+		try {
+			URL realUrl = new URL(
+					"https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid="
+							+ appid + "&secret=" + appsecret);
+			HttpURLConnection conn = (HttpURLConnection) realUrl
+					.openConnection();
+			// 连接超时
+			conn.setConnectTimeout(25000);
+			// 读取超时 --服务器响应比较慢，增大时间
+			conn.setReadTimeout(25000);
+			HttpURLConnection.setFollowRedirects(true);
+			// 请求方式
+			conn.setRequestMethod("GET");
+			conn.setDoOutput(true);
+			conn.setDoInput(true);
+			conn.setRequestProperty("User-Agent",
+					"Mozilla/5.0 (Windows NT 6.1; WOW64; rv:21.0) Gecko/20100101 Firefox/21.0");
+			conn.setRequestProperty("Referer", "https://api.weixin.qq.com/");
+			conn.connect();
+
+			InputStream in = conn.getInputStream();
+			BufferedReader read = new BufferedReader(new InputStreamReader(in,
+					"UTF-8"));
+			String valueString = null;
+			while ((valueString = read.readLine()) != null) {
+				bufferRes.append(valueString);
+			}
+			JSONObject jo = (JSONObject) JSONObject.parse(bufferRes.toString());
+			access_token = jo.getString("access_token");
+			// System.out.println("access_token==="+access_token);
+			in.close();
+			if (conn != null) {
+				// 关闭连接
+				conn.disconnect();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+		return access_token;
+	}
+
+	/**
+	 * 创建自定义菜单
+	 * 
+	 * @param params
+	 *            参数 String s =
+	 *            "{\"button\":[{\"type\":\"click\",\"name\":\"产品\",\"sub_button\":[{\"type\":\"click\",\"name\":\"产品列表\",\"key\":\"V1001_01_01\"},{\"type\":\"click\",\"name\":\"优惠活动\",\"key\":\"V1001_01_05\"}]},{\"type\":\"click\",\"name\":\"服务\",\"sub_button\":[{\"type\":\"click\",\"name\":\"wifi登录\",\"key\":\"V1001_02_01\"}]},{\"type\":\"click\",\"name\":\"关于我们\",\"sub_button\":[{\"type\":\"click\",\"name\":\"关于我们\",\"key\":\"V1001_03_01\"},{\"type\":\"click\",\"name\":\"联系方式\",\"key\":\"V1001_03_02\"}]}]}"
+	 *            ; String ss=
+	 *            "{\"button\":[{\"type\":\"click\",\"name\":\"商家\",\"sub_button\":[{\"type\":\"click\",\"name\":\"最新商家\",\"key\":\"V1001_01_01\"},{\"type\":\"click\",\"name\":\"优惠活动\",\"key\":\"V1001_01_05\"}]},{\"type\":\"click\",\"name\":\"产品\",\"sub_button\":[{\"type\":\"click\",\"name\":\"WiAP路由器\",\"key\":\"V1001_02_01\"},{\"type\":\"click\",\"name\":\"WiAC网关\",\"key\":\"V1001_02_02\"},{\"type\":\"click\",\"name\":\"免费无线宝\",\"key\":\"V1001_02_03\"}]},{\"type\":\"click\",\"name\":\"时讯无线\",\"sub_button\":[{\"type\":\"click\",\"name\":\"免费上网\",\"key\":\"V1001_03_01\"},{\"type\":\"click\",\"name\":\"商家报装\",\"key\":\"V1001_03_02\"},{\"type\":\"click\",\"name\":\"商家报修\",\"key\":\"V1001_03_03\"},{\"type\":\"click\",\"name\":\"加盟代理\",\"key\":\"V1001_03_04\"},{\"type\":\"click\",\"name\":\"关于我们\",\"key\":\"V1001_03_05\"}]}]}"
+	 *            ;
+	 * @param accessToken
+	 *            你自己的token SeLAimX_yRL_6xnRw-1
+	 *            z2oqqqgKwMgCGRCyal11WhrR8JHixrRpmD2f7kWdKBOtsEOwuyB5WNNi1oGKB
+	 *            -Ie4qe1QS-
+	 *            CYl27a0z1Sk4Ev2wcHbSLRr9Tm6DWECgwoSjnXTuLd5gbbdIk9JehgWjUriQ
+	 * @return
+	 */
+	public boolean createMenu(String params, String accessToken) {
+		boolean b = false;
+		StringBuffer bufferRes = new StringBuffer();
+		try {
+			URL realUrl = new URL(
+					"https://api.weixin.qq.com/cgi-bin/menu/create?access_token="
+							+ accessToken);
+			HttpURLConnection conn = (HttpURLConnection) realUrl
+					.openConnection();
+			// 连接超时
+			conn.setConnectTimeout(25000);
+			// 读取超时 --服务器响应比较慢，增大时间
+			conn.setReadTimeout(25000);
+			HttpURLConnection.setFollowRedirects(true);
+			// 请求方式
+			conn.setRequestMethod("POST");
+			conn.setDoOutput(true);
+			conn.setDoInput(true);
+			conn.setRequestProperty("User-Agent",
+					"Mozilla/5.0 (Windows NT 6.1; WOW64; rv:21.0) Gecko/20100101 Firefox/21.0");
+			conn.setRequestProperty("Referer", "https://api.weixin.qq.com/");
+			conn.connect();
+			// 获取URLConnection对象对应的输出流
+			OutputStream out = conn.getOutputStream();
+			// 发送请求参数
+			// out.write(URLEncoder.encode(params,"UTF-8"));
+			out.write(params.getBytes("utf-8"));
+			out.flush();
+			out.close();
+
+			InputStream in = conn.getInputStream();
+			BufferedReader read = new BufferedReader(new InputStreamReader(in,
+					"UTF-8"));
+			String valueString = null;
+			while ((valueString = read.readLine()) != null) {
+				bufferRes.append(valueString);
+			}
+			System.out.println(bufferRes.toString());
+			JSONObject jo = (JSONObject) JSONObject.parse(bufferRes.toString());
+			String errcode = jo.getString("errcode");
+			if (errcode.equals("0")) {
+				b = true;
+			} else {
+				b = false;
+			}
+			in.close();
+			if (conn != null) {
+				// 关闭连接
+				conn.disconnect();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			b = false;
+		}
+		return b;
+	}
+	
+	
+	//发送模板消息
+	public boolean createMobanMessage(String params,String accessToken) {
+		boolean b = false;
+		StringBuffer bufferRes = new StringBuffer();
+		try {
+			URL realUrl = new URL(
+					"https://api.weixin.qq.com/cgi-bin/message/template/send?access_token="
+							+ accessToken);
+			HttpURLConnection conn = (HttpURLConnection) realUrl
+					.openConnection();
+			// 连接超时
+			conn.setConnectTimeout(25000);
+			// 读取超时 --服务器响应比较慢，增大时间
+			conn.setReadTimeout(25000);
+			HttpURLConnection.setFollowRedirects(true);
+			// 请求方式
+			conn.setRequestMethod("POST");
+			conn.setDoOutput(true);
+			conn.setDoInput(true);
+			conn.setRequestProperty("User-Agent",
+					"Mozilla/5.0 (Windows NT 6.1; WOW64; rv:21.0) Gecko/20100101 Firefox/21.0");
+			conn.setRequestProperty("Referer", "https://api.weixin.qq.com/");
+			conn.connect();
+			// 获取URLConnection对象对应的输出流
+			OutputStream out = conn.getOutputStream();
+			// 发送请求参数
+			// out.write(URLEncoder.encode(params,"UTF-8"));
+			System.out.println(params);
+			out.write(params.getBytes("utf-8"));
+			out.flush();
+			out.close();
+
+			InputStream in = conn.getInputStream();
+			BufferedReader read = new BufferedReader(new InputStreamReader(in,
+					"UTF-8"));
+			String valueString = null;
+			while ((valueString = read.readLine()) != null) {
+				bufferRes.append(valueString);
+			}
+			System.out.println(bufferRes.toString());
+			JSONObject jo = (JSONObject) JSONObject.parse(bufferRes.toString());
+			String errcode = jo.getString("errcode");
+			System.out.println("--------------code:"+errcode);
+			if (errcode.equals("0")) {
+				b = true;
+			} else {
+				b = false;
+			}
+			in.close();
+			if (conn != null) {
+				// 关闭连接
+				conn.disconnect();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			b = false;
+		}
+		return b;
+	}
+	
+	
+	
+	
+	
+	
+
+	/**
+	 * 删除自定义菜单
+	 * 
+	 * @param accessToken
+	 *            你自己的token
+	 * @return
+	 */
+	public boolean deleteMenu(String accessToken) {
+		boolean b = false;
+		StringBuffer bufferRes = new StringBuffer();
+		try {
+			URL realUrl = new URL(
+					"https://api.weixin.qq.com/cgi-bin/menu/delete?access_token="
+							+ accessToken);
+			HttpURLConnection conn = (HttpURLConnection) realUrl
+					.openConnection();
+			// 连接超时
+			conn.setConnectTimeout(25000);
+			// 读取超时 --服务器响应比较慢，增大时间
+			conn.setReadTimeout(25000);
+			HttpURLConnection.setFollowRedirects(true);
+			// 请求方式
+			conn.setRequestMethod("GET");
+			conn.setDoOutput(true);
+			conn.setDoInput(true);
+			conn.setRequestProperty("User-Agent",
+					"Mozilla/5.0 (Windows NT 6.1; WOW64; rv:21.0) Gecko/20100101 Firefox/21.0");
+			conn.setRequestProperty("Referer", "https://api.weixin.qq.com/");
+			conn.connect();
+
+			InputStream in = conn.getInputStream();
+			BufferedReader read = new BufferedReader(new InputStreamReader(in,
+					"UTF-8"));
+			String valueString = null;
+			while ((valueString = read.readLine()) != null) {
+				bufferRes.append(valueString);
+			}
+			JSONObject jo = (JSONObject) JSONObject.parse(bufferRes.toString());
+			String errcode = jo.getString("errcode");
+			if (errcode.equals("0")) {
+				b = true;
+			} else {
+				b = false;
+			}
+			in.close();
+			if (conn != null) {
+				// 关闭连接
+				conn.disconnect();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			b = false;
+		}
+		return b;
+	}
+
+	/**
+	 * 根据用户openid获取用户基本信息json字符串
+	 * 
+	 * @param openid
+	 * @param access_token
+	 * @return
+	 */
+	public String getUserInfo(String openid, String access_token) {
+		StringBuffer bufferRes = new StringBuffer();
+		String url = "https://api.weixin.qq.com/cgi-bin/user/info?access_token="
+				+ access_token + "&openid=" + openid + "&lang=zh_CN";
+		try {
+			URL realUrl = new URL(url);
+			HttpURLConnection conn = (HttpURLConnection) realUrl
+					.openConnection();
+			// 连接超时
+			conn.setConnectTimeout(25000);
+			// 读取超时 --服务器响应比较慢，增大时间
+			conn.setReadTimeout(25000);
+			HttpURLConnection.setFollowRedirects(true);
+			// 请求方式
+			conn.setRequestMethod("GET");
+			conn.setDoOutput(true);
+			conn.setDoInput(true);
+			conn.setRequestProperty("User-Agent",
+					"Mozilla/5.0 (Windows NT 6.1; WOW64; rv:21.0) Gecko/20100101 Firefox/21.0");
+			conn.setRequestProperty("Referer", "https://api.weixin.qq.com/");
+			conn.connect();
+
+			InputStream in = conn.getInputStream();
+			BufferedReader read = new BufferedReader(new InputStreamReader(in,
+					"UTF-8"));
+			String valueString = null;
+			while ((valueString = read.readLine()) != null) {
+				bufferRes.append(valueString);
+			}
+
+			// JSONObject jo =
+			// (JSONObject)JSONObject.parse(bufferRes.toString());
+			// access_token=jo.getString("access_token");
+			// System.out.println("access_token==="+access_token);
+			/*
+			 * { "subscribe": 1, "openid": "o6_bmjrPTlm6_2sgVt7hMZOPfL2M",
+			 * "nickname": "Band", "sex": 1, "language": "zh_CN", "city": "广州",
+			 * "province": "广东", "country": "中国", "headimgurl":
+			 * "http://wx.qlogo.cn/mmopen/g3MonUZtNHkdmzicIlibx6iaFqAc56vxLSUfpb6n5WKSYVY0ChQKkiaJSgQ1dZuTOgvLLrhJbERQQ4eMsv84eavHiaiceqxibJxCfHe/0"
+			 * , "subscribe_time": 1382694957, "unionid":
+			 * " o6_bmasdasdsad6_2sgVt7hMZOPfL" }
+			 */
+			in.close();
+			if (conn != null) {
+				// 关闭连接
+				conn.disconnect();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "";
+		}
+		return bufferRes.toString();
+	}
+
+	/**
+	 * 获取用户列表
+	 * 
+	 * @param access_token
+	 * @param rows
+	 * @return
+	 */
+	public Map<String, Object> getAllWeiXinUser(String access_token) {
+		Map<String, Object> mm = new HashMap<String, Object>();
+		StringBuffer bufferRes = new StringBuffer();
+		// 上传文件请求路径
+		String url = "https://api.weixin.qq.com/cgi-bin/user/get?access_token="
+				+ access_token;
+		try {
+			URL realUrl = new URL(url);
+			HttpURLConnection conn = (HttpURLConnection) realUrl
+					.openConnection();
+			// 连接超时
+			conn.setConnectTimeout(25000);
+			// 读取超时 --服务器响应比较慢，增大时间
+			conn.setReadTimeout(25000);
+			HttpURLConnection.setFollowRedirects(true);
+			// 请求方式
+			conn.setRequestMethod("GET");
+			conn.setDoOutput(true);
+			conn.setDoInput(true);
+			conn.setRequestProperty("User-Agent",
+					"Mozilla/5.0 (Windows NT 6.1; WOW64; rv:21.0) Gecko/20100101 Firefox/21.0");
+			conn.setRequestProperty("Referer", "https://api.weixin.qq.com/");
+			conn.connect();
+			InputStream in = conn.getInputStream();
+			BufferedReader read = new BufferedReader(new InputStreamReader(in,
+					"UTF-8"));
+			String valueString = null;
+			while ((valueString = read.readLine()) != null) {
+				bufferRes.append(valueString);
+			}
+			JSONObject jo = (JSONObject) JSONObject.parse(bufferRes.toString());
+			String error = jo.getString("errcode");
+			if (!"".equals(error) && error != null) {
+				mm.put("message", "error");
+			} else {
+				String total = jo.getString("total");
+				String count = jo.getString("count");
+				JSONObject ja = jo.getJSONObject("data");
+				String next_openid = "";
+				if (Integer.valueOf(total) > 10000) {
+					next_openid = jo.getString("next_openid");
+					for (int i = 0; i < Integer.valueOf(total) / 10000; i++) {
+						String url1 = "https://api.weixin.qq.com/cgi-bin/user/get?access_token="
+								+ access_token
+								+ "&next_openid="
+								+ next_openid
+								+ "";
+						URL realUrl1 = new URL(url1);
+						HttpURLConnection conn1 = (HttpURLConnection) realUrl
+								.openConnection();
+						// 连接超时
+						conn1.setConnectTimeout(25000);
+						// 读取超时 --服务器响应比较慢，增大时间
+						conn1.setReadTimeout(25000);
+						HttpURLConnection.setFollowRedirects(true);
+						// 请求方式
+						conn1.setRequestMethod("GET");
+						conn1.setDoOutput(true);
+						conn1.setDoInput(true);
+						conn1.setRequestProperty("User-Agent",
+								"Mozilla/5.0 (Windows NT 6.1; WOW64; rv:21.0) Gecko/20100101 Firefox/21.0");
+						conn1.setRequestProperty("Referer",
+								"https://api.weixin.qq.com/");
+						conn1.connect();
+						InputStream in1 = conn1.getInputStream();
+						BufferedReader read1 = new BufferedReader(
+								new InputStreamReader(in1, "UTF-8"));
+						while ((valueString = read1.readLine()) != null) {
+							bufferRes.append(valueString);
+						}
+						JSONObject jo1 = (JSONObject) JSONObject
+								.parse(bufferRes.toString());
+						JSONObject ja1 = jo.getJSONObject("data");
+						ja.putAll(ja1);
+						next_openid = jo1.getString("next_openid");
+					}
+				}
+				String[] openIds = ja.getString("openid")
+						.substring(1, ja.getString("openid").length() - 1)
+						.replaceAll("\"", "").split(",");
+				String userInfo="";
+				String bufferStr="";
+				int k = 0;
+				if(Integer.valueOf(total)>100){
+					StringBuffer userBauffer = new StringBuffer();
+					for(int j=0;j<Integer.valueOf(total)/100+1;j++){
+						
+						if(j==Integer.valueOf(total)/100){
+							StringBuffer buffer = new StringBuffer();
+							buffer.append("{\"user_list\": [");
+							for (int i = 0; i < openIds.length-(j*100); i++) {
+								buffer.append(" {\"openid\": \"" + openIds[k]
+										+ "\",\"lang\": \"zh-CN\"}");
+								if (k!=openIds.length-1) {
+									buffer.append(",");
+								}
+								k++;
+							}
+							buffer.append(" ]}");
+							bufferStr=buffer.toString();
+						}else{
+							StringBuffer buffer = new StringBuffer();
+							buffer.append("{\"user_list\": [");
+							for (int i = 0; i < 100; i++) {
+								buffer.append(" {\"openid\": \"" + openIds[k]
+										+ "\",\"lang\": \"zh-CN\"}");
+								if (k!=openIds.length) {
+									buffer.append(",");
+								}
+								k++;
+							}
+							buffer.append(" ]}");
+							bufferStr=buffer.toString();
+						}
+						String userIn = this.getAllUserInfo(access_token,
+								bufferStr);
+						String a="\"user_info_list\":";
+						String jj=userIn.substring(1, userIn.length()-1).replaceAll(a, "");
+						userInfo+=jj.substring(1,jj.length()-1);
+					}
+					userBauffer.append("["+userInfo+"]");
+					userInfo=userBauffer.toString();
+				}else{
+					StringBuffer buffer = new StringBuffer();
+					buffer.append("{\"user_list\": [");
+					for (int i = 0; i < 100; i++) {
+						buffer.append(" {\"openid\": \"" + openIds[i]
+								+ "\",\"lang\": \"zh-CN\"}");
+						if (k != openIds.length- 1) {
+							buffer.append(",");
+						}
+						k++;
+					}
+					buffer.append(" ]}");
+					String userIn = this.getAllUserInfo(access_token,
+							buffer.toString());
+					String a="\"user_info_list\":";
+					String jj=userIn.substring(1, userIn.length()-1).replaceAll(a, "");
+					userInfo=userIn;
+				}
+				mm.put("userInfo", userInfo);
+				mm.put("total", total);
+			}
+			if (conn != null) {
+				// 关闭连接
+				conn.disconnect();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return mm;
+
+	}
+
+	/**
+	 * 批量获取用户信息
+	 * 
+	 * @param access_token
+	 * @param json
+	 * @return
+	 */
+	public String getAllUserInfo(String access_token, String buffer) {
+		String userInfo = "";
+		StringBuffer bufferRes = new StringBuffer();
+		String geturl = "https://api.weixin.qq.com/cgi-bin/user/info/batchget?access_token="
+				+ access_token + "";
+		try {
+			URL readurl = new URL(geturl);
+			HttpURLConnection con = (HttpURLConnection) readurl
+					.openConnection();
+			// 连接超时
+			con.setConnectTimeout(25000);
+			// 读取超时 --服务器响应比较慢，增大时间
+			con.setReadTimeout(25000);
+			HttpURLConnection.setFollowRedirects(true);
+			// 请求方式
+			con.setRequestMethod("POST");
+			con.setDoOutput(true);
+			con.setDoInput(true);
+			con.setRequestProperty("User-Agent",
+					"Mozilla/5.0 (Windows NT 6.1; WOW64; rv:21.0) Gecko/20100101 Firefox/21.0");
+			con.setRequestProperty("Referer", "https://api.weixin.qq.com/");
+			con.connect();
+			OutputStream out = con.getOutputStream();
+			out.write(buffer.toString().getBytes("utf-8"));
+			// out.write(params.getBytes("utf-8"));
+			out.flush();
+			out.close();
+
+			InputStream ins = con.getInputStream();
+			BufferedReader bRead = new BufferedReader(new InputStreamReader(
+					ins, "UTF-8"));
+			String valueString = null;
+			while ((valueString = bRead.readLine()) != null) {
+				bufferRes.append(valueString);
+			}
+			JSONObject alluser = (JSONObject) JSONObject.parse(bufferRes
+					.toString());
+			userInfo = alluser.toString();
+			return userInfo;
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	public String getUserGroup(String access_token) {
+		String userGroup = "";
+		StringBuffer bufferRes = new StringBuffer();
+		String url = "https://api.weixin.qq.com/cgi-bin/groups/get?access_token="
+				+ access_token + "";
+		try {
+			URL realUrl;
+			realUrl = new URL(url);
+			HttpURLConnection conn = (HttpURLConnection) realUrl.openConnection();
+			// 连接超时
+			conn.setConnectTimeout(25000);
+			// 读取超时 --服务器响应比较慢，增大时间
+			conn.setReadTimeout(25000);
+			HttpURLConnection.setFollowRedirects(true);
+			// 请求方式
+			conn.setRequestMethod("GET");
+			conn.setDoOutput(true);
+			conn.setDoInput(true);
+			conn.setRequestProperty("User-Agent",
+					"Mozilla/5.0 (Windows NT 6.1; WOW64; rv:21.0) Gecko/20100101 Firefox/21.0");
+			conn.setRequestProperty("Referer", "https://api.weixin.qq.com/");
+			conn.connect();
+			InputStream in = conn.getInputStream();
+			BufferedReader read = new BufferedReader(new InputStreamReader(in,
+					"UTF-8"));
+			String valueString = null;
+			while ((valueString = read.readLine()) != null) {
+				bufferRes.append(valueString);
+			}
+			JSONObject jo = (JSONObject) JSONObject.parse(bufferRes.toString());
+			userGroup=jo.toJSONString();
+			return userGroup;
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	
+	/**
+	 * 城市服务预约成功
+	 * @param TEMPLATEPARAM
+	 * @return
+	 */
+	public void yuYueCityServer(String TEMPLATEPARAM) {
+		//StringBuffer bufferRes = new StringBuffer();
+		try {
+			URL realUrl = new URL("https://city.weixin.qq.com/cgi-bin/entry?result_data="+ TEMPLATEPARAM+"#wechat_redirect");
+			HttpURLConnection conn = (HttpURLConnection) realUrl
+					.openConnection();
+			
+			System.out.println(realUrl.toString());
+			
+			// 连接超时
+			conn.setConnectTimeout(25000);
+			// 读取超时 --服务器响应比较慢，增大时间
+			conn.setReadTimeout(25000);
+			HttpURLConnection.setFollowRedirects(true);
+			// 请求方式
+			conn.setRequestMethod("GET");
+			conn.setDoOutput(true);
+			conn.setDoInput(true);
+			conn.setRequestProperty("User-Agent",
+					"Mozilla/5.0 (Windows NT 6.1; WOW64; rv:21.0) Gecko/20100101 Firefox/21.0");
+			conn.setRequestProperty("Referer", "https://api.weixin.qq.com/");
+			conn.connect();
+			// 获取URLConnection对象对应的输出流
+			
+
+//			InputStream in = conn.getInputStream();
+//			BufferedReader read = new BufferedReader(new InputStreamReader(in,
+//					"UTF-8"));
+//			String valueString = null;
+//			while ((valueString = read.readLine()) != null) {
+//				bufferRes.append(valueString);
+//			}
+//			System.out.println(bufferRes.toString());
+//			//JSONObject jo = (JSONObject) JSONObject.parse(bufferRes.toString());
+//			//String errcode = jo.getString("errcode");
+//			in.close();
+			if (conn != null) {
+				// 关闭连接
+				conn.disconnect();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	
+	
+	
+	//
+	public static void main(String[] args) throws UnsupportedEncodingException {
+		/*
+		 * WeiXinUtil util = new WeiXinUtil(); // String token =
+		 * "GGly8Pn_K6Hhla9LzoElF_ILmI1Kldq_MdvuUYrUuDLAl39iLxo6hIrT4LLsVMxUcH7GPTBu5HT5wmZI8d_jV4r718ChRUwzTwuoCBBVHM9FM6z5y7YRQe1Lh_FP__xnUsDws33Z4gobNoCQbWUmfQ"
+		 * ; // ss=
+		 * "{\"button\":[{\"type\":\"click\",\"name\":\"商家\",\"sub_button\":[{\"type\":\"click\",\"name\":\"最新商家\",\"key\":\"V1001_01_01\"},{\"type\":\"click\",\"name\":\"优惠活动\",\"key\":\"V1001_01_05\"}]},{\"type\":\"click\",\"name\":\"产品\",\"sub_button\":[{\"type\":\"click\",\"name\":\"WiAP路由器\",\"key\":\"V1001_02_01\"},{\"type\":\"click\",\"name\":\"WiAC网关\",\"key\":\"V1001_02_02\"},{\"type\":\"click\",\"name\":\"免费无线宝\",\"key\":\"V1001_02_03\"}]},{\"type\":\"click\",\"name\":\"时讯无线\",\"sub_button\":[{\"type\":\"click\",\"name\":\"免费上网\",\"key\":\"V1001_03_01\"},{\"type\":\"click\",\"name\":\"商家报装\",\"key\":\"V1001_03_02\"},{\"type\":\"click\",\"name\":\"商家报修\",\"key\":\"V1001_03_03\"},{\"type\":\"click\",\"name\":\"加盟代理\",\"key\":\"V1001_03_04\"},{\"type\":\"click\",\"name\":\"关于我们\",\"key\":\"V1001_03_05\"}]}]}"
+		 * ; String s =
+		 * " {\"button\":[{\"type\":\"click\",\"name\":\"今日歌曲\",\"key\":\"V1001_TODAY_MUSIC\"},{\"type\":\"click\",\"name\":\"歌手简介\",\"key\":\"V1001_TODAY_SINGER\"},{\"name\":\"菜单\",\"sub_button\":[{\"type\":\"view\",\"name\":\"搜索\",\"url\":\"http://www.soso.com/\"},{\"type\":\"view\",\"name\":\"视频\",\"url\":\"http://v.qq.com/\"},{\"type\":\"click\",\"name\":\"赞一下我们\",\"key\":\"V1001_GOOD\"}]}]}"
+		 * ; String ss =
+		 * "{\"button\":[{\"name\":\"er二\",\"sub_button\":[{\"type\":\"click\",\"name\":\"22\",\"key\":\"22\"}]},{\"name\":\"主菜单三\",\"sub_button\":[{\"type\":\"click\",\"name\":\"31\",\"key\":\"31\"},{\"type\":\"click\",\"name\":\"32\",\"key\":\"32\"},{\"type\":\"click\",\"name\":\"33\",\"key\":\"33\"},{\"type\":\"click\",\"name\":\"34\",\"key\":\"34\"},{\"type\":\"view\",\"name\":\"35\",\"url\":\"http://www.baidu.com\"}]}]}"
+		 * ; //util.deleteMenu(util.getAccess_token()); String sss =
+		 * "{\"button\":[{\"name\":\"维尔瓦\",\"sub_button\":[{\"type\":\"view\",\"name\":\"dd\",\"url\":\"http://www.baidu.com\"}]}]}"
+		 * ;
+		 */
+
+		// util.createMenu(sss, util.getAccess_token());
+		// System.out.println(util.getAccess_token());
+		WeiXinUtil util = new WeiXinUtil();
+		/*String token = util.getAccess_token("wx4f8f9dc36160b515", "fc401b422b7d433fea25a81faeb16c4c");
+		//模板ID    hOxfDtm9nqdxjwpbe2-TKuBOdDNzoeRyrFzzV5ISXAA
+		String params = "{\"touser\":\"orOuKwNLMZ47mIWaJPusHlXKl9vc\",\"template_id\":\"OrcXU1L4mCQsO1hjgcGd7G3jzjKxrzkXehBq48usm5c\",\"url\":\"\",\"topcolor\":\"#FF0000\",\"data\":{}}";
+		
+		boolean flag = util.createMobanMessage(params, token);*/
+		//oSUoSuEYyB4cnzYIh7Y2_64N6w0c
+		//给的例子
+		String s = "https://city.weixin.qq.com/cgi-bin/entry?result_data=%7b%22touser%22%3anull%2c%22template_id%22%3a%22zhangshangyizhitong_tyghpt%22%2c%22url%22%3a%22http%3a%5c%2f%5c%2fweixin.qq.com%5c%2fdownload%22%2c%22topcolor%22%3a%22%23FF0000%22%2c%22data%22%3a%7b%22first%22%3a%7b%22value%22%3a%22%e6%82%a8%e5%b7%b2%e7%bb%8f%e9%a2%84%e7%ba%a6%e6%8c%82%e5%8f%b7%e6%88%90%e5%8a%9f%ef%bc%81%22%2c%22color%22%3a%22%23173177%22%7d%2c%22keyword1%22%3a%7b%22value%22%3a%22%e6%9c%aa%e5%91%bd%e5%90%8d%22%2c%22color%22%3a%22%23173177%22%7d%2c%22remark%22%3a%7b%22value%22%3a%22%22%2c%22color%22%3a%22%23173177%22%7d%7d%7d#wechat_redirect";
+		
+		String s1 = "%7b%22touser%22%3anull%2c%22template_id%22%3a%22zhangshangyizhitong_tyghpt%22%2c%22url%22%3a%22http%3a%5c%2f%5c%2fweixin.qq.com%5c%2fdownload%22%2c%22topcolor%22%3a%22%23FF0000%22%2c%22data%22%3a%7b%22first%22%3a%7b%22value%22%3a%22%e6%82%a8%e5%b7%b2%e7%bb%8f%e9%a2%84%e7%ba%a6%e6%8c%82%e5%8f%b7%e6%88%90%e5%8a%9f%ef%bc%81%22%2c%22color%22%3a%22%23173177%22%7d%2c%22keyword1%22%3a%7b%22value%22%3a%22%e6%9c%aa%e5%91%bd%e5%90%8d%22%2c%22color%22%3a%22%23173177%22%7d%2c%22remark%22%3a%7b%22value%22%3a%22%22%2c%22color%22%3a%22%23173177%22%7d%7d%7d";
+
+		//出入境
+		//String params = "{\"touser\":\"orOuKwNLMZ47mIWaJPusHlXKl9vc\",\"template_id\":\"OOr6BH1RmS3vnZkwNOhOT2Qsm61d6skgNE4rrOqTHCA\",\"url\":\"\",\"topcolor\":\"#FF0000\",\"data\":{}}";
+		//出入境
+		String params = "{\"touser\":"+null+",\"template_id\":\"OOr6BH1RmS3vnZkwNOhOT2Qsm61d6skgNE4rrOqTHCA\",\"url\":\"\",\"topcolor\":\"#FF0000\",\"data\":{}}";
+				
+		util.yuYueCityServer(URLEncoder.encode(params, "UTF-8"));
+		
+		
+		//System.out.println(URLDecoder.decode(s1, "utf-8"));
+		
+		
+	}
+}

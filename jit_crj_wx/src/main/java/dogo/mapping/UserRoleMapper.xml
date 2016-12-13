@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="dogo.dao.UserRoleMapper" >
+  <resultMap id="BaseResultMap" type="dogo.model.UserRole" >
+    <result column="USERROLEID" property="userroleid" jdbcType="VARCHAR" />
+    <result column="USERID" property="userid" jdbcType="VARCHAR" />
+    <result column="ROLEID" property="roleid" jdbcType="VARCHAR" />
+  </resultMap>
+  <insert id="insert" parameterType="dogo.model.UserRole" >
+    insert into m_user_role (USERROLEID, USERID, ROLEID
+      )
+    values (#{userroleid,jdbcType=VARCHAR}, #{userid,jdbcType=VARCHAR}, #{roleid,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="addRolesName" parameterType="dogo.model.UserRole" >
+    insert into m_user_role (USERROLEID, USERID, ROLEID
+      )
+    values (#{userroleid,jdbcType=VARCHAR}, #{userid,jdbcType=VARCHAR}, #{roleid,jdbcType=VARCHAR}
+      )
+  </insert>
+  <delete id="deleteByRoleid" parameterType="java.lang.String" >
+    delete from m_user_role
+    where ROLEID = #{roleid,jdbcType=VARCHAR}
+  </delete>
+  <select id="selectAllUserByRoleid" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    USERROLEID, USERID, ROLEID
+     from m_user_role
+    where ROLEID = #{roleid,jdbcType=VARCHAR}
+  </select>
+  <insert id="insertSelective" parameterType="dogo.model.UserRole" >
+    insert into m_user_role
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="userroleid != null" >
+        USERROLEID,
+      </if>
+      <if test="userid != null" >
+        USERID,
+      </if>
+      <if test="roleid != null" >
+        ROLEID,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="userroleid != null" >
+        #{userroleid,jdbcType=VARCHAR},
+      </if>
+      <if test="userid != null" >
+        #{userid,jdbcType=VARCHAR},
+      </if>
+      <if test="roleid != null" >
+        #{roleid,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  
+  <select id="selectRoleName" resultType="java.lang.String" parameterType="java.lang.String" >
+    select 
+     r.roleid 
+    from m_role r,m_user_role m 
+    where r.roleid =m.roleid and m.userid=#{userid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteRoleByUserId" parameterType="java.lang.String" >
+    delete from m_user_role
+    where USERID = #{userid,jdbcType=VARCHAR}
+  </delete>
+  
+</mapper>

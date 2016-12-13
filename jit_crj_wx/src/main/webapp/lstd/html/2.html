@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>绿色加急通道</title>
+    <link rel="stylesheet" type="text/css" href="../css/default.css" />
+    <link rel="stylesheet" type="text/css" href="../css/aui.2.0.css" />
+    <link rel="stylesheet" type="text/css" href="../css/commont.css" />
+    <script type="text/javascript" src="../script/jquery-1.8.2.js"></script>
+    <script type="text/javascript" src="../script/jquery.uploadPreview.js"></script>
+    <script type="text/javascript" src="../script/jquery.filestyle.js"></script>
+    <script type="text/javascript">
+        //修改按钮样式
+        $(function() {
+
+            $("input.file_1").filestyle({
+                image: "../image/upload_btn.jpg",
+                imageheight : 50,
+                imagewidth : 50,
+                width : 250
+            });
+        });
+
+        //缩略图预览
+        function preview(file,preview,imghead,width,height){
+            if($.browser.msie){
+                //参数 是否是IE，div的id，img的id，高,宽
+                previewImage(true,file,preview,imghead,width,height);
+            }else{
+                //参数 是否是IE，div的id，img的id，高,宽
+                previewImage(false,file,preview,imghead,width,height);
+
+            }
+
+        }
+    </script>
+    <script>
+        $.fn.extend({
+            wordCount: function (maxLength, wordWrapper) {
+                var self = this;
+                $(self).attr("maxlength", maxLength);
+                showWordCount();
+                $(this).on("input propertychange", showWordCount);
+                function showWordCount() {
+                    curLength = $(self).val().length;
+                    var leaveCount = maxLength - curLength;
+                    wordWrapper.text(leaveCount + "/" + maxLength);
+                }
+            }
+        })
+        $(function () {
+            $(".textarea").wordCount(100, $("#wordCountShow"));
+        })
+    </script>
+    <style>
+        .aui-card-list-header { padding: 0!important;}
+    </style>
+</head>
+<body>
+  <div>
+        <header id="header">
+            <img src="../image/2_banenr.jpg" alt="" width="100%" />
+            <div class="tip_box">
+                <img src="../image/tip_icon.png" alt="" width="15" height="15" />
+                <p>提示：请上传相关证明材料</p>
+            </div>
+        </header>
+        <section class="aui-content-padded">
+            <div class="aui-card-list">
+                <div class="aui-info aui-margin-t-10 aui-padded-l-10 aui-padded-r-10">
+                    <div class="aui-info-item border_bottom">
+                        <img src="../image/2_icon1.png" style="width:1.5rem" class="aui-img-round" /><span class="aui-margin-l-5 aui-card-list-header">证明材料</span>
+                    </div>
+                </div>
+                <ul class="upload_box">
+                    <li id="imgdiv1" class="imgdiv1"><img src="../image/2_img1.jpg" alt=""/></li>
+                    <li></li>
+                    <li></li>
+                    <li>
+                        <input type="file" class="file_1" name="upfilets1" id="upfilets1" onchange="preview(this,'imgdiv1','tsimg1',200,200)"/>
+                    </li>
+                </ul>
+                <p class="tip_text">＊请您上传清晰的大使馆死亡证明通知书。</p>
+            </div>
+        </section>
+      <section class="aui-content-padded">
+          <div class="aui-card-list">
+              <div class="aui-info aui-margin-t-10 aui-padded-l-10 aui-padded-r-10">
+                  <div class="aui-info-item">
+                      <img src="../image/2_icon2.png" style="width:1.5rem" class="aui-img-round" /><span class="aui-margin-l-5 aui-card-list-header">文字描述</span>
+                  </div>
+              </div>
+               <div style="position: relative;">
+                   <textarea name="" id="" class="textarea" placeholder="请您对事件进行简要描述"></textarea><span id="wordCountShow">dfdsf</span>
+               </div>
+              <p class="tip_text">＊如您无法提供证明材料，请详细填写事件描述。</p>
+          </div>
+      </section>
+      <section class="aui-content-padded">
+          <div class="aui-card-list">
+              <div class="aui-info aui-margin-t-10 aui-padded-l-10 aui-padded-r-10">
+                  <div class="aui-info-item">
+                      <img src="../image/2_icon3.png" style="width:1.5rem" class="aui-img-round" /><span class="aui-margin-l-5 aui-card-list-header">语音描述</span>
+                  </div>
+              </div>
+              <div>
+                  <img src="../image/2_yy_img.jpg" alt="" width="100%"/>
+              </div>
+          </div>
+      </section>
+        <div class="aui-content-padded ">
+            <p class="padding_top"><div class="aui-btn aui-btn-blue aui-btn-block"  onclick="window.location.href='3.html'">确 定</div></p>
+        </div>
+    </div>
+</body>
+</html>

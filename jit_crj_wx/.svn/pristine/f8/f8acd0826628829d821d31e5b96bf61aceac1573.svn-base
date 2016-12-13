@@ -1,0 +1,104 @@
+/**
+ * 
+ */
+package dogo.util;
+
+import java.rmi.RemoteException;
+import java.util.Map;
+
+import javax.xml.rpc.ServiceException;
+
+import dogo.sdkaxiswebservice.SDKClient;
+import dogo.sdkaxiswebservice.SDKService_ServiceLocator;
+
+
+/**
+ * @Project:  短信接口共同类
+ * @ClassName: SmsUtils.java
+ * @Description: TODO
+ * @author zhang
+ * @date  2016年01月23日
+ */
+public class SmsUtils {
+	
+	public static final String GBK = "GBK";
+	public static final String softwareSerialNo = Constants.SOFTWARESERIALNO;
+	public static final String key = Constants.KEY;
+	public static final String serialpass = Constants.SERIALPASS;
+	
+	
+	// 私有构造子，禁止外部实例化
+	private SmsUtils(){}
+	
+	public static class Singletom{
+		private static SmsUtils instances = new SmsUtils();
+	}
+	
+	public static SmsUtils getInstance(){
+		return Singletom.instances;
+	}
+    
+    /**
+     * 发送短信类
+     * @param map
+     * sendTime延时发送，为空时即时发送,mobiles手机号，字符串数组,smsContent短信内容,smsPriority优先级1-5，越高越优先(int)
+     * @return 0是成功
+     */
+    public static String sendSMS(Map<String, Object> map) {
+    	
+    	String addSerial = "";//扩展号码 (长度小于15的字符串) 用户可通过附加码自定义短信类别扩展号码的功能，需另外申请，当未申请扩展号码功能时，该参数默认为空值即可。
+    	long smsID = 0;//短信ID，自定义唯一的消息ID，数字位数最大19位，与状态报告ID一一对应，需用户自定义ID规则确保ID的唯一性。如果smsID为0将获取不到相应的状态报告信息。
+    	/**
+    	 * 定时短信的定时时间，格式为:年年年年月月日日时时分分秒秒,例如:20090504111010 
+    	 * sendTime值为空时，为即时发送短信;sendTime值不为空时，为定时发送短信
+    	 */
+    	String sendTime = (String)map.get("sendTime");
+    	String[] mobiles = (String[])map.get("mobiles");//手机号码(字符串数组,最多为200个手机号码)
+    	String smsContent = (String)map.get("smsContent");//短信内容(最多500个汉字或1000个纯英文）
+    	int smsPriority = (Integer)map.get("smsPriority");//短信等级，范围1~5，数值越高优先级越高
+    	String reportStatus = "1";
+
+    	try {
+	    	
+			SDKClient _SDKClient = new SDKService_ServiceLocator().getSDKService();
+			
+			reportStatus =  _SDKClient.sendSMS(softwareSerialNo, key, sendTime, mobiles, smsContent, addSerial, GBK, smsPriority, smsID)+"";
+			
+		} catch (ServiceException e) {
+			System.out.println(e);
+			e.printStackTrace();
+		} catch (RemoteException e) {
+			System.out.println("发送短信异常："+e +"异常号码："+mobiles.toString());
+			e.printStackTrace();
+		}
+			
+    	return reportStatus;
+    }
+    
+    
+    /**
+     * 注册短息序列号类
+     * @return 0是成功
+     */
+    public static String registEx(){
+    	
+    	String reportStatus = "1";
+    	SDKClient _SDKClient;
+    	
+		try {
+			
+			_SDKClient = new SDKService_ServiceLocator().getSDKService();
+			
+			reportStatus = _SDKClient.registEx(softwareSerialNo, key, serialpass)+"";
+			
+		} catch (ServiceException e) {
+			System.out.println(e);
+			e.printStackTrace();
+		} catch (RemoteException e) {
+			System.out.println("注册序列号异常："+e);
+			e.printStackTrace();
+		}
+    	
+    	return reportStatus;
+    }
+}

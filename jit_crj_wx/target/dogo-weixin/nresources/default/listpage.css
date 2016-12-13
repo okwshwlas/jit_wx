@@ -1,0 +1,4 @@
+﻿@import url('css/listPage.css');
+@import url('css/jquery.thickbox.css');
+<!-- 如果easyUI的layout 布局 布在div上，不是body上，那么需要配置body的高度100%，和隐藏滚动条 ,配置此css,页面自动加载该样式-->
+ <!-- 还需使用jquery.thickbox.css 遮罩层 -->

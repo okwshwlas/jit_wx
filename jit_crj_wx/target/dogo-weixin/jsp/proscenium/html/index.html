@@ -1,0 +1,85 @@
+<!doctype html>
+<html>
+  <head>
+  <meta charset="gb2312">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"/>
+  <title>首页3</title>
+  <link href="../style/default.css" rel="stylesheet" type="text/css" />
+  <link rel="stylesheet" type="text/css" href="../style/index3.css">
+ 
+<style>
+html {
+	background: #fff;
+}
+</style>
+  <!-- Modernizr -->
+   <script src="../js/swipe.js"></script><script src="../js/jepto.js"></script>
+  <!-- FlexSlider -->
+  <script type="text/javascript">
+     $(window).load(function(){
+      $('.flexslider').flexslider({
+        animation: "auto",
+        start: function(slider){
+          $('body').removeClass('loading');
+        }
+      });
+    });
+  </script>
+  </head>
+  <body>
+<!-- wraps -->
+<div id="wrap">
+	<section class="slider">
+		<div class="flexslider">
+			<ul class="slides">
+ 				<li> <img src="../image/images/banner.jpg" alt="" height="160" /></li>
+			</ul>
+			<div class="flex-show"></div>
+		</div>
+	</section>
+	<!-- 模块 -->
+ <div class="contWrap">
+ 	<div>
+		<div class="head_box">
+			 <img src="../image/images/head_img.jpg" alt="" />
+		</div>
+		<p style=" position:absolute; top:-10%; left:42%;color:#fff; font-size:18px;">XXX</p>
+	</div>
+ 	<ul class="ul_box">
+		<li>
+			<a href="list2.html">
+				<span style="height:22px; display:block;">
+					<img src="../image/icon/xiaoxi.jpg" alt="" height="22" />
+				</span>
+				<span class="span_text">消息通知</span>
+			</a>
+		</li>
+		<li>
+			<a href="schedule.html">
+				<span style="height:22px; display:block;">
+					<img src="../image/icon/banzheng.png" alt="" width="30" />
+				</span>
+				<span class="span_text">办事进度</span>
+			</a>
+		</li>
+	</ul>
+	<ul class="conter_box">
+		<li>
+			<a href="passport.html" class="aColor2"><img src="../image/icon/putong_01.png" alt="" /></a>
+			<p>普通护照</p>
+		</li>
+		<li>
+			<a href="notice.html" class="aColor3"><img src="../image/icon/putong_02.png" alt="" /></a>
+			<p>港澳通行证</p>
+		</li>
+		<li>
+			<a href="taiwan.html" class="aColor4"><img src="../image/icon/putong_03.png" alt="" /></a>
+			<p>台湾通行证</p>
+		</li>
+		 
+	</ul>
+</div>
+
+</div>
+</body>
+</html>

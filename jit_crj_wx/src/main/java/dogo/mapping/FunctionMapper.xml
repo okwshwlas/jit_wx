@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="dogo.dao.FunctionMapper" >
+  <resultMap id="BaseResultMap" type="dogo.model.Function" >
+    <id column="FUNCTIONID" property="functionid" jdbcType="VARCHAR" />
+    <result column="PARENTFUNCTION" property="parentfunction" jdbcType="VARCHAR" />
+    <result column="FUNCTIONNAME" property="functionname" jdbcType="VARCHAR" />
+    <result column="FUNCTIONURL" property="functionurl" jdbcType="VARCHAR" />
+    <result column="FUNCTIONTARGET" property="functiontarget" jdbcType="VARCHAR" />
+    <result column="FUNCTIONDESC" property="functiondesc" jdbcType="VARCHAR" />
+    <result column="FUNCTIONORDER" property="functionorder" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    FUNCTIONID, PARENTFUNCTION, FUNCTIONNAME, FUNCTIONURL, FUNCTIONTARGET, FUNCTIONDESC, 
+    FUNCTIONORDER
+  </sql>
+  
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from m_function
+    where FUNCTIONID = #{functionid,jdbcType=VARCHAR}
+  </select>
+  
+  <select id="selectAll" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from m_function
+  </select>
+  
+ 
+  
+  
+  <!-- 根据用户ID查询所有父级菜单 -->
+	<select id="getAllParentFunctionByUserId" resultMap="BaseResultMap" parameterType="java.lang.String" >
+        SELECT m.FUNCTIONID, m.PARENTFUNCTION, m.FUNCTIONNAME, m.FUNCTIONURL, m.FUNCTIONTARGET, m.FUNCTIONDESC, m.FUNCTIONORDER 
+		FROM m_function m 
+		JOIN(
+		SELECT a.ROLEID,b.FUNCTIONID FROM m_user_role  a 
+		LEFT JOIN
+		m_function_role   b ON 
+		a.ROLEID = b.ROLEID 
+		WHERE a.USERID=#{userid,jdbcType=VARCHAR} ) c ON m.FUNCTIONID = c.FUNCTIONID WHERE m.PARENTFUNCTION='0' 	
+	</select>
+	
+	 <!-- 根据用户ID和当前父菜单ID查询所有子级菜单 -->
+	<select id="getAllChildFunctionByUserId_ParentId" resultMap="BaseResultMap" parameterType="java.util.Map" >
+	    SELECT m.FUNCTIONID, m.PARENTFUNCTION, m.FUNCTIONNAME, m.FUNCTIONURL, m.FUNCTIONTARGET, m.FUNCTIONDESC, m.FUNCTIONORDER 
+		FROM m_function m 
+		JOIN(
+		SELECT a.ROLEID,b.FUNCTIONID FROM m_user_role  a 
+		LEFT JOIN
+		m_function_role   b ON 
+		a.ROLEID = b.ROLEID 
+		WHERE a.USERID=#{userid,jdbcType=VARCHAR} ) c ON m.FUNCTIONID = c.FUNCTIONID WHERE m.PARENTFUNCTION=#{function.functionid}
+	</select>
+	
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from m_function
+    where FUNCTIONID = #{functionid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="dogo.model.Function" >
+    insert into m_function (FUNCTIONID, PARENTFUNCTION, FUNCTIONNAME, 
+      FUNCTIONURL, FUNCTIONTARGET, FUNCTIONDESC, 
+      FUNCTIONORDER)
+    values (#{functionid,jdbcType=VARCHAR}, #{parentfunction,jdbcType=VARCHAR}, #{functionname,jdbcType=VARCHAR}, 
+      #{functionurl,jdbcType=VARCHAR}, #{functiontarget,jdbcType=VARCHAR}, #{functiondesc,jdbcType=VARCHAR}, 
+      #{functionorder,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="dogo.model.Function" >
+    insert into m_function
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="functionid != null" >
+        FUNCTIONID,
+      </if>
+      <if test="parentfunction != null" >
+        PARENTFUNCTION,
+      </if>
+      <if test="functionname != null" >
+        FUNCTIONNAME,
+      </if>
+      <if test="functionurl != null" >
+        FUNCTIONURL,
+      </if>
+      <if test="functiontarget != null" >
+        FUNCTIONTARGET,
+      </if>
+      <if test="functiondesc != null" >
+        FUNCTIONDESC,
+      </if>
+      <if test="functionorder != null" >
+        FUNCTIONORDER,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="functionid != null" >
+        #{functionid,jdbcType=VARCHAR},
+      </if>
+      <if test="parentfunction != null" >
+        #{parentfunction,jdbcType=VARCHAR},
+      </if>
+      <if test="functionname != null" >
+        #{functionname,jdbcType=VARCHAR},
+      </if>
+      <if test="functionurl != null" >
+        #{functionurl,jdbcType=VARCHAR},
+      </if>
+      <if test="functiontarget != null" >
+        #{functiontarget,jdbcType=VARCHAR},
+      </if>
+      <if test="functiondesc != null" >
+        #{functiondesc,jdbcType=VARCHAR},
+      </if>
+      <if test="functionorder != null" >
+        #{functionorder,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="dogo.model.Function" >
+    update m_function
+    <set >
+      <if test="parentfunction != null" >
+        PARENTFUNCTION = #{parentfunction,jdbcType=VARCHAR},
+      </if>
+      <if test="functionname != null" >
+        FUNCTIONNAME = #{functionname,jdbcType=VARCHAR},
+      </if>
+      <if test="functionurl != null" >
+        FUNCTIONURL = #{functionurl,jdbcType=VARCHAR},
+      </if>
+      <if test="functiontarget != null" >
+        FUNCTIONTARGET = #{functiontarget,jdbcType=VARCHAR},
+      </if>
+      <if test="functiondesc != null" >
+        FUNCTIONDESC = #{functiondesc,jdbcType=VARCHAR},
+      </if>
+      <if test="functionorder != null" >
+        FUNCTIONORDER = #{functionorder,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where FUNCTIONID = #{functionid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="dogo.model.Function" >
+    update m_function
+    set PARENTFUNCTION = #{parentfunction,jdbcType=VARCHAR},
+      FUNCTIONNAME = #{functionname,jdbcType=VARCHAR},
+      FUNCTIONURL = #{functionurl,jdbcType=VARCHAR},
+      FUNCTIONTARGET = #{functiontarget,jdbcType=VARCHAR},
+      FUNCTIONDESC = #{functiondesc,jdbcType=VARCHAR},
+      FUNCTIONORDER = #{functionorder,jdbcType=VARCHAR}
+    where FUNCTIONID = #{functionid,jdbcType=VARCHAR}
+  </update>
+</mapper>

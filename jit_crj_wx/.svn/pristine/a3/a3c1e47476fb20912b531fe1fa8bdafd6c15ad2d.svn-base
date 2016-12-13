@@ -1,0 +1,753 @@
+package dogo.controller;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLConnection;
+import java.net.URLEncoder;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Set;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.alibaba.druid.sql.dialect.oracle.ast.clause.SubqueryFactoringClause.Entry;
+import com.alibaba.fastjson.JSON;
+
+import dogo.model.CrjPaylog;
+import dogo.model.CrjYyxx;
+import dogo.model.Gongzhong;
+import dogo.model.SysWorktime;
+import dogo.model.Wx_Pc;
+import dogo.modeljson.AjaxJson;
+import dogo.modeljson.BaseJson;
+import dogo.modeljson.JsonDateValueProcessor;
+import dogo.service.CrjRyjbxxServiceI;
+import dogo.service.CrjWxQzPayServiceImpl;
+import dogo.service.CrjWxQzPayServicel;
+import dogo.service.GongzhongZhanghaoService;
+import dogo.util.DataUtils;
+import dogo.util.HttpClientUtil;
+import dogo.util.Params;
+import dogo.util.SmsUtils;
+import dogo.util.StringUtils;
+import dogo.weixin.core.WeiXinUtil;
+import net.sf.json.JSONObject;
+import net.sf.json.JsonConfig;
+
+
+@Controller
+@RequestMapping("/crj/wxqz")
+public class WxqzController {
+	  private static final Logger log = Logger.getLogger(WxqzController.class);
+
+	  @Autowired
+	  private CrjRyjbxxServiceI crjRyjbxxServiceI;
+	  
+	  private CrjWxQzPayServicel crjWxQzPayServiceI;
+	  
+	  public CrjWxQzPayServicel getCrjWxQzPayServiceI() {
+			return crjWxQzPayServiceI;
+		}
+
+		public void setCrjWxQzPayServiceI(CrjWxQzPayServicel crjWxQzPayServiceI) {
+			this.crjWxQzPayServiceI = crjWxQzPayServiceI;
+		}
+
+
+	  @Autowired
+	  private GongzhongZhanghaoService gongzhongZhanghaoService;
+	  
+	 @RequestMapping(value={"/end.do"}, method={org.springframework.web.bind.annotation.RequestMethod.POST})
+	  public void addYuYueByWorktime(HttpServletResponse response, HttpServletRequest request)
+	    throws IOException
+	  {
+		String type =request.getParameter("type");
+		String openid = request.getParameter("openid");
+	    AjaxJson ajaxJson = new AjaxJson();
+	    String ret = "";
+	    response.setCharacterEncoding("UTF-8");
+	    response.setContentType("text/html");
+	    PrintWriter out = response.getWriter();
+
+	    BaseJson baseJson = new BaseJson();
+	    
+	    String endywxx =request.getParameter("endywxx");
+	    String dwxx ="请将:"+endywxx+"填写到邮封备注栏中,并根据代理单位信息填写邮寄信息"+request.getParameter("dwxx");
+	    String ywbh = "";
+	    String yysjfw = "";
+	    String shijian = "";
+	    String Strid = Params.getCode();
+	    try {
+	    	  
+	    	  
+//	    	"dwxx" :dwxx,
+//			"endywxx":endywxx 
+	    	  
+
+	      SimpleDateFormat dateFormater = new SimpleDateFormat("yyyy-MM-dd");
+	      Date date = new Date();
+//	      Wx_Pc pc = new Wx_Pc();
+//	      pc.setOpenid(openid);
+//	      pc.setYywd(jgdwName);
+//	      pc.setYywddz(jgdwywdwdz);
+//	      pc.setYybhs(Strid);
+//	      pc.setDhhm(yysjfw);
+//	      pc.setYysj(dateFormater.format(date));
+	      shijian =dateFormater.format(date);
+//	      this.crjRyjbxxServiceI.insertSelective(pc);
+	      Gongzhong gongzhong = this.gongzhongZhanghaoService.selectGongzhongZhanghaoById("1");
+	      String appid = gongzhong.getAccountAppid();
+	      String appsecret = gongzhong.getAccountAppsecret();
+	      WeiXinUtil util = new WeiXinUtil();
+
+	      if ((type != null) && ("2".equals(type))) {
+	        String token = util.getAccess_token(appid, appsecret);
+	        String params = "{\"touser\":\"" + openid + "\",\"template_id\":\"h31AWXFqF0k3xxVLAbSjR6idAZpxQCWI90DwaINSqqU\",\"url\":\"\",\"topcolor\":\"#FF0000\",\"data\":{" + 
+	          "\"first\": {\"value\":\"尊敬的客户，您的业务已受理成功！\",\"color\":\"#173177\"},\"keyword1\":{ \"value\":\"" + endywxx + "\", \"color\":\"#173177\" },\"keyword2\": {\"value\":\"" + shijian + "\", \"color\"" + 
+	          ":\"#173177\" },\"remark\":{\"value\":\"" + dwxx + "\",\"color\":\"#173177\"}}}";
+
+	        boolean flag = util.createMobanMessage(params, token);
+
+	        String params_csfw = "{\"touser\":\"" + openid + "\",\"template_id\":\"h31AWXFqF0k3xxVLAbSjR6idAZpxQCWI90DwaINSqqU\",\"url\":\"\",\"topcolor\":\"#FF0000\",\"data\":{" + 
+	  	          "\"first\": {\"value\":\"尊敬的客户，您的业务已受理成功！\",\"color\":\"#173177\"},\"keyword1\":{ \"value\":\"" + endywxx + "\", \"color\":\"#173177\" },\"keyword2\": {\"value\":\"" + shijian + "\", \"color\"" + 
+		          ":\"#173177\" },\"remark\":{\"value\":\"" + dwxx + "\",\"color\":\"#173177\"}}}";
+	        String csfw = URLEncoder.encode(params_csfw, "UTF-8");
+	        csfw = "https://city.weixin.qq.com/cgi-bin/entry?result_data=" + csfw + "#wechat_redirect";
+	        baseJson.setData(csfw);
+	        
+	        JsonConfig jsonConfig = new JsonConfig();
+	        jsonConfig.registerJsonValueProcessor(Date.class, new JsonDateValueProcessor());
+	        JSONObject aa = JSONObject.fromObject(baseJson, jsonConfig);
+	        ret = JSON.toJSONString(aa);
+
+	        out = response.getWriter();
+	        out.print(ret);
+	      }
+	      else {
+	        String token = util.getAccess_token(appid, appsecret);
+	        String params = "{\"touser\":\"" + openid + "\",\"template_id\":\"h31AWXFqF0k3xxVLAbSjR6idAZpxQCWI90DwaINSqqU\",\"url\":\"\",\"topcolor\":\"#FF0000\",\"data\":{" + 
+	  	          "\"first\": {\"value\":\"尊敬的客户，您的业务已受理成功！\",\"color\":\"#173177\"},\"keyword1\":{ \"value\":\"" + endywxx + "\", \"color\":\"#173177\" },\"keyword2\": {\"value\":\"" + shijian + "\", \"color\"" + 
+		          ":\"#173177\" },\"remark\":{\"value\":\"" + dwxx + "\",\"color\":\"#173177\"}}}";
+	        boolean flag = util.createMobanMessage(params, token);
+	        out = response.getWriter();
+	        out.print(ret);
+	      }
+	    } catch (Exception e) {
+	      log.error(e.getMessage(), e);
+	      e.printStackTrace();
+	      ajaxJson.setCode("000001");
+	      ajaxJson.setMsg("预约失败！");
+	      out.print(JSON.toJSONString(ajaxJson));
+	    } finally {
+	      out.flush();
+	      out.close();
+	    }
+	  }
+	 
+	 @RequestMapping(value={"/getToken.do"}, method={org.springframework.web.bind.annotation.RequestMethod.POST})
+	 public  void getToken(HttpServletResponse response, HttpServletRequest request)
+			    throws IOException{
+		 AjaxJson ajaxJson = new AjaxJson();
+		    String ret = "";
+		    response.setCharacterEncoding("UTF-8");
+		    response.setContentType("text/html");
+		    PrintWriter out = response.getWriter();
+		    BaseJson baseJson = new BaseJson();
+		 String returnString = "";
+		 try {
+			 String url="http://221.8.52.227/mc/api/console/token";
+//			 String param ="appId=\"100081\"&secrectKey=\"KbaHD6Rrs9DVr3mXs\"";
+			 String data = "{\"appId\":\"100081\",\"secrectKey\":\"KbaHD6Rrs9DVr3mX\"}";
+			 System.out.println(data);
+			 returnString =  HttpClientUtil.getFeiInfo(url, data);
+//			 System.out.println(returnString);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+//		return returnString;
+		   baseJson.setData(returnString);
+	        
+	        JsonConfig jsonConfig = new JsonConfig();
+//	        jsonConfig.registerJsonValueProcessor(Date.class, new JsonDateValueProcessor());
+	        JSONObject aa = JSONObject.fromObject(baseJson, jsonConfig);
+	        ret = JSON.toJSONString(aa);
+
+	        out = response.getWriter();
+	        out.print(ret);
+		 
+		 
+	 }
+	 @RequestMapping(value={"/getTokenTime.do"}, method={org.springframework.web.bind.annotation.RequestMethod.GET})
+	 public   void getTokenTime(HttpServletResponse response, HttpServletRequest request)
+			    throws IOException{
+		 String returnString = "";
+		    String ret = "";
+		    response.setCharacterEncoding("UTF-8");
+		    response.setContentType("text/html");
+		    PrintWriter out = response.getWriter();
+		    BaseJson baseJson = new BaseJson();
+		 try {
+			 String url="http://221.8.52.227/mc/api/console/token/ttl";
+//			 String param ="appId=\"100081\"&secrectKey=\"KbaHD6Rrs9DVr3mXs\"";
+			 String data = request.getParameter("token");
+//			 String data ="6a1279584b644382a69267d4f6670f20";
+			 returnString =  HttpClientUtil.sendGet(url, data);
+		} catch (Exception e) {
+			// TODO: handle exception
+//			System.out.println("222");
+		}
+		 baseJson.setData(returnString);
+	        
+	        JsonConfig jsonConfig = new JsonConfig();
+//	        jsonConfig.registerJsonValueProcessor(Date.class, new JsonDateValueProcessor());
+	        JSONObject aa = JSONObject.fromObject(baseJson, jsonConfig);
+	        ret = JSON.toJSONString(aa);
+
+	        out = response.getWriter();
+	        out.print(ret);
+		 
+		 
+		 
+		 
+	 }
+	 @RequestMapping(value={"/getZhuCe.do"}, method={org.springframework.web.bind.annotation.RequestMethod.POST})
+	 public  void getZhuCe(HttpServletResponse response, HttpServletRequest request)
+			    throws IOException{
+		    String ret = "";
+		    response.setCharacterEncoding("UTF-8");
+		    response.setContentType("text/html");
+		    PrintWriter out = response.getWriter();
+		    BaseJson baseJson = new BaseJson();
+		 String returnString = "";
+		 String token = request.getParameter("token");
+		 String userName =request.getParameter("userName");
+		 try {
+			 String url="http://gaapi.jl.gov.cn/MicroService/api/v1/member/getmemberinfo";
+//			 String param ="appId=\"100081\"&secrectKey=\"KbaHD6Rrs9DVr3mXs\"";
+//			 String data = "{\"userName\":";
+//			 data +="\"";
+//			 data +=userName;
+//			 data +="\"";
+//			 data +="}";
+			 String data = "userName="+userName;
+			 System.out.println(data);
+			 returnString =  HttpClientUtil.post(url,data,token);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		     baseJson.setData(returnString);
+	        JsonConfig jsonConfig = new JsonConfig();
+	        JSONObject aa = JSONObject.fromObject(baseJson, jsonConfig);
+	        ret = JSON.toJSONString(aa);
+	        out = response.getWriter();
+	        out.print(ret);
+		 
+		 
+	 }
+	 
+	 
+	 
+	 @RequestMapping(value={"/zhuCeSave.do"}, method={org.springframework.web.bind.annotation.RequestMethod.POST})
+	 public  void zhuCeSave(HttpServletResponse response, HttpServletRequest request)
+			    throws IOException{
+		    String ret = "";
+		    response.setCharacterEncoding("UTF-8");
+		    response.setContentType("text/html");
+		    PrintWriter out = response.getWriter();
+		    BaseJson baseJson = new BaseJson();
+		 String returnString = "";
+		 String token = request.getParameter("token");
+		 String mobile =request.getParameter("mobile");
+		 String userType =request.getParameter("userType");
+		 String passwd =request.getParameter("passwd");
+		 String src =request.getParameter("src");
+		 try {
+			 String url="http://gaapi.jl.gov.cn/MicroService/api/v1/member/memberregister";
+//			 String param ="appId=\"100081\"&secrectKey=\"KbaHD6Rrs9DVr3mXs\"";
+//			 String data = "{\"userName\":";
+//			 data +="\"";
+//			 data +=userName;
+//			 data +="\"";
+//			 data +="}";
+			 String data = "";
+			 data +="mobile="+mobile;
+			 data += "&userType="+userType;
+			 data += "&passwd="+passwd;
+			 data += "&src="+src;
+			 System.out.println(data);
+			 returnString =  HttpClientUtil.post(url,data,token);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		     baseJson.setData(returnString);
+	        JsonConfig jsonConfig = new JsonConfig();
+	        JSONObject aa = JSONObject.fromObject(baseJson, jsonConfig);
+	        ret = JSON.toJSONString(aa);
+	        System.out.println(returnString);
+	        out = response.getWriter();
+	        out.print(ret);
+		 
+		 
+	 }
+	 
+	 
+	 @RequestMapping(value={"/smrzSave.do"}, method={org.springframework.web.bind.annotation.RequestMethod.POST})
+	 public  void smrzSave(HttpServletResponse response, HttpServletRequest request)
+			    throws IOException{
+		    String ret = "";
+		    response.setCharacterEncoding("UTF-8");
+		    response.setContentType("text/html");
+		    PrintWriter out = response.getWriter();
+		    BaseJson baseJson = new BaseJson();
+		 String returnString = "";
+		 String token = request.getParameter("token");
+		 String gmsfhm =request.getParameter("gmsfhm");
+		 String xm =request.getParameter("xm");
+		 String guid =request.getParameter("guid");
+		 try {
+			 String url="http://gaapi.jl.gov.cn/MicroService/api/v1/member/memberinforz";
+			 String data = "";
+			 data +="userguid="+guid;
+			 data += "&gmsfhm="+gmsfhm;
+			 data += "&xm="+xm;
+			 returnString =  HttpClientUtil.post(url,data,token);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		     baseJson.setData(returnString);
+	        JsonConfig jsonConfig = new JsonConfig();
+	        JSONObject aa = JSONObject.fromObject(baseJson, jsonConfig);
+	        ret = JSON.toJSONString(aa);
+	        out = response.getWriter();
+	        out.print(ret);
+		 
+		 
+	 }
+	 
+	 @RequestMapping(value={"/getzhucexx.do"}, method={org.springframework.web.bind.annotation.RequestMethod.POST})
+	 public  void getzhucexx(HttpServletResponse response, HttpServletRequest request)
+			    throws IOException{
+		    String ret = "";
+		    response.setCharacterEncoding("UTF-8");
+		    response.setContentType("text/html");
+		    PrintWriter out = response.getWriter();
+		    BaseJson baseJson = new BaseJson();
+		 String returnString = "";
+		 String token = request.getParameter("token");
+		 String gmsfhm =request.getParameter("gmsfhm");
+		 String xm =request.getParameter("xm");
+		 String guid =request.getParameter("guid");
+		 try {
+			 String url="http://gaapi.jl.gov.cn/MicroService/api/v1/member/memberinforz";
+			 String data = "";
+			 data +="userguid="+guid;
+			 data += "&gmsfhm="+gmsfhm;
+			 data += "&xm="+xm;
+			 returnString =  HttpClientUtil.post(url,data,token);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		     baseJson.setData(returnString);
+	        JsonConfig jsonConfig = new JsonConfig();
+	        JSONObject aa = JSONObject.fromObject(baseJson, jsonConfig);
+	        ret = JSON.toJSONString(aa);
+	        out = response.getWriter();
+	        out.print(ret);
+		 
+		 
+	 }
+	 
+	 
+	 @RequestMapping(value={"/findRzResult.do"}, method={org.springframework.web.bind.annotation.RequestMethod.POST})
+	 public   void findRzResult(HttpServletResponse response, HttpServletRequest request)
+			    throws IOException{
+		 String returnString = "";
+		    String ret = "";
+		    response.setCharacterEncoding("UTF-8");
+		    response.setContentType("text/html");
+		    PrintWriter out = response.getWriter();
+		    BaseJson baseJson = new BaseJson();
+		 try {
+			 String sn = request.getParameter("sn");
+			 String url="http://gaapi.jl.gov.cn/MicroService/api/v1/member/memberinforzquery?sn="+sn;
+//			 String param ="appId=\"100081\"&secrectKey=\"KbaHD6Rrs9DVr3mXs\"";
+			 
+			 String token = request.getParameter("token");
+//			 String data ="6a1279584b644382a69267d4f6670f20";
+//			 String param = request.getParameter("sn");
+			 returnString =  HttpClientUtil.sendGetToken(url, "",token);
+		} catch (Exception e) {
+			// TODO: handle exception
+//			System.out.println("222");
+		}
+		 baseJson.setData(returnString);
+	        
+	        JsonConfig jsonConfig = new JsonConfig();
+//	        jsonConfig.registerJsonValueProcessor(Date.class, new JsonDateValueProcessor());
+	        JSONObject aa = JSONObject.fromObject(baseJson, jsonConfig);
+	        ret = JSON.toJSONString(aa);
+
+	        out = response.getWriter();
+	        out.print(ret);
+		 
+		 
+		 
+		 
+	 }
+//	 @RequestMapping("pay.do")
+		public void crjPayment(HttpServletRequest request, HttpServletResponse response) throws Exception{
+			Map<String, Object> map = new HashMap<String, Object>();
+			String path = request.getContextPath();
+			String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+//			System.out.println(basePath);
+			//接收参数
+//			double amt = Double.parseDouble(request.getParameter("amt"));
+			double amt = 0.01;
+			String payno = request.getParameter("payno");
+//			String personName = URLDecoder.decode(request.getParameter("pername"),"UTF-8");
+			String personName = request.getParameter("pername");
+			String phoneNum = request.getParameter("phoneNum");
+			//String settleDesc =  URLDecoder.decode(request.getParameter("servicename"),"UTF-8");//商品名称
+			String settleDesc =  request.getParameter("servicename");//商品名称
+			String payedurl = request.getParameter("payedurl");//
+			String bizno = request.getParameter("bizno");//
+			
+			//固定参数
+			map.put("catName","出入境缴费"); //费种名称  出入境缴费
+			map.put("catCode", "1170010");   //费种编码
+//			map.put(SmsUtils.PAY_BACK_END_URL, "http://192.168.2.124:8445/jit_crj/crj/pay/payBack.do");
+//			map.put(SmsUtils.PAY_BACK_END_URL, "http://127.0.0.1:8445/jit_crj/crj/pay/payBack.do");
+
+			//支付信息
+			//System.out.println("---------"+basePath+ "crj/pay/payBack.do");
+			map.put("amt", amt);  //费用
+//			map.put(SmsUtils.PAY_PAYER_NO,payno);  //支付账号
+//			map.put(SmsUtils.PAY_PAYER_NAME, personName); //付款人姓名 
+			map.put("bizNo","20161100002");//商户订单号 
+//			map.put(SmsUtils.PAY_PAYER_MOBILE_NO, phoneNum); //手机号码
+			map.put("settleDesc", "测试商品"); //商品名称
+//			System.out.println(amt);
+//			System.out.println(payno);
+//			System.out.println(personName);
+//			System.out.println(bizno);
+//			System.out.println(phoneNum);
+//			System.out.println(settleDesc);
+//			String dateLong = String.valueOf(DateUtils.getInstance()
+//					.dateToDateTimeZoneLong(new Date()));
+//			map.put(SmsUtils.PAY_BIZ_DATE,
+//					dateLong.substring(0, dateLong.length() - 3));//交易日期
+//			map.put(SmsUtils.PAY_FRONT_URL, basePath+ "basics/jsp/paySuccess.jsp");
+//			String ywbh = request.getParameter("ywbh");
+//			//String appReserved = ywbh.substring(0,6);
+//			map.put("appReserved","{\'openid\':\'oSUoSuHROyzW9Vu48UIj3UJ7WrmU\'}");
+////			System.out.println(map.get("appReserved"));
+//			map.put("signature","");	
+//			map.put("ywbh", ywbh);
+			
+			CrjPaylog crjPay = new CrjPaylog();
+			
+//			
+//			try{
+//				crjWxQzPayServiceI.insert(crjPay);//记录支付操作记录，点一次按钮记录一次
+//				CrjPaylog getcrjPayLog = crjWxQzPayServiceI.selectByBizNo(bizno);
+//				if(getcrjPayLog==null){
+////					crjPayWebService.savePay(map);
+//					crjWxQzPayServiceI.insert(crjPay);
+//				}else{
+//					map.put("id", getcrjPayLog.getId());
+//					crjWxQzPayServiceI.updateByPrimaryKey(getcrjPayLog);
+//					map.remove("id");
+//				}
+//				
+//			}catch(Exception e){
+//				System.out.println("数据库访问异常");
+//			}
+			map.remove("ywbh");
+			
+			//调用支付接口
+			//商户名称
+//			String value = (String) map.get(SmsUtils.PAY_CAT_NAME);		
+//			value = URLEncoder.encode(value,"UTF-8");
+//		
+//			
+//			map.put(SmsUtils.PAY_CAT_NAME, value);
+//			//姓名
+//			String catname =(String) map.get(SmsUtils.PAY_PAYER_NAME);		
+//			catname = URLEncoder.encode(catname,"UTF-8");
+//			map.put(SmsUtils.PAY_PAYER_NAME, catname);
+//			//服务名称
+//			String settle =(String) map.get(SmsUtils.PAY_SETTLE_DESC);		
+//			settle = URLEncoder.encode(settle,"UTF-8");
+//			map.put(SmsUtils.PAY_SETTLE_DESC, settle);
+//			
+			Map<String, Object> payMap = new HashMap<String, Object>();
+			//固定参数
+			payMap.put("catCode", "1170010");   //费种编码
+			payMap.put("catName","出入境缴费"); //费种名称  出入境缴费
+			payMap.put("bizNo","20161100002");//商户订单号 
+			payMap.put("settleDesc", "测试商品"); //商品名称
+			payMap.put("amt",amt );  //费用\
+			payMap.put("payType", "OA"); 
+			String openId = request.getParameter("openId");
+			 openId = "orOuKwDZulkmITI-9ccNs-Gv2En4";
+			payMap.put("appReserved","{'openId':\'"+ openId+"\'}");
+			
+			
+			
+//			payMap.put("appReserved","{\'openId\':\'"+ appReserved+"\'}");
+//			payMap.put("appReserved","{'openId':'odA_RsoS0CY0j6-_IWwirTWZozZ'}");
+			
+			
+			
+			Set<String> paySet = new HashSet<String>();
+			paySet = payMap.keySet();
+			Iterator<String> it = paySet.iterator();
+			String params  = "";
+			while(it.hasNext()){
+				String key = it.next();
+				params = params + key  + "=" + payMap.get(key) + "&";
+//				request.setAttribute(key,map.get(key));
+			}
+			params= params.substring(0, params.length()-1);
+			//HttpUtil.http("http://gafw.jl.gov.cn:80/WebApi/ThirdParty/pay",map);
+		//System.out.println("http://gafw.jl.gov.cn:80/WebApi/ThirdParty/pay?"+params);
+			//保存支付信息
+			
+			
+			String url = "https://gaapi.jl.gov.cn/econsole/weixin/pay/index";
+//			CrjErrorLog.saveLog("INFO", url);
+//			String url = Constants.PAY_URL+"?"+params;
+//			System.out.println("url:"+url);
+//			request.getRequestDispatcher("/basics/jsp/pay.jsp").forward(request, response);
+			 response.getOutputStream().write(HttpClientUtil.sendPost(url, params).getBytes());
+//			return "redirect:"+HttpClientUtil.sendPost(url, params);
+//			return "";
+		}
+	 
+	 @RequestMapping(value={"/pay.do"}, method={org.springframework.web.bind.annotation.RequestMethod.POST})
+	 public  String  payDo(HttpServletResponse response, HttpServletRequest request)
+			    throws IOException{
+		    String ret = "";
+		    response.setCharacterEncoding("UTF-8");
+		    response.setContentType("text/html");
+		    PrintWriter out = response.getWriter();
+		    BaseJson baseJson = new BaseJson();
+		 String returnString = "";
+		String openId = request.getParameter("openId");
+			
+			 String data = "";
+			 data +="catCode="+"1170010";
+			 data += "&catName="+"出入境缴费";
+			 data += "&bizNo="+"bizNo";
+			 data += "&settleDesc="+"测试商品";
+			 data += "&amt="+"0.01";
+			 data += "&payType="+"OA";
+			 openId = "orOuKwDZulkmITI-9ccNs-Gv2En4";
+			 data += "&appReserved="+"{\'openId\':\'"+ openId+"\'}";
+			 data ="catCode=1170010&catName=出入境缴费&bizNo=201611002223&settleDesc=测试商品&amt=0.01&payType=OA&appReserved={\'openId\':\'orOuKwDZulkmITI-9ccNs-Gv2En4\'}";
+			 String url="https://gaapi.jl.gov.cn/econsole/weixin/pay/index?"+data;
+//			 return "redirect:"+url;
+			 return "redirect:"+url;
+		   
+	 }
+	 
+
+	 
+//	 @RequestMapping(value={"pay.do"}, method={org.springframework.web.bind.annotation.RequestMethod.POST})
+	    public static String http(String url, Map<String, String> params) {  
+	    	url="https://gaapi.jl.gov.cn/econsole/weixin/pay/index?";
+	        URL u = null;  
+	        HttpURLConnection con = null;  
+	        // 构建请求参数  
+			Map<String, Object> payMap = new HashMap<String, Object>();
+	        payMap.put("catCode", "1170010");   //费种编码
+			payMap.put("catName","出入境缴费"); //费种名称  出入境缴费
+			payMap.put("bizNo","20161100090");//商户订单号 
+			payMap.put("settleDesc", "测试商品"); //商品名称
+			payMap.put("amt","0.01" );  //费用\
+			payMap.put("payType", "OA"); 
+			String openId = "orOuKwDZulkmITI-9ccNs-Gv2En4";
+			payMap.put("appReserved","{\"openId\":\""+ openId+"\"}");
+	        StringBuffer sb = new StringBuffer();  
+//            String  data ="catCode=1170010&catName=出入境缴费&bizNo=201611002223&settleDesc=测试商品&amt=0.01&payType=OA&appReserved={'openId':'orOuKwDZulkmITI-9ccNs-Gv2En4'}";
+            Set<String> paySet = new HashSet<String>();
+			paySet = payMap.keySet();
+			Iterator<String> it = paySet.iterator();
+			String data  = "";
+			while(it.hasNext()){
+				String key = it.next();
+				data = data + key  + "=" + payMap.get(key) + "&";
+//				request.setAttribute(key,map.get(key));
+			}
+			data= data.substring(0, data.length()-1);
+	        System.out.println("send_url:" + url);  
+	        System.out.println("send_data:" + data.toString());  
+	        // 尝试发送请求  
+	        try {  
+	            u = new URL(url);  
+	            con = (HttpURLConnection) u.openConnection();  
+	            //// POST 只能为大写，严格限制，post会不识别  
+	            con.setRequestMethod("POST");  
+	            con.setDoOutput(true);  
+	            con.setDoInput(true);  
+	            con.setUseCaches(false);  
+	            con.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");  
+	            OutputStreamWriter osw = new OutputStreamWriter(con.getOutputStream(), "UTF-8");  
+	            osw.write(data.toString());  
+	            osw.flush();  
+	            osw.close();  
+	        } catch (Exception e) {  
+	            e.printStackTrace();  
+	        } finally {  
+	            if (con != null) {  
+	                con.disconnect();  
+	            }  
+	        }  
+	  
+	        // 读取返回内容  
+	        StringBuffer buffer = new StringBuffer();  
+	        try {  
+	            //一定要有返回值，否则无法把请求发送给server端。  
+	            BufferedReader br = new BufferedReader(new InputStreamReader(con.getInputStream(), "UTF-8"));  
+	            String temp;  
+	            while ((temp = br.readLine()) != null) {  
+	                buffer.append(temp);  
+	                buffer.append("\n");  
+	            }  
+	        } catch (Exception e) {  
+	            e.printStackTrace();  
+	        }  
+	  
+	        return buffer.toString();  
+	    } 
+		@RequestMapping("/crj/pay/pay.do")
+		public String wxpay(HttpServletRequest request, HttpServletResponse response) throws Exception{
+			Map<String, Object> map = new HashMap<String, Object>();
+			String path = request.getContextPath();
+			String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+//			System.out.println(basePath);
+			//接收参数
+//			double amt = Double.parseDouble(request.getParameter("amt"));
+			double amt = 0.01;
+			String payno = request.getParameter("payno");
+//			String personName = URLDecoder.decode(request.getParameter("pername"),"UTF-8");
+			String personName = request.getParameter("pername");
+			String phoneNum = request.getParameter("phoneNum");
+			//String settleDesc =  URLDecoder.decode(request.getParameter("servicename"),"UTF-8");//商品名称
+			String settleDesc =  request.getParameter("servicename");//商品名称
+			String payedurl = request.getParameter("payedurl");//
+			String bizno = request.getParameter("bizno");//
+			
+			//固定参数
+			map.put("catName","出入境缴费"); //费种名称  出入境缴费
+			map.put("catCode", "1170010");   //费种编码
+
+			//支付信息
+			//System.out.println("---------"+basePath+ "crj/pay/payBack.do");
+			map.put("amt", amt);  //费用
+			map.put(SmsUtils.PAY_PAYER_NO,payno);  //支付账号
+			map.put(SmsUtils.PAY_PAYER_NAME, personName); //付款人姓名 
+			map.put(SmsUtils.PAY_BIZ_NO,bizno);//商户订单号 
+			map.put(SmsUtils.PAY_PAYER_MOBILE_NO, phoneNum); //手机号码
+			map.put(SmsUtils.PAY_SETTLE_DESC, settleDesc); //商品名称
+//			System.out.println(amt);
+//			System.out.println(payno);
+//			System.out.println(personName);
+//			System.out.println(bizno);
+//			System.out.println(phoneNum);
+//			System.out.println(settleDesc);
+			String dateLong = String.valueOf(DataUtils.getInstance()
+					.dateToDateTimeZoneLong(new Date()));
+			map.put(SmsUtils.PAY_BIZ_DATE,
+					dateLong.substring(0, dateLong.length() - 3));//交易日期
+			map.put(SmsUtils.PAY_FRONT_URL, basePath+ "basics/jsp/paySuccess.jsp");
+			String ywbh = request.getParameter("ywbh");
+			String appReserved = ywbh.substring(0,6);
+			map.put("appReserved","{\'areaCode\':\'"+ appReserved+"\'}");
+//			System.out.println(map.get("appReserved"));
+			map.put("signature", SmsUtils.payRequest(map));	
+			map.put("ywbh", ywbh);
+			
+			
+			try{
+				crjPayWebService.savePayBak(map);//记录支付操作记录，点一次按钮记录一次
+				CrjPayLog crjPayLog = crjPayWebService.getPayInfo(bizno);
+				if(crjPayLog==null){
+					crjPayWebService.savePay(map);
+				}else{
+					map.put("id", crjPayLog.getId());
+					crjPayWebService.updatePayById(map);
+					map.remove("id");
+				}
+				
+			}catch(Exception e){
+				System.out.println("数据库访问异常");
+				return "redirect:"+basePath+"basics/jsp/payError.jsp";
+			}
+			map.remove("ywbh");
+			
+			//调用支付接口
+			//商户名称
+			String value = (String) map.get(SmsUtils.PAY_CAT_NAME);		
+			value = URLEncoder.encode(value,"UTF-8");
+			map.put(SmsUtils.PAY_CAT_NAME, value);
+			//姓名
+			String catname =(String) map.get(SmsUtils.PAY_PAYER_NAME);		
+			catname = URLEncoder.encode(catname,"UTF-8");
+			map.put(SmsUtils.PAY_PAYER_NAME, catname);
+			//服务名称
+			String settle =(String) map.get(SmsUtils.PAY_SETTLE_DESC);		
+			settle = URLEncoder.encode(settle,"UTF-8");
+			map.put(SmsUtils.PAY_SETTLE_DESC, settle);
+			
+			Set<String> paySet = new HashSet<String>();
+			paySet = map.keySet();
+			Iterator<String> it = paySet.iterator();
+			String params  = "";
+			while(it.hasNext()){
+				String key = it.next();
+				params = params + key  + "=" + map.get(key) + "&";
+//				request.setAttribute(key,map.get(key));
+			}
+			params= params.substring(0, params.length()-1);
+			//HttpUtil.http("http://gafw.jl.gov.cn:80/WebApi/ThirdParty/pay",map);
+		//System.out.println("http://gafw.jl.gov.cn:80/WebApi/ThirdParty/pay?"+params);
+			//保存支付信息
+			
+			
+			String url = "http://gafw.jl.gov.cn:80/WebApi/ThirdParty/pay?"+params;
+//			CrjErrorLog.saveLog("INFO", url);
+//			String url = Constants.PAY_URL+"?"+params;
+//			System.out.println("url:"+url);
+//			request.getRequestDispatcher("/basics/jsp/pay.jsp").forward(request, response);
+			return "redirect:"+url;
+//			return "";
+		}
+	  
+	  
+	 
+	 public static void main(String[] args){
+			
+			try{
+//				System.out.println(getTokenTime(null, null));;
+			}catch(Exception e){}
+		}
+
+	
+}

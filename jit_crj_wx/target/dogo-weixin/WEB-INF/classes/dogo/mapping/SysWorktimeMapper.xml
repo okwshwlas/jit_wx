@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="dogo.dao.SysWorktimeMapper" >
+  <resultMap id="BaseResultMap" type="dogo.model.SysWorktime" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="WORKDAY_ID" property="workdayId" jdbcType="VARCHAR" />
+    <result column="START_TIME" property="startTime" jdbcType="VARCHAR" />
+    <result column="END_TIME" property="endTime" jdbcType="VARCHAR" />
+    <result column="YYZL" property="yyzl" jdbcType="VARCHAR" />
+    <result column="YYSL" property="yysl" jdbcType="VARCHAR" />
+    <result column="SYSL" property="sysl" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="RIQI" property="riqi" jdbcType="VARCHAR" />
+    <result column="WEEK" property="week" jdbcType="VARCHAR" />
+    <result column="WORKTIME_SAMPLE_ID" property="worktimeSampleId" jdbcType="VARCHAR" />
+    <result column="JGWD_ID" property="jgwdId" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, WORKDAY_ID, START_TIME, END_TIME, YYZL, YYSL, SYSL, CREATE_TIME, UPDATE_TIME, 
+    RIQI, WEEK, WORKTIME_SAMPLE_ID, JGWD_ID
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from SYS_WORKTIME
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from SYS_WORKTIME
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="dogo.model.SysWorktime" >
+    insert into SYS_WORKTIME (ID, WORKDAY_ID, START_TIME, 
+      END_TIME, YYZL, YYSL, 
+      SYSL, CREATE_TIME, UPDATE_TIME, 
+      RIQI, WEEK, WORKTIME_SAMPLE_ID, 
+      JGWD_ID)
+    values (#{id,jdbcType=VARCHAR}, #{workdayId,jdbcType=VARCHAR}, #{startTime,jdbcType=VARCHAR}, 
+      #{endTime,jdbcType=VARCHAR}, #{yyzl,jdbcType=VARCHAR}, #{yysl,jdbcType=VARCHAR}, 
+      #{sysl,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{riqi,jdbcType=VARCHAR}, #{week,jdbcType=VARCHAR}, #{worktimeSampleId,jdbcType=VARCHAR}, 
+      #{jgwdId,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="dogo.model.SysWorktime" >
+    insert into SYS_WORKTIME
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="workdayId != null" >
+        WORKDAY_ID,
+      </if>
+      <if test="startTime != null" >
+        START_TIME,
+      </if>
+      <if test="endTime != null" >
+        END_TIME,
+      </if>
+      <if test="yyzl != null" >
+        YYZL,
+      </if>
+      <if test="yysl != null" >
+        YYSL,
+      </if>
+      <if test="sysl != null" >
+        SYSL,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME,
+      </if>
+      <if test="riqi != null" >
+        RIQI,
+      </if>
+      <if test="week != null" >
+        WEEK,
+      </if>
+      <if test="worktimeSampleId != null" >
+        WORKTIME_SAMPLE_ID,
+      </if>
+      <if test="jgwdId != null" >
+        JGWD_ID,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="workdayId != null" >
+        #{workdayId,jdbcType=VARCHAR},
+      </if>
+      <if test="startTime != null" >
+        #{startTime,jdbcType=VARCHAR},
+      </if>
+      <if test="endTime != null" >
+        #{endTime,jdbcType=VARCHAR},
+      </if>
+      <if test="yyzl != null" >
+        #{yyzl,jdbcType=VARCHAR},
+      </if>
+      <if test="yysl != null" >
+        #{yysl,jdbcType=VARCHAR},
+      </if>
+      <if test="sysl != null" >
+        #{sysl,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="riqi != null" >
+        #{riqi,jdbcType=VARCHAR},
+      </if>
+      <if test="week != null" >
+        #{week,jdbcType=VARCHAR},
+      </if>
+      <if test="worktimeSampleId != null" >
+        #{worktimeSampleId,jdbcType=VARCHAR},
+      </if>
+      <if test="jgwdId != null" >
+        #{jgwdId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="dogo.model.SysWorktime" >
+    update SYS_WORKTIME
+    <set >
+      <if test="workdayId != null" >
+        WORKDAY_ID = #{workdayId,jdbcType=VARCHAR},
+      </if>
+      <if test="startTime != null" >
+        START_TIME = #{startTime,jdbcType=VARCHAR},
+      </if>
+      <if test="endTime != null" >
+        END_TIME = #{endTime,jdbcType=VARCHAR},
+      </if>
+      <if test="yyzl != null" >
+        YYZL = #{yyzl,jdbcType=VARCHAR},
+      </if>
+      <if test="yysl != null" >
+        YYSL = #{yysl,jdbcType=VARCHAR},
+      </if>
+      <if test="sysl != null" >
+        SYSL = #{sysl,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="riqi != null" >
+        RIQI = #{riqi,jdbcType=VARCHAR},
+      </if>
+      <if test="week != null" >
+        WEEK = #{week,jdbcType=VARCHAR},
+      </if>
+      <if test="worktimeSampleId != null" >
+        WORKTIME_SAMPLE_ID = #{worktimeSampleId,jdbcType=VARCHAR},
+      </if>
+      <if test="jgwdId != null" >
+        JGWD_ID = #{jgwdId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="dogo.model.SysWorktime" >
+    update SYS_WORKTIME
+    set WORKDAY_ID = #{workdayId,jdbcType=VARCHAR},
+      START_TIME = #{startTime,jdbcType=VARCHAR},
+      END_TIME = #{endTime,jdbcType=VARCHAR},
+      YYZL = #{yyzl,jdbcType=VARCHAR},
+      YYSL = #{yysl,jdbcType=VARCHAR},
+      SYSL = #{sysl,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      RIQI = #{riqi,jdbcType=VARCHAR},
+      WEEK = #{week,jdbcType=VARCHAR},
+      WORKTIME_SAMPLE_ID = #{worktimeSampleId,jdbcType=VARCHAR},
+      JGWD_ID = #{jgwdId,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+   <select id="WX_findJgdwById" resultMap="BaseResultMap">
+  select * from SYS_WORKTIME where riqi = #{riqi} and JGWD_ID=#{jgid}
+  </select>
+</mapper>

@@ -1,0 +1,100 @@
+/*--
+  - Author: lll
+  - Date: 20060711
+  - Description: 通用CSS定义
+  - Copyright Notice: Beijing Jingyun Wanfeng Information Technology Co. Ltd.
+--*/
+  
+/*--
+  - Modified by: konami
+  - Date: 20060719
+  - Description: 优化部分代码
+--*/
+  
+body {
+  font-size: 12px; background-color: #ECF7FD;
+  scrollbar-face-color: #a0d3f5;
+  scrollbar-highlight-color: #ffffff;
+  scrollbar-shadow-color: #ffffff;
+  scrollbar-3dlight-color: #cccccc;
+  scrollbar-arrow-color: #ffffff;
+  scrollbar-track-color: #ffffff;
+  scrollbar-darkshadow-color: #cccccc;
+}
+.selrow { background-color: #CEE9F9; }
+th,td,select,input,textarea { font-size: 12px; }
+.txtarea { border: solid 1px #cccccc; padding: 3px; line-height: 200%; }
+.txt { border: #cccccc 1px solid; padding: 3px; height: 25px; }
+.logintxt {font-size: 14px;font-weight: bold;}
+.logint {font-size: 12px;line-height:150%;}
+.checkboxdx,.radiodx { width: 14px; height: 14px; }
+.selextxz { width: 196px; }
+.alignr { text-align: right; }
+.blank { padding-left:8pt; }
+.tab-soid { background-color: #A0D3F5; table-layout: fixed; word-wrap: break-word; }
+.tab-soidnf { background-color: #A0D3F5; }
+.tab-btbg { background-color: #AEDAF7; }
+.tab-bgbg { background-color: #ffffff; }
+.tab-bgbg1 { background-color: #F3F9FC; }
+.div-width { height: expression(document.body.clientHeight - listHeight > this.firstChild.clientHeight + 17 ? (document.body.clientWidth - 40 >= this.firstChild.clientWidth ? this.firstChild.clientHeight : (this.firstChild.clientHeight + 17)) : document.body.clientHeight - listHeight); width: expression(document.body.clientWidth - 40); overflow: auto; }
+.lb34 { border-right: 1px solid #A0D3F5; border-bottom: 1px solid #A0D3F5; }
+.lb14 { border-left: 1px solid #A0D3F5; border-bottom: 1px solid #A0D3F5; }
+.lb3 { border-right: 1px solid #A0D3F5; }
+.lb4 { border-bottom: 1px solid #A0D3F5;}
+.lb12 { border-left: 1px solid #A0D3F5; border-top: 1px solid #A0D3F5; }
+.lb1 { border-left: 1px solid #A0D3F5; }
+.lb2 { border-top: 1px solid #A0D3F5; }
+.lftd1 {
+  position: relative;
+  top: expression(this.parentElement.offsetParent.parentElement.scrollTop);
+}
+
+.lftd2 {
+  position: relative;
+  left: expression(this.parentElement.offsetParent.parentElement.scrollLeft); 
+}
+.lztop { z-index: 10; }
+.fombg { background-color: #AEDAF7; }
+
+.plac { color: #b9e8ff; }
+.plac:link { color: #b9e8ff; text-decoration: none; }
+.bt { font-size: 13px; font-weight: bold; color: #003F74; }
+.bta { font-size: 13px; font-weight: bold; color: #003F74; text-decoration: none; }
+.sxbt { font-weight: bold; color: #000000; }
+.sxbta { font-size: 13px; font-weight: bold; color: #003F74; text-decoration: none; }
+.tab-bt { font-weight: bold; color: #000000; }
+.sml-bt { font-size: 13px; font-weight: bold; color: #990000; }
+
+.wz { height: 27px; color: #ffffff; text-decoration: none;  background-color: #039CE2; }
+.wz a:link { color: #ffffff; text-decoration: none; }
+.wz a:visited { color: #ffffff; text-decoration: none; }
+.wz a:hover { color: #b9e8ff; text-decoration: none; }
+
+.dyg { color: #000000; text-decoration: none;}
+.dyg a:link { color: #d54b00; text-decoration: none; }
+.dyg a:visited { color: #d54b00; text-decoration: none; }
+.dyg a:hover { color: #0B85FF; text-decoration: none; }
+
+.fombt { color: #000000; text-decoration: none; }
+.wenzi { color: #ff0000; text-decoration: none; line-height:200%; }
+.xh { color: #990000;}
+.leftbg { background-color: #ffffff; }
+.gray { color: #999999; }
+
+/* konami added */
+.hand { cursor: hand; }
+.btn_s0 { border: 1px solid #E19D15; padding: 1px; height: 22px; background-color: #FFFFFF; }
+.btn_s1 { padding-left: 1px; padding-right: 1px; height: 24px; background-image:url(../jsp/login/images/common/button/buttonbg2.gif); }
+.btn_s2 { padding-left: 1px; padding-right: 1px; height: 24px; background-image:url(../jsp/login/images/common/button/buttonbg2.gif); }
+.btn0 { border: 0px; letter-spacing: 2px; height: 18px; padding-top: 3px; cursor: hand; background-image:url(../jsp/login/images/common/button/buttonbg0.gif); }
+.btn1 { border: 0px; height: 24px; padding-top: 3px; cursor: hand; background-image:url(../images/common/button/buttonbg1.gif); }
+.btn2 { border: 0px; height: 24px; padding-top: 3px; cursor: hand; background-image:url(../images/common/button/buttonbg1.gif); color: #808080; }
+.dblind { position: absolute; left: 0; top: 0; width: expression(document.body.clientWidth > document.body.scrollWidth ? document.body.clientWidth : document.body.scrollWidth); height: expression(document.body.clientHeight > document.body.scrollHeight ? document.body.clientHeight : document.body.scrollHeight); z-index: 1000; background-color: #4C4242; filter:progid:DXImageTransform.Microsoft.Alpha( Opacity=10, FinishOpacity=0, Style=1, StartX=0,  FinishX=0, StartY=0, FinishY=0); display: none; }
+.dblindOnly { position: absolute; z-index: 1000; background-color: #4C4242; filter:progid:DXImageTransform.Microsoft.Alpha( Opacity=10, FinishOpacity=0, Style=1, StartX=0,  FinishX=0, StartY=0, FinishY=0); }
+.dsaving { position: absolute; left: expression((document.body.clientWidth - 300) / 2 + eval(document.body.scrollLeft)); top: expression((document.body.clientHeight - 90) / 2 + eval(document.body.scrollTop)); width: 300px; height: 90px; z-index: 1001; display: none; background-color: #ffffff; }
+.disable { color: #808080; filter: progid:DXImageTransform.Microsoft.dropshadow(Color='#FFFFFF', OffX=1, OffY=1, Positive='true'); }
+/* added by cris,强制使对象高度在页面中居中*/
+.vmiddle{position:absolute;top:expression((document.body.clientHeight - this.offsetHeight)/2)}
+.tab{
+	background-color:#F3F9FC;
+}

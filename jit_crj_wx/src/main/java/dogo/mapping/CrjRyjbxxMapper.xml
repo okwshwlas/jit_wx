@@ -1,0 +1,313 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="dogo.dao.CrjRyjbxxMapper" >
+  <resultMap id="BaseResultMap" type="dogo.model.CrjRyjbxx" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="YHBH" property="yhbh" jdbcType="VARCHAR" />
+    <result column="RYBH" property="rybh" jdbcType="VARCHAR" />
+    <result column="DWBH" property="dwbh" jdbcType="VARCHAR" />
+    <result column="XM" property="xm" jdbcType="VARCHAR" />
+    <result column="ZWX" property="zwx" jdbcType="VARCHAR" />
+    <result column="ZWM" property="zwm" jdbcType="VARCHAR" />
+    <result column="PY_X" property="pyX" jdbcType="VARCHAR" />
+    <result column="PY_M" property="pyM" jdbcType="VARCHAR" />
+    <result column="XB" property="xb" jdbcType="VARCHAR" />
+    <result column="MZ" property="mz" jdbcType="VARCHAR" />
+    <result column="SFZJHM" property="sfzjhm" jdbcType="VARCHAR" />
+    <result column="CSRQ" property="csrq" jdbcType="DATE" />
+    <result column="CSD_GJ" property="csdGj" jdbcType="VARCHAR" />
+    <result column="CSD_SF" property="csdSf" jdbcType="VARCHAR" />
+    <result column="HKSZD_SSXQ" property="hkszdSsxq" jdbcType="VARCHAR" />
+    <result column="HKSZD_XS" property="hkszdXs" jdbcType="VARCHAR" />
+    <result column="HKSZD_PCS" property="hkszdPcs" jdbcType="VARCHAR" />
+    <result column="LXDH" property="lxdh" jdbcType="VARCHAR" />
+    <result column="JJLXR_XM" property="jjlxrXm" jdbcType="VARCHAR" />
+    <result column="JJLXR_DH" property="jjlxrDh" jdbcType="VARCHAR" />
+    <result column="YHZGX" property="yhzgx" jdbcType="VARCHAR" />
+    <result column="CREATETIME" property="createtime" jdbcType="DATE" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, YHBH, RYBH, DWBH, XM, ZWX, ZWM, PY_X, PY_M, XB, MZ, SFZJHM, CSRQ, CSD_GJ, CSD_SF, 
+    HKSZD_SSXQ, HKSZD_XS, HKSZD_PCS, LXDH, JJLXR_XM, JJLXR_DH, YHZGX, CREATETIME
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from T_CRJ_RYJBXX
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from T_CRJ_RYJBXX
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="dogo.model.CrjRyjbxx" >
+    insert into T_CRJ_RYJBXX (ID, YHBH, RYBH, 
+      DWBH, XM, ZWX, ZWM, 
+      PY_X, PY_M, XB, MZ, 
+      SFZJHM, CSRQ, CSD_GJ, CSD_SF, 
+      HKSZD_SSXQ, HKSZD_XS, HKSZD_PCS, 
+      LXDH, JJLXR_XM, JJLXR_DH, 
+      YHZGX, CREATETIME)
+    values (#{id,jdbcType=VARCHAR}, #{yhbh,jdbcType=VARCHAR}, #{rybh,jdbcType=VARCHAR}, 
+      #{dwbh,jdbcType=VARCHAR}, #{xm,jdbcType=VARCHAR}, #{zwx,jdbcType=VARCHAR}, #{zwm,jdbcType=VARCHAR}, 
+      #{pyX,jdbcType=VARCHAR}, #{pyM,jdbcType=VARCHAR}, #{xb,jdbcType=VARCHAR}, #{mz,jdbcType=VARCHAR}, 
+      #{sfzjhm,jdbcType=VARCHAR}, #{csrq,jdbcType=DATE}, #{csdGj,jdbcType=VARCHAR}, #{csdSf,jdbcType=VARCHAR}, 
+      #{hkszdSsxq,jdbcType=VARCHAR}, #{hkszdXs,jdbcType=VARCHAR}, #{hkszdPcs,jdbcType=VARCHAR}, 
+      #{lxdh,jdbcType=VARCHAR}, #{jjlxrXm,jdbcType=VARCHAR}, #{jjlxrDh,jdbcType=VARCHAR}, 
+      #{yhzgx,jdbcType=VARCHAR}, #{createtime,jdbcType=DATE})
+  </insert>
+  <insert id="insertSelective" parameterType="dogo.model.CrjRyjbxx" >
+    insert into T_CRJ_RYJBXX
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="yhbh != null" >
+        YHBH,
+      </if>
+      <if test="rybh != null" >
+        RYBH,
+      </if>
+      <if test="dwbh != null" >
+        DWBH,
+      </if>
+      <if test="xm != null" >
+        XM,
+      </if>
+      <if test="zwx != null" >
+        ZWX,
+      </if>
+      <if test="zwm != null" >
+        ZWM,
+      </if>
+      <if test="pyX != null" >
+        PY_X,
+      </if>
+      <if test="pyM != null" >
+        PY_M,
+      </if>
+      <if test="xb != null" >
+        XB,
+      </if>
+      <if test="mz != null" >
+        MZ,
+      </if>
+      <if test="sfzjhm != null" >
+        SFZJHM,
+      </if>
+      <if test="csrq != null" >
+        CSRQ,
+      </if>
+      <if test="csdGj != null" >
+        CSD_GJ,
+      </if>
+      <if test="csdSf != null" >
+        CSD_SF,
+      </if>
+      <if test="hkszdSsxq != null" >
+        HKSZD_SSXQ,
+      </if>
+      <if test="hkszdXs != null" >
+        HKSZD_XS,
+      </if>
+      <if test="hkszdPcs != null" >
+        HKSZD_PCS,
+      </if>
+      <if test="lxdh != null" >
+        LXDH,
+      </if>
+      <if test="jjlxrXm != null" >
+        JJLXR_XM,
+      </if>
+      <if test="jjlxrDh != null" >
+        JJLXR_DH,
+      </if>
+      <if test="yhzgx != null" >
+        YHZGX,
+      </if>
+      <if test="createtime != null" >
+        CREATETIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="yhbh != null" >
+        #{yhbh,jdbcType=VARCHAR},
+      </if>
+      <if test="rybh != null" >
+        #{rybh,jdbcType=VARCHAR},
+      </if>
+      <if test="dwbh != null" >
+        #{dwbh,jdbcType=VARCHAR},
+      </if>
+      <if test="xm != null" >
+        #{xm,jdbcType=VARCHAR},
+      </if>
+      <if test="zwx != null" >
+        #{zwx,jdbcType=VARCHAR},
+      </if>
+      <if test="zwm != null" >
+        #{zwm,jdbcType=VARCHAR},
+      </if>
+      <if test="pyX != null" >
+        #{pyX,jdbcType=VARCHAR},
+      </if>
+      <if test="pyM != null" >
+        #{pyM,jdbcType=VARCHAR},
+      </if>
+      <if test="xb != null" >
+        #{xb,jdbcType=VARCHAR},
+      </if>
+      <if test="mz != null" >
+        #{mz,jdbcType=VARCHAR},
+      </if>
+      <if test="sfzjhm != null" >
+        #{sfzjhm,jdbcType=VARCHAR},
+      </if>
+      <if test="csrq != null" >
+        #{csrq,jdbcType=DATE},
+      </if>
+      <if test="csdGj != null" >
+        #{csdGj,jdbcType=VARCHAR},
+      </if>
+      <if test="csdSf != null" >
+        #{csdSf,jdbcType=VARCHAR},
+      </if>
+      <if test="hkszdSsxq != null" >
+        #{hkszdSsxq,jdbcType=VARCHAR},
+      </if>
+      <if test="hkszdXs != null" >
+        #{hkszdXs,jdbcType=VARCHAR},
+      </if>
+      <if test="hkszdPcs != null" >
+        #{hkszdPcs,jdbcType=VARCHAR},
+      </if>
+      <if test="lxdh != null" >
+        #{lxdh,jdbcType=VARCHAR},
+      </if>
+      <if test="jjlxrXm != null" >
+        #{jjlxrXm,jdbcType=VARCHAR},
+      </if>
+      <if test="jjlxrDh != null" >
+        #{jjlxrDh,jdbcType=VARCHAR},
+      </if>
+      <if test="yhzgx != null" >
+        #{yhzgx,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=DATE},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="dogo.model.CrjRyjbxx" >
+    update T_CRJ_RYJBXX
+    <set >
+      <if test="yhbh != null" >
+        YHBH = #{yhbh,jdbcType=VARCHAR},
+      </if>
+      <if test="rybh != null" >
+        RYBH = #{rybh,jdbcType=VARCHAR},
+      </if>
+      <if test="dwbh != null" >
+        DWBH = #{dwbh,jdbcType=VARCHAR},
+      </if>
+      <if test="xm != null" >
+        XM = #{xm,jdbcType=VARCHAR},
+      </if>
+      <if test="zwx != null" >
+        ZWX = #{zwx,jdbcType=VARCHAR},
+      </if>
+      <if test="zwm != null" >
+        ZWM = #{zwm,jdbcType=VARCHAR},
+      </if>
+      <if test="pyX != null" >
+        PY_X = #{pyX,jdbcType=VARCHAR},
+      </if>
+      <if test="pyM != null" >
+        PY_M = #{pyM,jdbcType=VARCHAR},
+      </if>
+      <if test="xb != null" >
+        XB = #{xb,jdbcType=VARCHAR},
+      </if>
+      <if test="mz != null" >
+        MZ = #{mz,jdbcType=VARCHAR},
+      </if>
+      <if test="sfzjhm != null" >
+        SFZJHM = #{sfzjhm,jdbcType=VARCHAR},
+      </if>
+      <if test="csrq != null" >
+        CSRQ = #{csrq,jdbcType=DATE},
+      </if>
+      <if test="csdGj != null" >
+        CSD_GJ = #{csdGj,jdbcType=VARCHAR},
+      </if>
+      <if test="csdSf != null" >
+        CSD_SF = #{csdSf,jdbcType=VARCHAR},
+      </if>
+      <if test="hkszdSsxq != null" >
+        HKSZD_SSXQ = #{hkszdSsxq,jdbcType=VARCHAR},
+      </if>
+      <if test="hkszdXs != null" >
+        HKSZD_XS = #{hkszdXs,jdbcType=VARCHAR},
+      </if>
+      <if test="hkszdPcs != null" >
+        HKSZD_PCS = #{hkszdPcs,jdbcType=VARCHAR},
+      </if>
+      <if test="lxdh != null" >
+        LXDH = #{lxdh,jdbcType=VARCHAR},
+      </if>
+      <if test="jjlxrXm != null" >
+        JJLXR_XM = #{jjlxrXm,jdbcType=VARCHAR},
+      </if>
+      <if test="jjlxrDh != null" >
+        JJLXR_DH = #{jjlxrDh,jdbcType=VARCHAR},
+      </if>
+      <if test="yhzgx != null" >
+        YHZGX = #{yhzgx,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        CREATETIME = #{createtime,jdbcType=DATE},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="dogo.model.CrjRyjbxx" >
+    update T_CRJ_RYJBXX
+    set YHBH = #{yhbh,jdbcType=VARCHAR},
+      RYBH = #{rybh,jdbcType=VARCHAR},
+      DWBH = #{dwbh,jdbcType=VARCHAR},
+      XM = #{xm,jdbcType=VARCHAR},
+      ZWX = #{zwx,jdbcType=VARCHAR},
+      ZWM = #{zwm,jdbcType=VARCHAR},
+      PY_X = #{pyX,jdbcType=VARCHAR},
+      PY_M = #{pyM,jdbcType=VARCHAR},
+      XB = #{xb,jdbcType=VARCHAR},
+      MZ = #{mz,jdbcType=VARCHAR},
+      SFZJHM = #{sfzjhm,jdbcType=VARCHAR},
+      CSRQ = #{csrq,jdbcType=DATE},
+      CSD_GJ = #{csdGj,jdbcType=VARCHAR},
+      CSD_SF = #{csdSf,jdbcType=VARCHAR},
+      HKSZD_SSXQ = #{hkszdSsxq,jdbcType=VARCHAR},
+      HKSZD_XS = #{hkszdXs,jdbcType=VARCHAR},
+      HKSZD_PCS = #{hkszdPcs,jdbcType=VARCHAR},
+      LXDH = #{lxdh,jdbcType=VARCHAR},
+      JJLXR_XM = #{jjlxrXm,jdbcType=VARCHAR},
+      JJLXR_DH = #{jjlxrDh,jdbcType=VARCHAR},
+      YHZGX = #{yhzgx,jdbcType=VARCHAR},
+      CREATETIME = #{createtime,jdbcType=DATE}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  
+  <!-- 根据身份证和电话查询 -->
+  <select id="selectByCardAndPhone" resultMap="BaseResultMap">
+  select * from T_CRJ_RYJBXX where sfzjhm = #{sfzjhm}
+  and lxdh = #{lxdh}
+  </select>
+  
+
+  
+  
+  
+</mapper>

@@ -1,0 +1,5 @@
+validationQuery=SELECT 1
+#jdbc_url=jdbc:oracle:thin:@127.0.0.1:1521:ORCL
+jdbc_url=jdbc:oracle:thin:@101.200.200.193:1521:ORCL
+jdbc_username=crj_user
+jdbc_password=crj_user_2016

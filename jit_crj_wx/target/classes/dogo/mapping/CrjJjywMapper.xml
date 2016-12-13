@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="dogo.dao.CrjJjywMapper" >
+  <resultMap id="BaseResultMap" type="dogo.model.CrjJjyw" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="QZZL" property="qzzl" jdbcType="VARCHAR" />
+    <result column="XM" property="xm" jdbcType="VARCHAR" />
+    <result column="SFZH" property="sfzh" jdbcType="VARCHAR" />
+    <result column="JJSY" property="jjsy" jdbcType="VARCHAR" />
+    <result column="SHJG" property="shjg" jdbcType="VARCHAR" />
+    <result column="SHYJ" property="shyj" jdbcType="VARCHAR" />
+    <result column="SHR" property="shr" jdbcType="VARCHAR" />
+    <result column="CRJDH" property="crjdh" jdbcType="VARCHAR" />
+    <result column="FJ1" property="fj1" jdbcType="VARCHAR" />
+    <result column="FJ2" property="fj2" jdbcType="VARCHAR" />
+    <result column="FJ3" property="fj3" jdbcType="VARCHAR" />
+    <result column="SQSJ" property="sqsj" jdbcType="DATE" />
+    <result column="SHSJ" property="shsj" jdbcType="DATE" />
+    <result column="OPENID" property="openid" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, QZZL, XM, SFZH, JJSY, SHJG, SHYJ, SHR, CRJDH, FJ1, FJ2, FJ3, SQSJ, SHSJ,OPENID
+  </sql>
+  <select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from CRJ_JJYW
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByOpenId" resultMap="BaseResultMap"  >
+    select 
+    <include refid="Base_Column_List" />
+    from CRJ_JJYW
+    where OPENID = #{openId,jdbcType=VARCHAR} order by SQSJ desc
+  </select>
+  <select id="selectByShjg" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from CRJ_JJYW
+    where Shjg = ""
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from CRJ_JJYW
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="dogo.model.CrjJjyw" >
+    insert into CRJ_JJYW (ID, QZZL, XM, 
+      SFZH, JJSY, SHJG, SHYJ, 
+      SHR, CRJDH, FJ1, FJ2, 
+      FJ3, SQSJ, SHSJ,OPENID)
+    values (#{id,jdbcType=VARCHAR}, #{qzzl,jdbcType=VARCHAR}, #{xm,jdbcType=VARCHAR}, 
+      #{sfzh,jdbcType=VARCHAR}, #{jjsy,jdbcType=VARCHAR}, #{shjg,jdbcType=VARCHAR}, #{shyj,jdbcType=VARCHAR}, 
+      #{shr,jdbcType=VARCHAR}, #{crjdh,jdbcType=VARCHAR}, #{fj1,jdbcType=VARCHAR}, #{fj2,jdbcType=VARCHAR}, 
+      #{fj3,jdbcType=VARCHAR}, #{sqsj,jdbcType=DATE}, #{shsj,jdbcType=DATE}, #{openid,jdbcType=DATE})
+  </insert>
+  <insert id="insertSelective" parameterType="dogo.model.CrjJjyw" >
+    insert into CRJ_JJYW
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="qzzl != null" >
+        QZZL,
+      </if>
+      <if test="xm != null" >
+        XM,
+      </if>
+      <if test="sfzh != null" >
+        SFZH,
+      </if>
+      <if test="jjsy != null" >
+        JJSY,
+      </if>
+      <if test="shjg != null" >
+        SHJG,
+      </if>
+      <if test="shyj != null" >
+        SHYJ,
+      </if>
+      <if test="shr != null" >
+        SHR,
+      </if>
+      <if test="crjdh != null" >
+        CRJDH,
+      </if>
+      <if test="fj1 != null" >
+        FJ1,
+      </if>
+      <if test="fj2 != null" >
+        FJ2,
+      </if>
+      <if test="fj3 != null" >
+        FJ3,
+      </if>
+      <if test="sqsj != null" >
+        SQSJ,
+      </if>
+      <if test="shsj != null" >
+        SHSJ,
+      </if>
+      <if test="openid != null" >
+        OPENID,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="qzzl != null" >
+        #{qzzl,jdbcType=VARCHAR},
+      </if>
+      <if test="xm != null" >
+        #{xm,jdbcType=VARCHAR},
+      </if>
+      <if test="sfzh != null" >
+        #{sfzh,jdbcType=VARCHAR},
+      </if>
+      <if test="jjsy != null" >
+        #{jjsy,jdbcType=VARCHAR},
+      </if>
+      <if test="shjg != null" >
+        #{shjg,jdbcType=VARCHAR},
+      </if>
+      <if test="shyj != null" >
+        #{shyj,jdbcType=VARCHAR},
+      </if>
+      <if test="shr != null" >
+        #{shr,jdbcType=VARCHAR},
+      </if>
+      <if test="crjdh != null" >
+        #{crjdh,jdbcType=VARCHAR},
+      </if>
+      <if test="fj1 != null" >
+        #{fj1,jdbcType=VARCHAR},
+      </if>
+      <if test="fj2 != null" >
+        #{fj2,jdbcType=VARCHAR},
+      </if>
+      <if test="fj3 != null" >
+        #{fj3,jdbcType=VARCHAR},
+      </if>
+      <if test="sqsj != null" >
+        #{sqsj,jdbcType=DATE},
+      </if>
+      <if test="shsj != null" >
+        #{shsj,jdbcType=DATE},
+      </if>
+      <if test="openid != null" >
+        #{openid,jdbcType=DATE},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="dogo.model.CrjJjyw" >
+    update CRJ_JJYW
+    <set >
+      <if test="qzzl != null" >
+        QZZL = #{qzzl,jdbcType=VARCHAR},
+      </if>
+      <if test="xm != null" >
+        XM = #{xm,jdbcType=VARCHAR},
+      </if>
+      <if test="sfzh != null" >
+        SFZH = #{sfzh,jdbcType=VARCHAR},
+      </if>
+      <if test="jjsy != null" >
+        JJSY = #{jjsy,jdbcType=VARCHAR},
+      </if>
+      <if test="shjg != null" >
+        SHJG = #{shjg,jdbcType=VARCHAR},
+      </if>
+      <if test="shyj != null" >
+        SHYJ = #{shyj,jdbcType=VARCHAR},
+      </if>
+      <if test="shr != null" >
+        SHR = #{shr,jdbcType=VARCHAR},
+      </if>
+      <if test="crjdh != null" >
+        CRJDH = #{crjdh,jdbcType=VARCHAR},
+      </if>
+      <if test="fj1 != null" >
+        FJ1 = #{fj1,jdbcType=VARCHAR},
+      </if>
+      <if test="fj2 != null" >
+        FJ2 = #{fj2,jdbcType=VARCHAR},
+      </if>
+      <if test="fj3 != null" >
+        FJ3 = #{fj3,jdbcType=VARCHAR},
+      </if>
+      <if test="sqsj != null" >
+        SQSJ = #{sqsj,jdbcType=DATE},
+      </if>
+      <if test="shsj != null" >
+        SHSJ = #{shsj,jdbcType=DATE},
+      </if>
+      <if test="openid != null" >
+        OPENID = #{openid,jdbcType=DATE},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="dogo.model.CrjJjyw" >
+    update CRJ_JJYW
+    set QZZL = #{qzzl,jdbcType=VARCHAR},
+      XM = #{xm,jdbcType=VARCHAR},
+      SFZH = #{sfzh,jdbcType=VARCHAR},
+      JJSY = #{jjsy,jdbcType=VARCHAR},
+      SHJG = #{shjg,jdbcType=VARCHAR},
+      SHYJ = #{shyj,jdbcType=VARCHAR},
+      SHR = #{shr,jdbcType=VARCHAR},
+      CRJDH = #{crjdh,jdbcType=VARCHAR},
+      FJ1 = #{fj1,jdbcType=VARCHAR},
+      FJ2 = #{fj2,jdbcType=VARCHAR},
+      FJ3 = #{fj3,jdbcType=VARCHAR},
+      SQSJ = #{sqsj,jdbcType=DATE},
+      SHSJ = #{shsj,jdbcType=DATE},
+      OPENID = #{openid,jdbcType=DATE}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="update" parameterType="dogo.model.CrjJjyw" >
+    update CRJ_JJYW
+    set QZZL = #{qzzl,jdbcType=VARCHAR},
+      XM = #{xm,jdbcType=VARCHAR},
+      SFZH = #{sfzh,jdbcType=VARCHAR},
+      JJSY = #{jjsy,jdbcType=VARCHAR},
+      SHJG = #{shjg,jdbcType=VARCHAR},
+      SHYJ = #{shyj,jdbcType=VARCHAR},
+      SHR = #{shr,jdbcType=VARCHAR},
+      CRJDH = #{crjdh,jdbcType=VARCHAR},
+      FJ1 = #{fj1,jdbcType=VARCHAR},
+      FJ2 = #{fj2,jdbcType=VARCHAR},
+      FJ3 = #{fj3,jdbcType=VARCHAR},
+      SQSJ = #{sqsj,jdbcType=DATE},
+      SHSJ = #{shsj,jdbcType=DATE},
+      OPENID = #{openid,jdbcType=DATE}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

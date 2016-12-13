@@ -1,0 +1,28 @@
+﻿.favorite{
+	height:100%;
+	overflow:auto;	
+}
+.favorite ul{
+	margin-top:4px;
+}
+.favorite li{
+	margin-left:10px;
+	padding-left:20px;
+	position:relative;
+	height:16px;
+	line-height:16px;
+	margin-bottom:4px;
+	background:url('../images/favorite/favorite.gif') no-repeat scroll left top;
+}
+.favorite li a{
+	color:black;
+	float:left;
+}
+.favorite li .delete{
+	background:url('../images/favorite/delete.gif') no-repeat scroll center bottom;
+	cursor:pointer;
+	width:13px;
+	height:16px;
+	float:left;
+	display:none;
+}

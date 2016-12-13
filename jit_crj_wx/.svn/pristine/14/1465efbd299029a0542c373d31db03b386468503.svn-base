@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="dogo.dao.RoleMapper" >
+  <resultMap id="BaseResultMap" type="dogo.model.Role" >
+    <id column="ROLEID" property="roleid" jdbcType="VARCHAR" />
+    <result column="ROLENAME" property="rolename" jdbcType="VARCHAR" />
+    <result column="ROLEDESC" property="roledesc" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ROLEID, ROLENAME, ROLEDESC
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from m_role
+    where ROLEID = #{roleid,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from m_role
+  </select>
+  <select id="selectAllPage" resultMap="BaseResultMap" parameterType="java.util.Map" statementType="STATEMENT">
+   select * from (
+    select a.*,rownum r
+    from m_role a
+     where 1=1
+     and 
+     <![CDATA[ 
+     rownum<=${page.end}
+     ]]>
+    <trim suffixOverrides="," >
+      <if test="page.typeName != 'ALL' and page.typeName != null" >
+        ${page.typeName} like '%${page.typeValue}%',
+      </if>
+    </trim>
+    )
+    where 
+    <![CDATA[ 
+    ${page.begin}<=r
+    ]]>
+  </select>
+  <select id="selectAllCount" resultType="java.lang.String" parameterType="java.util.Map" statementType="STATEMENT">
+    select 
+    count(*)
+    from m_role
+    <trim suffixOverrides="," >
+      <if test="page.typeName != 'ALL' and page.typeName != null" >
+	    where 
+        ${page.typeName} like '%${page.typeValue}%',
+      </if>
+    </trim>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from m_role
+    where ROLEID = #{roleid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="dogo.model.Role" >
+    insert into m_role (ROLEID, ROLENAME, ROLEDESC
+      )
+    values (#{roleid,jdbcType=VARCHAR}, #{rolename,jdbcType=VARCHAR}, #{roledesc,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="dogo.model.Role" >
+    insert into m_role
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="roleid != null" >
+        ROLEID,
+      </if>
+      <if test="rolename != null" >
+        ROLENAME,
+      </if>
+      <if test="roledesc != null" >
+        ROLEDESC,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="roleid != null" >
+        #{roleid,jdbcType=VARCHAR},
+      </if>
+      <if test="rolename != null" >
+        #{rolename,jdbcType=VARCHAR},
+      </if>
+      <if test="roledesc != null" >
+        #{roledesc,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="dogo.model.Role" >
+    update m_role
+    <set >
+      <if test="rolename != null" >
+        ROLENAME = #{rolename,jdbcType=VARCHAR},
+      </if>
+      <if test="roledesc != null" >
+        ROLEDESC = #{roledesc,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ROLEID = #{roleid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="dogo.model.Role" >
+    update m_role
+    set ROLENAME = #{rolename,jdbcType=VARCHAR},
+      ROLEDESC = #{roledesc,jdbcType=VARCHAR}
+    where ROLEID = #{roleid,jdbcType=VARCHAR}
+  </update>
+</mapper>

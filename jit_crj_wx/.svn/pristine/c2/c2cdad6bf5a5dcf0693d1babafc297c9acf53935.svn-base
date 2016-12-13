@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"/>
+    <title>预约</title>
+    <link href="../style/default.css" rel="stylesheet" type="text/css" />
+    <link href="../style/contents.css" type="text/css"  rel="stylesheet"  />
+    <script type="text/javascript" src="../js/jquery.1.8.2.min.js"></script>
+    <script type="text/javascript">
+    function appendli()
+       {
+	   var suibian ='<dl class="id_main">';
+		suibian =suibian + '<dt><img src="../image/icon/ID_code.png" alt=""  width="20" height="20" /> <span style=" vertical-align:middle;">身份证号</span>';
+		suibian =suibian + ' <a href="javascript:void(0);" class="delete_icon" onclick="deleteRow(this)"><img src="../image/icon/delete_icon.png" alt="删 除" width="18" height="18" /></a></dt>';
+		suibian =suibian + '<dd><input type="number" placeholder="请输入身份证号码"  class="input_sty"/></dd></dl>	';
+       jQuery("#id_box").append(suibian);
+	
+        }
+	function deleteRow(cor){
+	 	 $(cor).parents(".id_main").remove();
+	  }
+    </script>
+</head>
+<body>
+	<div id="wrap">
+    	<header id="header">预约申请</header>
+        <section id="section">
+        	<div id="id_box">
+            	<dl class="id_main">
+                	<dt>
+                    	<img src="../image/icon/ID_code.png" alt=""  width="20" height="20" />
+                        <span style=" vertical-align:middle;">身份证号</span>
+                       
+                   	</dt>
+                    <dd><input type="number" placeholder="请输入身份证号码"  class="input_sty border_color"/></dd>
+                </dl>	
+                <dl class="id_main">
+                	<dt>
+                    	<img src="../image/icon/ID_code.png" alt=""  width="20" height="20" />
+                        <span style=" vertical-align:middle;">身份证号</span>
+                        <a href="javascript:void(0);" class="delete_icon" onclick="deleteRow(this)"><img src="../image/icon/delete_icon.png" alt="删 除" width="18" height="18" /></a>
+                    </dt>
+                    <dd><input type="number" placeholder="请输入身份证号码"  class="input_sty"/></dd>
+                </dl>	
+            </div>
+        </section>
+        <section style="">
+        	<div class="add_box"><a href="javascript:void(0);" onClick="appendli();"><img src="../image/icon/add_btn.png" alt=""  width="50" height="50"/><span style="display:block; line-height:30px;">添加协行人</span></a></div>
+
+            <div><a href="javascript:void(0);" class="btn_confirm">确 定</a></div>
+        </section>
+    </div>
+</body>
+</html>

@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="dogo.dao.GrregistMapper" >
+  <resultMap id="BaseResultMap" type="dogo.model.Grregist" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="NAME" property="name" jdbcType="VARCHAR" />
+    <result column="PHONENUM" property="phonenum" jdbcType="VARCHAR" />
+    <result column="EMAIL" property="email" jdbcType="VARCHAR" />
+    <result column="URGENTLINK" property="urgentlink" jdbcType="VARCHAR" />
+    <result column="LINKPHONE" property="linkphone" jdbcType="VARCHAR" />
+    <result column="ADDRESS" property="address" jdbcType="VARCHAR" />
+    <result column="QQ" property="qq" jdbcType="VARCHAR" />
+    <result column="WECHAT" property="wechat" jdbcType="VARCHAR" />
+    <result column="IDCARD" property="idcard" jdbcType="VARCHAR" />
+    <result column="PYX" property="pyx" jdbcType="VARCHAR" />
+    <result column="PYM" property="pym" jdbcType="VARCHAR" />
+    <result column="GENDER" property="gender" jdbcType="VARCHAR" />
+    <result column="NATION" property="nation" jdbcType="VARCHAR" />
+    <result column="CSRQ" property="csrq" jdbcType="VARCHAR" />
+    <result column="HKSZD" property="hkszd" jdbcType="VARCHAR" />
+    <result column="CSD" property="csd" jdbcType="VARCHAR" />
+    <result column="X" property="x" jdbcType="VARCHAR" />
+    <result column="M" property="m" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, NAME, PHONENUM, EMAIL, URGENTLINK, LINKPHONE, ADDRESS, QQ, WECHAT, IDCARD, PYX, 
+    PYM, GENDER, NATION, CSRQ, HKSZD, CSD, X, M
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from CRJ_GRREGIST
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from CRJ_GRREGIST
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insertSelective" parameterType="dogo.model.Grregist" >
+    insert into CRJ_GRREGIST
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="name != null" >
+        NAME,
+      </if>
+      <if test="phonenum != null" >
+        PHONENUM,
+      </if>
+      <if test="email != null" >
+        EMAIL,
+      </if>
+      <if test="urgentlink != null" >
+        URGENTLINK,
+      </if>
+      <if test="linkphone != null" >
+        LINKPHONE,
+      </if>
+      <if test="address != null" >
+        ADDRESS,
+      </if>
+      <if test="qq != null" >
+        QQ,
+      </if>
+      <if test="wechat != null" >
+        WECHAT,
+      </if>
+      <if test="idcard != null" >
+        IDCARD,
+      </if>
+      <if test="pyx != null" >
+        PYX,
+      </if>
+      <if test="pym != null" >
+        PYM,
+      </if>
+      <if test="gender != null" >
+        GENDER,
+      </if>
+      <if test="nation != null" >
+        NATION,
+      </if>
+      <if test="csrq != null" >
+        CSRQ,
+      </if>
+      <if test="hkszd != null" >
+        HKSZD,
+      </if>
+      <if test="csd != null" >
+        CSD,
+      </if>
+      <if test="x != null" >
+        X,
+      </if>
+      <if test="m != null" >
+        M,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="phonenum != null" >
+        #{phonenum,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="urgentlink != null" >
+        #{urgentlink,jdbcType=VARCHAR},
+      </if>
+      <if test="linkphone != null" >
+        #{linkphone,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="qq != null" >
+        #{qq,jdbcType=VARCHAR},
+      </if>
+      <if test="wechat != null" >
+        #{wechat,jdbcType=VARCHAR},
+      </if>
+      <if test="idcard != null" >
+        #{idcard,jdbcType=VARCHAR},
+      </if>
+      <if test="pyx != null" >
+        #{pyx,jdbcType=VARCHAR},
+      </if>
+      <if test="pym != null" >
+        #{pym,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null" >
+        #{gender,jdbcType=VARCHAR},
+      </if>
+      <if test="nation != null" >
+        #{nation,jdbcType=VARCHAR},
+      </if>
+      <if test="csrq != null" >
+        #{csrq,jdbcType=VARCHAR},
+      </if>
+      <if test="hkszd != null" >
+        #{hkszd,jdbcType=VARCHAR},
+      </if>
+      <if test="csd != null" >
+        #{csd,jdbcType=VARCHAR},
+      </if>
+      <if test="x != null" >
+        #{x,jdbcType=VARCHAR},
+      </if>
+      <if test="m != null" >
+        #{m,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="dogo.model.Grregist" >
+    update CRJ_GRREGIST
+    <set >
+      <if test="name != null" >
+        NAME = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="phonenum != null" >
+        PHONENUM = #{phonenum,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        EMAIL = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="urgentlink != null" >
+        URGENTLINK = #{urgentlink,jdbcType=VARCHAR},
+      </if>
+      <if test="linkphone != null" >
+        LINKPHONE = #{linkphone,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        ADDRESS = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="qq != null" >
+        QQ = #{qq,jdbcType=VARCHAR},
+      </if>
+      <if test="wechat != null" >
+        WECHAT = #{wechat,jdbcType=VARCHAR},
+      </if>
+      <if test="idcard != null" >
+        IDCARD = #{idcard,jdbcType=VARCHAR},
+      </if>
+      <if test="pyx != null" >
+        PYX = #{pyx,jdbcType=VARCHAR},
+      </if>
+      <if test="pym != null" >
+        PYM = #{pym,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null" >
+        GENDER = #{gender,jdbcType=VARCHAR},
+      </if>
+      <if test="nation != null" >
+        NATION = #{nation,jdbcType=VARCHAR},
+      </if>
+      <if test="csrq != null" >
+        CSRQ = #{csrq,jdbcType=VARCHAR},
+      </if>
+      <if test="hkszd != null" >
+        HKSZD = #{hkszd,jdbcType=VARCHAR},
+      </if>
+      <if test="csd != null" >
+        CSD = #{csd,jdbcType=VARCHAR},
+      </if>
+      <if test="x != null" >
+        X = #{x,jdbcType=VARCHAR},
+      </if>
+      <if test="m != null" >
+        M = #{m,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  
+  <!-- 根据身份证和电话查询 -->
+  <select id="selectByCardAndPhone" resultMap="BaseResultMap">
+  select * from CRJ_GRREGIST where IDCARD = #{idcard}
+  and  PHONENUM = #{phonenum}
+  </select>
+  
+  
+</mapper>

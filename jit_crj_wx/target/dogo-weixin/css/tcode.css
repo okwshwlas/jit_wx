@@ -1,0 +1,179 @@
+#tcode{
+  position: relative;
+  width: 648px;
+  height: 308px;
+  
+  
+  background-color: #fff;
+
+}
+
+#tcode .sort-list{
+  height: 86px;
+  width: 1000px;
+  overflow: hidden;
+}
+#tcode .sort-list h3.icon{
+  float: left;
+  width: 88px;
+  height: 78px;
+  overflow: hidden;
+  text-indent: -9999px;
+  background: url(../i/bg-tcode.gif) left top no-repeat;
+}
+#tcode .sort-list ul{
+  float: left;
+  overflow:hidden;
+}
+#tcode .sort-list ul li{
+  float: left;
+  width: 80px;
+  height: 78px;
+  padding-left: 13px;
+}
+#tcode .sort-list ul li a{
+  display: block;
+  width: 78px;
+  height: 76px;
+  overflow: hidden;
+  border: solid 1px #dce5fd;
+  color:#0744b5;
+  text-align: center;
+  line-height: 120px;
+}
+#tcode .sort-list ul li a:hover{
+  text-decoration: none;
+  border: solid 1px #438d01;
+}
+#tcode .sort-list ul li a:visited{
+  color:#0744b5;
+}
+#tcode .sort-list ul li a.item1{
+  background: url(../i/bg-tcode.gif) left -300px no-repeat;
+}
+#tcode .sort-list ul li a.item2{
+  background: url(../i/bg-tcode.gif) left -400px no-repeat;
+}
+#tcode .sort-list ul li a.item3{
+  background: url(../i/bg-tcode.gif) left -500px no-repeat;
+}
+#tcode .sort-list ul li a.item4{
+  background: url(../i/bg-tcode.gif) left -600px no-repeat;
+}
+#tcode .sort-list ul li a.item5{
+  background: url(../i/bg-tcode.gif) left -700px no-repeat;
+}
+#tcode .sort-list ul li a.item6{
+  background: url(../i/bg-tcode.gif) left -800px no-repeat;
+}
+
+
+
+#tcode .show-table{
+  height: 156px;
+  position: relative;
+}
+#tcode .show-table .header{
+  padding-left: 32px;
+  height: 26px;
+  overflow: hidden;
+  background: url(../i/bg-tcode.gif) left -243px repeat;
+}
+
+#tcode .show-table h3{
+  color: #0744b5;
+  font-weight: bold;
+  line-height: 26px;
+  float:left;
+  padding: 0 10px;
+  background-color: #fff;
+}
+#tcode .show-table .more{
+  line-height: 26px;
+  color: #333;
+  position: absolute;
+  top: 0;
+  right: 20px;
+  padding: 0 10px;
+  background-color: #fff;
+}
+#tcode .show-table .more:visited, #tcode .show-table .more:hover{
+  color: #333;
+}
+#tcode .show-table table{
+  border-collapse: collapse;
+  border: solid 1px #d5e0fe;
+  line-height: 28px;
+}
+#tcode .show-table th{
+  text-align: center;
+  font-weight:bold;
+  color: #5b5b5b;
+  border: solid 1px #d5e0fe;
+}
+#tcode .show-table td{
+  border-right: solid 1px #d5e0fe;
+}
+
+#tcode .item-search{
+  height: 48px;
+  padding: 8px 10px;
+  border: solid 1px #d4e9f7;
+}
+#tcode .item-search .code-search-form{
+  float: left;
+  width: 266px;
+}
+#tcode .item-search .code-search-form .title{
+  position: relative;
+  float: left;
+  width:66px;
+  height: 40px;
+  padding: 4px;
+  color: #5b5b5b;
+  border: solid 1px #d8d9f0;
+}
+#tcode .item-search .code-search-form .title .icon{
+  position: absolute;
+  left: -1px;
+  top: -1px;
+  width: 16px;
+  height: 12px;
+  background: url(../i/bg-tcode.gif) right top no-repeat;
+}
+#tcode .item-search .code-search-form form{
+  float: left;
+  width: 180px;
+  padding-left: 10px;
+}
+#tcode .item-search .code-search-form .text{
+  width: 165px;
+  border: solid 1px #0863b4;
+  color: #adadad;
+  margin: 0;
+  margin-bottom: 2px;
+}
+#tcode .item-search .code-search-form .submit{
+  width: 61px;
+  height: 22px;
+  border:none;
+  padding: 0;
+  background: url(../i/bg-tcode.gif) left -200px no-repeat;
+}
+#tcode .item-search .stat{
+  float: right;
+  width: 300px;
+  padding-left: 60px;
+  background: url(../i/bg-tcode.gif) left -100px no-repeat;
+  line-height: 18px;
+}
+#tcode .item-search .stat h3{
+  font-weight: bold;
+  color: #0744b5;
+}
+#tcode .item-search .stat p{
+  width: 320px;
+}
+#tcode .item-search .stat em{
+  color: #cc0000;
+}

@@ -1,0 +1,171 @@
+﻿html, body {
+	height: 100%;
+	overflow: hidden;
+	position:relative;
+	
+}
+
+.r1{
+	height:70px;
+	background:url('../images/r1.jpg') repeat-x;
+	position:relative;
+	overflow:hidden;
+}
+.r1 .msg-text{
+	position:relative;
+	z-index:2;
+	top:-20px;
+	text-align:center;
+}
+.r1 .msg-text span{
+	background:yellow;
+	border:1px silver solid;
+	color:red;
+	padding:2px 10px;
+
+}
+.r1 .rightArea{
+	background-position:right top;
+	width:400px;
+	height:70px;
+	position:absolute;
+	top:0;
+	right:0;
+	border-right:1px silver solid;	
+
+
+}
+.r1 .rightArea p{
+	line-height:22px;
+	text-align:right;
+	color:#0B457A;
+
+
+}
+.r1 .rightArea p.time{
+	color:white;
+	height:20px;
+	position:absolute;
+	top:36px;
+	right:20px;
+}
+.r1 .rightArea p.userInfo{
+	color:white;
+	position:absolute;
+	top:10px;
+	right:20px;
+	background: url('../images/userinfo-bg.gif') no-repeat;
+	color:#263D9D;
+	text-align:center;
+	height:24px;
+	line-height:0;
+	padding:0 60px 0 20px;
+}
+.r1 .rightArea p.userInfo .right{
+	display:block;
+	background: url('../images/userinfo-bg-r.gif') no-repeat;
+	background-position:right top;
+	position:absolute;
+	top:0;
+	right:-8px;
+	width:8px;
+	height:24px;
+}
+.r1 .rightArea p.userInfo .help{
+	color:#FF9000;
+}
+.r1 .rightArea p.userInfo .quit{
+	position:absolute;
+	right:10px;
+	top:3px;
+}
+.r1 .rightArea p img{
+			margin-right:3px;
+}
+.r1 .top-swf {
+	position: absolute;
+	top: 0;
+	left: 280px;
+	width: 500px;
+	height: 55px;
+	z-index: 199;
+}
+.r2{
+	height:0;
+	overflow:hidden;
+	background:silver url('../images/c2.jpg') repeat-x;
+
+
+	
+}
+.r3{
+	height:100%;
+	overflow:hidden;
+	position:relative;
+	margin:4px;
+
+}
+.r3 .c1{
+	height:100%;
+	float:left;
+	width:154px;
+	overflow:hidden;
+	z-index:1;
+	top:0;
+	left:0;
+}
+
+.r3 .c2{
+	overflow:hidden;
+	height:100%;
+	_float:left;
+}
+.r4{
+	height:0px;
+	width:100%;
+	background:#ddd url('../images/r4.jpg') repeat-x;
+	position:absolute;
+	bottom:0;
+	overflow:hidden;
+}
+.togglePrev{
+	height:100%;
+	float:left;
+	width:7px;
+	background: url('../images/togglePrevOver.jpg') no-repeat scroll left center;
+	cursor:pointer;
+}
+.togglePrevOver{
+	background: url('../images/togglePrevOver.jpg') no-repeat scroll left center;
+}
+.togglePrevEnd{
+	background: url('../images/togglePrevEnd.jpg') no-repeat scroll left center;
+}
+
+.navBtn{
+	border: 1px solid gray;
+	margin:4px 0 0 10px;
+	height:22px;
+	overflow:hidden;
+	background:#CCCCCC url('../images/navBtn.jpg') repeat-x;
+	color:#222;
+	cursor:pointer;
+}
+.navBtnOn{
+	background:#CCCCCC url('../images/navBtn.jpg') repeat-x scroll left 23px;
+}
+.logo{
+	height:70px;
+	width:452px;
+	position:absolute;
+	z-index:1;
+	background: url('../images/logo.jpg') no-repeat  left 0;
+
+}
+
+.logo .text{
+	line-height:70px;
+	font-size:16px;
+	color:#2F73C8;
+	padding-left:10px;
+}

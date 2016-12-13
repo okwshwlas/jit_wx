@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>扫码支付</title>
+    <link rel="stylesheet" type="text/css" href="../css/default.css" />
+    <link rel="stylesheet" type="text/css" href="../css/commont.css" />
+    <link rel="stylesheet" type="text/css" href="../css/aui.2.0.css" />
+    <style>
+        .aui-list::after { background-color: #fff;}
+        .aui-list .aui-list-item::after{ background-color: #fff;}
+        .aui-list::before{ background-color: #fff;}
+        .aui-card-list-header { font-size: 0.7rem; color: #626262;}
+    </style>
+</head>
+<body>
+    <div>
+        <header><img src="../image/banner_01.jpg" alt="" width="100%;"/></header>
+        <section>
+            <div class="operating_box">
+                <div class="pad_top">
+                    <ul class="aui-list aui-form-list ">
+                        <li class="aui-list-item">
+                            <div class="aui-list-item-inner">
+                                <div class="aui-list-item-label">
+                                    业务编号
+                                </div>
+                                <div class="aui-list-item-input">
+                                    <input type="text" placeholder="请您输入业务编号" class="input_bg">
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                    <p class="tip_text">＊填写业务编号也可扫描申请单上的条形码。</p>
+                </div>
+            </div>
+        </section>
+        <section class="aui-content-padded mar_top ">
+            <div class="aui-card-list" style="padding:1rem 0;">
+                <div class="aui-info pad_0">
+                    <div class="aui-info-item">
+                        <img src="../image/icon_01.png" style="width:1.5rem" class="aui-img-round" /><span class="aui-margin-l-5 aui-card-list-header">业务编号：</span><span>Mx162761726</span>
+                    </div>
+                </div>
+                <div class="aui-info pad_0">
+                    <div class="aui-info-item">
+                        <img src="../image/icon_02.png" style="width:1.5rem" class="aui-img-round" /><span class="aui-margin-l-5 aui-card-list-header">业务名称：</span><span>个人旅游签注</span>
+                    </div>
+                </div>
+                <div class="aui-info pad_0">
+                    <div class="aui-info-item">
+                        <img src="../image/icon_03.png" style="width:1.5rem" class="aui-img-round" /><span class="aui-margin-l-5 aui-card-list-header">缴费状态：</span><span>未缴费</span>
+                    </div>
+                </div>
+                <div class="aui-info pad_0 border_top pad_top_1">
+                    <div class="aui-info-item">
+                        <img src="../image/icon_04.png" style="width:1.5rem" class="aui-img-round" /><span class="aui-margin-l-5 aui-card-list-header">收费金额：</span><span>20元</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- 暂无信息 -->
+        <div style=" display: none;" class="no_data">
+            <img src="../image/zanwu.png" alt="" width="150" height="140" />
+        </div>
+        <!-- end -->
+        <div class="aui-content-padded ">
+            <p class="padding_top"><div class="aui-btn aui-btn-yellow aui-btn-block"  onclick="window.location.href='2.html'">去缴费</div></p>
+        </div>
+    </div>
+</body>
+</html>

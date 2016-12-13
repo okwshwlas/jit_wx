@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="dogo.dao.TuwenMapper" >
+  <resultMap id="BaseResultMap" type="dogo.model.Tuwen" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="url" property="url" jdbcType="VARCHAR" />
+    <result column="link" property="link" jdbcType="VARCHAR" />
+    <result column="parent_id" property="parentId" jdbcType="VARCHAR" />
+    <result column="keyword_id" property="keywordId" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="dogo.model.Tuwen" extends="BaseResultMap" >
+    <result column="miaoshu" property="miaoshu" jdbcType="VARCHAR" />
+    <result column="neirong" property="neirong" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, title, url, link, parent_id, keyword_id
+  </sql>
+  <sql id="Blob_Column_List" >
+    miaoshu, neirong
+  </sql>
+
+	<!-- 查询所有记录数 -->
+	<select id="selectAllCount" resultType="int" parameterType="java.util.Map">
+		select count(*) from dogo_tuwen LEFT JOIN dogo_keywords ON dogo_tuwen.keyword_id=dogo_keywords.id
+		<where> 
+		    <if test="page.typeName == 'title'">
+		       title like '%${page.typeValue}%'
+		    </if>
+		    <if test="page.typeName == 'context'">
+		       and context like '%${page.typeValue}%'
+		    </if>
+		     <if test="tuwenId != null">
+		       and parent_id not like  '%${tuwenId}%'  OR parent_id IS NULL 
+		    </if>
+	    </where>
+	</select>
+	<!-- 查询是否已经存在该关键字 -->
+	<select id="selectisNotkeyword" resultType="int" parameterType="java.util.Map">
+		select count(*) from dogo_tuwen
+		where 1=1
+		    <if test="tuwenid != null">
+		       and id != #{tuwenid,jdbcType=VARCHAR}
+		    </if>
+		    <if test="keyword_id != null">
+		       and keyword_id = #{keyword_id,jdbcType=VARCHAR}
+		    </if>
+	</select>
+	<resultMap type="dogo.model.Tuwen" id="tuwenResultPage1" extends="ResultMapWithBLOBs">
+		<association property="keywords" javaType="dogo.model.Keywords">
+			<id property="id" column="kid" />
+			<result property="sign" column="sign" />
+			<result property="context" column="context" />
+		</association>
+		<!-- 
+			<association property="keywords" javaType="dogo.model.Keywords" resultMap="dogo.mapping.KeywordsMapper.BaseResultMap"/> 
+			这是另一种写法,但是字段有冲突的时候可能不行,直接映射到keywrods.
+		-->
+	</resultMap>
+	<!-- 查询所有带分页 -->
+	<select id="selectAllTuwenByPage" resultMap="tuwenResultPage1"
+		parameterType="java.util.Map">
+		select * from (
+		select 
+		dogo_tuwen.id,dogo_tuwen.title, dogo_tuwen.url, dogo_tuwen.link,rownum r,
+		dogo_tuwen.parent_id, dogo_tuwen.keyword_id , dogo_tuwen.miaoshu, dogo_tuwen.neirong,
+		dogo_keywords.id as kid,dogo_keywords.sign,dogo_keywords.context 
+		from dogo_tuwen LEFT JOIN dogo_keywords ON dogo_tuwen.keyword_id=dogo_keywords.id
+		where 1=1
+		    <if test="page.typeName == 'title'">
+		      and title like '%${page.typeValue}%'
+		    </if>
+		    <if test="page.typeName == 'context'">
+		       and context like '%${page.typeValue}%'
+		    </if>
+		     <if test="tuwenId != null">
+		       and parent_id not like '%${tuwenId}%'   OR parent_id IS NULL 
+		    </if>
+		    and 
+		    <![CDATA[ 
+		    rownum<=#{page.end}
+		    ]]>
+	    )
+	    where 
+	   <![CDATA[  
+	   #{page.begin}<=r
+	   ]]>
+	</select>
+	
+	
+	<!-- 根据关键词标示或关键词查询所有图文 -->
+	<select id="selectAllTuwenBySign" resultMap="tuwenResultPage1" parameterType="java.lang.String">
+		select 
+		dogo_tuwen.id,dogo_tuwen.title, dogo_tuwen.url, dogo_tuwen.link, 
+		dogo_tuwen.parent_id, dogo_tuwen.keyword_id , dogo_tuwen.miaoshu, dogo_tuwen.neirong,
+		dogo_keywords.id as kid,dogo_keywords.sign,dogo_keywords.context 
+		from dogo_tuwen LEFT JOIN dogo_keywords ON dogo_tuwen.keyword_id=dogo_keywords.id
+	     where dogo_keywords.sign = #{sign,jdbcType=VARCHAR}  or dogo_keywords.context= #{sign,jdbcType=VARCHAR}
+	</select>
+	
+  
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from dogo_tuwen
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  
+  <select id="selectHasParentId" resultType="int" parameterType="dogo.model.Tuwen" >
+    select
+    count(*) from dogo_tuwen where id=#{id,jdbcType=VARCHAR} and id in(
+    select 
+    id
+    from dogo_tuwen
+    where parent_id = #{parentId,jdbcType=VARCHAR}
+    )
+  </select>
+  
+  <select id="selectByPatentId" resultMap="ResultMapWithBLOBs" parameterType="java.util.Map" statementType="STATEMENT">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from dogo_tuwen
+    where parent_id like '%${id}%'
+  </select>
+  <delete id="deleteTuwenById" parameterType="java.lang.String" >
+    delete from dogo_tuwen
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteTuwenByParentId" parameterType="java.lang.String" >
+    delete from dogo_tuwen
+    where parent_id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByKeywordsId" parameterType="java.lang.String" >
+    delete from dogo_tuwen
+    where keyword_id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="dogo.model.Tuwen" >
+    insert into dogo_tuwen (id, title, url, 
+      link, parent_id, keyword_id, 
+      miaoshu, neirong)
+    values (#{id,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}, 
+      #{link,jdbcType=VARCHAR}, #{parentId,jdbcType=VARCHAR}, #{keywordId,jdbcType=VARCHAR}, 
+      #{miaoshu,jdbcType=VARCHAR}, #{neirong,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertTuwen" parameterType="dogo.model.Tuwen" >
+    insert into dogo_tuwen
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="title != null" >
+        title,
+      </if>
+      <if test="url != null" >
+        url,
+      </if>
+      <if test="link != null" >
+        link,
+      </if>
+      <if test="parentId != null" >
+        parent_id,
+      </if>
+      <if test="keywordId != null" >
+        keyword_id,
+      </if>
+      <if test="miaoshu != null" >
+        miaoshu,
+      </if>
+      <if test="neirong != null" >
+        neirong,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null" >
+        #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="link != null" >
+        #{link,jdbcType=VARCHAR},
+      </if>
+      <if test="parentId != null" >
+        #{parentId,jdbcType=VARCHAR},
+      </if>
+      <if test="keywordId != null" >
+        #{keywordId,jdbcType=VARCHAR},
+      </if>
+      <if test="miaoshu != null" >
+        #{miaoshu,jdbcType=VARCHAR},
+      </if>
+      <if test="neirong != null" >
+        #{neirong,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="dogo.model.Tuwen" >
+    update dogo_tuwen
+    <set >
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null" >
+        url = #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="link != null" >
+        link = #{link,jdbcType=VARCHAR},
+      </if>
+      <if test="parentId != null" >
+        parent_id = #{parentId,jdbcType=VARCHAR},
+      </if>
+      <if test="keywordId != null" >
+        keyword_id = #{keywordId,jdbcType=VARCHAR},
+      </if>
+      <if test="miaoshu != null" >
+        miaoshu = #{miaoshu,jdbcType=VARCHAR},
+      </if>
+      <if test="neirong != null" >
+        neirong = #{neirong,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="dogo.model.Tuwen" >
+    update dogo_tuwen
+    set title = #{title,jdbcType=VARCHAR},
+      url = #{url,jdbcType=VARCHAR},
+      link = #{link,jdbcType=VARCHAR},
+      parent_id = #{parentId,jdbcType=VARCHAR},
+      keyword_id = #{keywordId,jdbcType=VARCHAR},
+      miaoshu = #{miaoshu,jdbcType=VARCHAR},
+      neirong = #{neirong,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="dogo.model.Tuwen" >
+    update dogo_tuwen
+    set title = #{title,jdbcType=VARCHAR},
+      url = #{url,jdbcType=VARCHAR},
+      link = #{link,jdbcType=VARCHAR},
+      parent_id = #{parentId,jdbcType=VARCHAR},
+      keyword_id = #{keywordId,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateParentIdByPrimaryKey" parameterType="dogo.model.Tuwen" >
+    update dogo_tuwen
+      set parent_id = #{parentId,jdbcType=VARCHAR} 
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

@@ -1,0 +1,203 @@
+package dogo.model;
+
+public class CrjYyxx {
+    private String yyId;
+
+    private String sqId;
+
+    private String jgdwId;
+
+    private String sfzh;
+
+    private String sjhm;
+
+    private String yyzt;
+
+    private String yysjId;
+
+    private String yysjQs;
+
+    private String yysjZz;
+
+    private String yyrq;
+
+    private Object createTime;
+
+    private Object updateTime;
+
+    private String name;
+
+    private String yysz;
+
+    private String yyxq;
+
+    private String yyszd;
+
+    private String yycode;
+
+    private String openid;
+
+    private String beiyong1;
+
+    private String beiyong2;
+
+    public String getYyId() {
+        return yyId;
+    }
+
+    public void setYyId(String yyId) {
+        this.yyId = yyId == null ? null : yyId.trim();
+    }
+
+    public String getSqId() {
+        return sqId;
+    }
+
+    public void setSqId(String sqId) {
+        this.sqId = sqId == null ? null : sqId.trim();
+    }
+
+    public String getJgdwId() {
+        return jgdwId;
+    }
+
+    public void setJgdwId(String jgdwId) {
+        this.jgdwId = jgdwId == null ? null : jgdwId.trim();
+    }
+
+    public String getSfzh() {
+        return sfzh;
+    }
+
+    public void setSfzh(String sfzh) {
+        this.sfzh = sfzh == null ? null : sfzh.trim();
+    }
+
+    public String getSjhm() {
+        return sjhm;
+    }
+
+    public void setSjhm(String sjhm) {
+        this.sjhm = sjhm == null ? null : sjhm.trim();
+    }
+
+    public String getYyzt() {
+        return yyzt;
+    }
+
+    public void setYyzt(String yyzt) {
+        this.yyzt = yyzt == null ? null : yyzt.trim();
+    }
+
+    public String getYysjId() {
+        return yysjId;
+    }
+
+    public void setYysjId(String yysjId) {
+        this.yysjId = yysjId == null ? null : yysjId.trim();
+    }
+
+    public String getYysjQs() {
+        return yysjQs;
+    }
+
+    public void setYysjQs(String yysjQs) {
+        this.yysjQs = yysjQs == null ? null : yysjQs.trim();
+    }
+
+    public String getYysjZz() {
+        return yysjZz;
+    }
+
+    public void setYysjZz(String yysjZz) {
+        this.yysjZz = yysjZz == null ? null : yysjZz.trim();
+    }
+
+    public String getYyrq() {
+        return yyrq;
+    }
+
+    public void setYyrq(String yyrq) {
+        this.yyrq = yyrq == null ? null : yyrq.trim();
+    }
+
+    public Object getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Object createTime) {
+        this.createTime = createTime;
+    }
+
+    public Object getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Object updateTime) {
+        this.updateTime = updateTime;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name == null ? null : name.trim();
+    }
+
+    public String getYysz() {
+        return yysz;
+    }
+
+    public void setYysz(String yysz) {
+        this.yysz = yysz == null ? null : yysz.trim();
+    }
+
+    public String getYyxq() {
+        return yyxq;
+    }
+
+    public void setYyxq(String yyxq) {
+        this.yyxq = yyxq == null ? null : yyxq.trim();
+    }
+
+    public String getYyszd() {
+        return yyszd;
+    }
+
+    public void setYyszd(String yyszd) {
+        this.yyszd = yyszd == null ? null : yyszd.trim();
+    }
+
+    public String getYycode() {
+        return yycode;
+    }
+
+    public void setYycode(String yycode) {
+        this.yycode = yycode == null ? null : yycode.trim();
+    }
+
+    public String getOpenid() {
+        return openid;
+    }
+
+    public void setOpenid(String openid) {
+        this.openid = openid == null ? null : openid.trim();
+    }
+
+    public String getBeiyong1() {
+        return beiyong1;
+    }
+
+    public void setBeiyong1(String beiyong1) {
+        this.beiyong1 = beiyong1 == null ? null : beiyong1.trim();
+    }
+
+    public String getBeiyong2() {
+        return beiyong2;
+    }
+
+    public void setBeiyong2(String beiyong2) {
+        this.beiyong2 = beiyong2 == null ? null : beiyong2.trim();
+    }
+}

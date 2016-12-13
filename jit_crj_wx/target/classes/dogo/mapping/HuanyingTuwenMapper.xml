@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="dogo.dao.HuanyingTuwenMapper" >
+  <resultMap id="BaseResultMap" type="dogo.model.HuanyingTuwen" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="url" property="url" jdbcType="VARCHAR" />
+    <result column="link" property="link" jdbcType="VARCHAR" />
+    <result column="parent_id" property="parentId" jdbcType="VARCHAR" />
+    <result column="keyword_id" property="keywordId" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="dogo.model.HuanyingTuwen" extends="BaseResultMap" >
+    <result column="miaoshu" property="miaoshu" jdbcType="VARCHAR" />
+    <result column="neirong" property="neirong" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, title, url, link, parent_id, keyword_id, status
+  </sql>
+  <sql id="Blob_Column_List" >
+    miaoshu, neirong
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from dogo_huanying_tuwen
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from dogo_huanying_tuwen
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="dogo.model.HuanyingTuwen" >
+    insert into dogo_huanying_tuwen (id, title, url, 
+      link, parent_id, keyword_id, 
+      status, miaoshu, neirong
+      )
+    values (#{id,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}, 
+      #{link,jdbcType=VARCHAR}, #{parentId,jdbcType=VARCHAR}, #{keywordId,jdbcType=VARCHAR}, 
+      #{status,jdbcType=VARCHAR}, #{miaoshu,jdbcType=VARCHAR}, #{neirong,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="dogo.model.HuanyingTuwen" >
+    insert into dogo_huanying_tuwen
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="title != null" >
+        title,
+      </if>
+      <if test="url != null" >
+        url,
+      </if>
+      <if test="link != null" >
+        link,
+      </if>
+      <if test="parentId != null" >
+        parent_id,
+      </if>
+      <if test="keywordId != null" >
+        keyword_id,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="miaoshu != null" >
+        miaoshu,
+      </if>
+      <if test="neirong != null" >
+        neirong,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null" >
+        #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="link != null" >
+        #{link,jdbcType=VARCHAR},
+      </if>
+      <if test="parentId != null" >
+        #{parentId,jdbcType=VARCHAR},
+      </if>
+      <if test="keywordId != null" >
+        #{keywordId,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="miaoshu != null" >
+        #{miaoshu,jdbcType=VARCHAR},
+      </if>
+      <if test="neirong != null" >
+        #{neirong,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="dogo.model.HuanyingTuwen" >
+    update dogo_huanying_tuwen
+    <set >
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null" >
+        url = #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="link != null" >
+        link = #{link,jdbcType=VARCHAR},
+      </if>
+      <if test="parentId != null" >
+        parent_id = #{parentId,jdbcType=VARCHAR},
+      </if>
+      <if test="keywordId != null" >
+        keyword_id = #{keywordId,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="miaoshu != null" >
+        miaoshu = #{miaoshu,jdbcType=VARCHAR},
+      </if>
+      <if test="neirong != null" >
+        neirong = #{neirong,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="dogo.model.HuanyingTuwen" >
+    update dogo_huanying_tuwen
+    set title = #{title,jdbcType=VARCHAR},
+      url = #{url,jdbcType=VARCHAR},
+      link = #{link,jdbcType=VARCHAR},
+      parent_id = #{parentId,jdbcType=VARCHAR},
+      keyword_id = #{keywordId,jdbcType=VARCHAR},
+      status = #{status,jdbcType=VARCHAR},
+      miaoshu = #{miaoshu,jdbcType=VARCHAR},
+      neirong = #{neirong,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="dogo.model.HuanyingTuwen" >
+    update dogo_huanying_tuwen
+    set title = #{title,jdbcType=VARCHAR},
+      url = #{url,jdbcType=VARCHAR},
+      link = #{link,jdbcType=VARCHAR},
+      parent_id = #{parentId,jdbcType=VARCHAR},
+      keyword_id = #{keywordId,jdbcType=VARCHAR},
+      status = #{status,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

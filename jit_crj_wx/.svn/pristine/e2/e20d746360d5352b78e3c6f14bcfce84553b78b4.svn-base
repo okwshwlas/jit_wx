@@ -1,0 +1,64 @@
+package dogo.service;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import org.springframework.stereotype.Service;
+import dogo.model.Sfxm;
+
+@Service
+public class SfxmServiceImpl implements SfxmServiceI{
+
+	public Sfxm getSfxmByWhbh(String ywbh) {
+		String sql="";
+			//设定数据库驱动，数据库连接地址、端口、名称，用户名，密码
+		String driverName="oracle.jdbc.driver.OracleDriver";
+		String url="jdbc:oracle:thin:@192.168.2.244:1521:db1";	//test为数据库名称，1521为连接数据库的默认端口
+		String user="crj_business";	//aa为用户名
+		String password="crj_business_2016";	//123为密码
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		Sfxm sfxm = new Sfxm();
+		//数据库连接对象
+		Connection conn = null;
+		try {
+			//反射Oracle数据库驱动程序类
+			Class.forName(driverName);
+			//获取数据库连接
+			conn = DriverManager.getConnection(url, user, password);
+			//定制sql命令
+			sql = "SELECT id,rowid,ywbh,jyh,ywlb,ywlbmc,stflb,stflbmc,stfje,sfrq,sfdw,sfry,tfrq,tfdw,tfry,stfbs,sfrs FROM crj_business.t_wx_smsf where ywbh='" + ywbh + "'";
+			//创建该连接下的PreparedStatement对象
+			pstmt = conn.prepareStatement(sql);
+			//执行查询语句，将数据保存到ResultSet对象中
+			rs = pstmt.executeQuery();
+			//将指针移到下一行，判断rs中是否有数据
+			if(rs.next()){
+				sfxm.setYwlbmc(rs.getString("ywlbmc"));
+				sfxm.setYwbh(rs.getString("ywbh"));
+				sfxm.setStfje(rs.getString("stfje"));
+			}
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally{
+			try{
+				if(rs != null){
+					rs.close();
+				}
+				if(pstmt != null){
+					pstmt.close();
+				}
+				if(conn != null){
+					conn.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}	
+		}
+		return sfxm;
+	}
+}

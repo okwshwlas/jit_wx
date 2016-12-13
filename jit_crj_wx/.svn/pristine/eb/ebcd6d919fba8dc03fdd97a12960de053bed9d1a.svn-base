@@ -1,0 +1,133 @@
+package dogo.controller;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.net.URLEncoder;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.alibaba.fastjson.JSON;
+
+import dogo.model.CrjYyxx;
+import dogo.model.Gongzhong;
+import dogo.model.SysWorktime;
+import dogo.model.Wx_Pc;
+import dogo.modeljson.AjaxJson;
+import dogo.modeljson.BaseJson;
+import dogo.modeljson.JsonDateValueProcessor;
+import dogo.service.CrjRyjbxxServiceI;
+import dogo.service.GongzhongZhanghaoService;
+import dogo.util.Params;
+import dogo.util.StringUtils;
+import dogo.weixin.core.WeiXinUtil;
+import net.sf.json.JSONObject;
+import net.sf.json.JsonConfig;
+
+
+@Controller
+@RequestMapping("/crj/wxqz")
+public class WxqzController {
+	  private static final Logger log = Logger.getLogger(WxqzController.class);
+
+	  @Autowired
+	  private CrjRyjbxxServiceI crjRyjbxxServiceI;
+
+	  @Autowired
+	  private GongzhongZhanghaoService gongzhongZhanghaoService;
+	  
+	 @RequestMapping(value={"/end.do"}, method={org.springframework.web.bind.annotation.RequestMethod.POST})
+	  public void addYuYueByWorktime(HttpServletResponse response, HttpServletRequest request)
+	    throws IOException
+	  {
+		String type =request.getParameter("type");
+		String openid = request.getParameter("openid");
+	    AjaxJson ajaxJson = new AjaxJson();
+	    String ret = "";
+	    response.setCharacterEncoding("UTF-8");
+	    response.setContentType("text/html");
+	    PrintWriter out = response.getWriter();
+
+	    BaseJson baseJson = new BaseJson();
+	    
+	    String endywxx =request.getParameter("endywxx");
+	    String dwxx ="请将:"+endywxx+"填写到邮封备注栏中,并根据代理单位信息填写邮寄信息"+request.getParameter("dwxx");
+	    String ywbh = "";
+	    String yysjfw = "";
+	    String shijian = "";
+	    String Strid = Params.getCode();
+	    try {
+	    	  
+	    	  
+//	    	"dwxx" :dwxx,
+//			"endywxx":endywxx 
+	    	  
+
+	      SimpleDateFormat dateFormater = new SimpleDateFormat("yyyy-MM-dd");
+	      Date date = new Date();
+//	      Wx_Pc pc = new Wx_Pc();
+//	      pc.setOpenid(openid);
+//	      pc.setYywd(jgdwName);
+//	      pc.setYywddz(jgdwywdwdz);
+//	      pc.setYybhs(Strid);
+//	      pc.setDhhm(yysjfw);
+//	      pc.setYysj(dateFormater.format(date));
+	      shijian =dateFormater.format(date);
+//	      this.crjRyjbxxServiceI.insertSelective(pc);
+	      Gongzhong gongzhong = this.gongzhongZhanghaoService.selectGongzhongZhanghaoById("1");
+	      String appid = gongzhong.getAccountAppid();
+	      String appsecret = gongzhong.getAccountAppsecret();
+	      WeiXinUtil util = new WeiXinUtil();
+
+	      if ((type != null) && ("2".equals(type))) {
+	        String token = util.getAccess_token(appid, appsecret);
+	        String params = "{\"touser\":\"" + openid + "\",\"template_id\":\"h31AWXFqF0k3xxVLAbSjR6idAZpxQCWI90DwaINSqqU\",\"url\":\"\",\"topcolor\":\"#FF0000\",\"data\":{" + 
+	          "\"first\": {\"value\":\"尊敬的客户，您的业务已受理成功！\",\"color\":\"#173177\"},\"keyword1\":{ \"value\":\"" + endywxx + "\", \"color\":\"#173177\" },\"keyword2\": {\"value\":\"" + shijian + "\", \"color\"" + 
+	          ":\"#173177\" },\"remark\":{\"value\":\"" + dwxx + "\",\"color\":\"#173177\"}}}";
+
+	        boolean flag = util.createMobanMessage(params, token);
+
+	        String params_csfw = "{\"touser\":\"" + openid + "\",\"template_id\":\"h31AWXFqF0k3xxVLAbSjR6idAZpxQCWI90DwaINSqqU\",\"url\":\"\",\"topcolor\":\"#FF0000\",\"data\":{" + 
+	  	          "\"first\": {\"value\":\"尊敬的客户，您的业务已受理成功！\",\"color\":\"#173177\"},\"keyword1\":{ \"value\":\"" + endywxx + "\", \"color\":\"#173177\" },\"keyword2\": {\"value\":\"" + shijian + "\", \"color\"" + 
+		          ":\"#173177\" },\"remark\":{\"value\":\"" + dwxx + "\",\"color\":\"#173177\"}}}";
+	        String csfw = URLEncoder.encode(params_csfw, "UTF-8");
+	        csfw = "https://city.weixin.qq.com/cgi-bin/entry?result_data=" + csfw + "#wechat_redirect";
+	        baseJson.setData(csfw);
+	        
+	        JsonConfig jsonConfig = new JsonConfig();
+	        jsonConfig.registerJsonValueProcessor(Date.class, new JsonDateValueProcessor());
+	        JSONObject aa = JSONObject.fromObject(baseJson, jsonConfig);
+	        ret = JSON.toJSONString(aa);
+
+	        out = response.getWriter();
+	        out.print(ret);
+	      }
+	      else {
+	        String token = util.getAccess_token(appid, appsecret);
+	        String params = "{\"touser\":\"" + openid + "\",\"template_id\":\"h31AWXFqF0k3xxVLAbSjR6idAZpxQCWI90DwaINSqqU\",\"url\":\"\",\"topcolor\":\"#FF0000\",\"data\":{" + 
+	  	          "\"first\": {\"value\":\"尊敬的客户，您的业务已受理成功！\",\"color\":\"#173177\"},\"keyword1\":{ \"value\":\"" + endywxx + "\", \"color\":\"#173177\" },\"keyword2\": {\"value\":\"" + shijian + "\", \"color\"" + 
+		          ":\"#173177\" },\"remark\":{\"value\":\"" + dwxx + "\",\"color\":\"#173177\"}}}";
+	        boolean flag = util.createMobanMessage(params, token);
+	        out = response.getWriter();
+	        out.print(ret);
+	      }
+	    } catch (Exception e) {
+	      log.error(e.getMessage(), e);
+	      e.printStackTrace();
+	      ajaxJson.setCode("000001");
+	      ajaxJson.setMsg("预约失败！");
+	      out.print(JSON.toJSONString(ajaxJson));
+	    } finally {
+	      out.flush();
+	      out.close();
+	    }
+	  }
+
+}
